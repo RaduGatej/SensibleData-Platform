@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+{% endif %}
+
+
+<form method="post" action="{% url 'accounts.register.register' %}">
+{% csrf_token %}
+<table>
+<tr>
+    <td>{{ username.label_tag }}</td>
+    <td>{{ username.input | safe }}</td>
+</tr>
+<tr>
+    <td>{{ password.label_tag }}</td>
+    <td>{{ password.input | safe }}</td>
+</tr>
+<tr>
+    <td>{{ password_repeat.label_tag }}</td>
+    <td>{{ password_repeat.input | safe }}</td>
+</tr>
+</table>
+
+<input type="submit" value="register" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{% endblock %}
