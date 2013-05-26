@@ -123,6 +123,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'openid_provider',
+    'accounts',
+    'render',
+    'identity_providers',
 )
 
 # A sample logging configuration. The only tangible logging
