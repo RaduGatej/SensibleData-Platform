@@ -5,6 +5,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^openid/', include('openid_provider.urls')),
-    (r'^accounts/login/$', 'django.contrib.auth.views.login'),
+    url(r'^accounts/', include('accounts.urls')),
+    url(r'^identity_providers/', include('identity_providers.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include('render.urls')),
 )
