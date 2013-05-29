@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     'accounts',
     'render',
     'identity_providers',
+    'utils',
 )
 
 # A sample logging configuration. The only tangible logging
