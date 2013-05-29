@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+This is profile.html
+</br>
+Hello {{ user.username }}.
+
+{% if user.student_id %}
+	</br>
+	Your student id is {{ user.student_id }}
+{% else %}
+	</br>
+	DTU student? Link to <a href='{{ connector_link.cas }}'>CAS</a>
+{% endif %}
+
+
+{% endblock %}
