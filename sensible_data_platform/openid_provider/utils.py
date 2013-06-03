@@ -9,6 +9,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.utils.importlib import import_module
 
 import hashlib
+from accounts.models import Participant
 
 def import_module_attr(path):
     package, module = path.rsplit('.', 1)
@@ -20,7 +21,8 @@ def get_default_sreg_data(request, orequest):
 #        'nickname': request.user.username,
 #        'fullname': request.user.get_full_name(),
         'email': '',
-        'nickname': str(hashlib.sha1(request.user.username).hexdigest()),
+ #       'nickname': str(hashlib.sha1(request.user.username).hexdigest()),
+        'nickname': Participant.objects.get(user=request.user).pseudonym,
         'fullname': '',
     }
 
