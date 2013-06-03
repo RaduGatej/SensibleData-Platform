@@ -4,8 +4,10 @@ from django.core.context_processors import csrf
 from django.contrib.auth.models import User
 
 from openid_provider.models import *
+from .models import *
 
 from collections import defaultdict
+import hashlib
 
 def register(request):
 
@@ -26,7 +28,7 @@ def register(request):
 		username = request.POST.get('username', '')
 		password = request.POST.get('password', '')
 
-		#TODO> valudate username
+		#TODO> validate username
 
 		user = User.objects.create_user(username, '', password)
 
@@ -34,5 +36,10 @@ def register(request):
 		openid.user = user
 		openid.default = True
 		openid.save()
+
+		participant = Participant()
+		participant.user = user
+		participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())
+		participant.save()
 
 		return HttpResponse(username+' created successfully!')

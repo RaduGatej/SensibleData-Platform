@@ -8,3 +8,7 @@ class Cas(models.Model):
     givenName = models.CharField(max_length=100, blank=True)
     familyName = models.CharField(max_length=100, blank=True)
     closed = models.CharField(max_length=100, blank=True)
+
+class Participant(models.Model):
+    user = models.OneToOneField(User)
+    pseudonym = models.CharField(max_length=100, blank=True)
