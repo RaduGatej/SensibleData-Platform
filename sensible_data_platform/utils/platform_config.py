@@ -3,6 +3,4 @@ IDENTITY_PROVIDERS = {
 		'connector': 'cas.py',
 		'link': '/identity_providers/cas/',
 	}
-
-
 }
