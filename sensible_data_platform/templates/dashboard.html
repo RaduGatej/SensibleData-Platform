@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+This is dashboard.html
+</br>
+
+<b>initiated</b>
+</br>
+{% for service, value in services.initiated.items %}
+	<li> {{ service }} </li>
+{% endfor %}
+
+<b>available</b>
+</br>
+{% for service, value in services.available.items %}
+	<li> {{ value.status }}: {{ service }}  
+	<form method="get" action="/oauth2/oauth2/authorize">
+	<input type="hidden" name="redirect_uri" value="{{ value.redirect_uri }}">
+	<input type="hidden" name="response_type" value="code">
+	<input type="hidden" name="client_id" value="{{ value.client_id }}">
+	<input type="hidden" name="scope" value="enroll,view_real_name">
+	<input type="submit" value="Enroll">
+	</form>
+	</li>
+{% endfor %}
+
+<b>enrolled</b>
+</br>
+{% for service, value in services.enrolled.items %}
+	<li> {{ value.status }}: {{ service }}  </li>
+{% endfor %}
+
+
+{% endblock %}
