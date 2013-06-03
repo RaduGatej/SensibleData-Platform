@@ -22,12 +22,6 @@
   authenticity.  Perhaps it is on your local network.</p>
 {% endifequal %}
 {% ifequal trust_root_valid "DISCOVERY_FAILED" %}
-  <p>The site <tt>{{ trust_root|escape }}</tt> has requested verification
-  of your OpenID.  However, <tt>{{ trust_root|escape }}</tt> does not 
-  implement OpenID 2.0's relying party verification mechanism.  Please use
-  extra caution in deciding whether to release information to this party,
-  and ask <tt>{{ trust_root|escape }}</tt> to implement relying party
-  verification for your future transactions.</p>
 {% endifequal %}
 
 <!-- trust_root_valid is {{ trust_root_valid }} -->
