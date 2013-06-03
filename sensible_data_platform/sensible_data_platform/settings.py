@@ -1,5 +1,7 @@
 # Django settings for sensible_data_platform project.
 
+import os
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -12,7 +14,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/home/arks/MODIS/Sensible-Data-Platform/sensible_data_platform/SECURE_auth.db',                      # Or path to database file if using sqlite3.
+        'NAME': '/home/arks/MODIS/Sensible-Data-Platform/sensible_data_platform/SECURE_database.db',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -59,7 +61,7 @@ MEDIA_URL = ''
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+	# in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
 STATIC_ROOT = ''
 
@@ -69,6 +71,8 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+    #TODO: make this relative
+    '/home/arks/MODIS/Sensible-Data-Platform/sensible_data_platform/static',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -127,6 +131,10 @@ INSTALLED_APPS = (
     'render',
     'identity_providers',
     'utils',
+    'oauth2app',
+    'oauth2_authorization_server',
+    'uni_form',
+    'service_manager',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -157,3 +165,6 @@ LOGGING = {
         },
     }
 }
+
+import hashlib
+SESSION_COOKIE_NAME = str(hashlib.sha1(SECRET_KEY).hexdigest())
