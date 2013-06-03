@@ -5,8 +5,10 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^openid/', include('openid_provider.urls')),
+    url(r'^oauth2/', include('oauth2_authorization_server.urls')),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^identity_providers/', include('identity_providers.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^test/', 'utils.TEMP_test.test'),
     url(r'^', include('render.urls')),
 )
