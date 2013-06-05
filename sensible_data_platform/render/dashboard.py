@@ -12,6 +12,8 @@ from service_manager import service_manager
 def dashboard(request):
 	template = {}
 	template['services'] = service_manager.getServices(request.user)
-	template['authorizations'] = service_manager.getAuthorizations(request.user, template['services'])
-	return HttpResponse(json.dumps(template))
+	template['authorizations'] = json.dumps(service_manager.getAuthorizations(request.user, template['services']))
+	#TODO: sort services by name
+	template['services'] = json.dumps(template['services'])
+	#return HttpResponse(json.dumps(template))
 	return render_to_response('dashboard.html', template)
