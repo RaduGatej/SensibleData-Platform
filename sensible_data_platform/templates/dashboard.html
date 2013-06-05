@@ -5,11 +5,14 @@
 This is dashboard.html
 </br>
 
-<b>initiated</b>
+<div id = 'initiated'>
+</div>
+
+<div id = 'enrolled'>
+</div>
+
+
 </br>
-{% for service, value in services.initiated.items %}
-	<li> {{ service }} </li>
-{% endfor %}
 
 <b>available</b>
 </br>
@@ -25,11 +28,119 @@ This is dashboard.html
 	</li>
 {% endfor %}
 
-<b>enrolled</b>
-</br>
-{% for service, value in services.enrolled.items %}
-	<li> {{ value.status }}: {{ service }}  </li>
-{% endfor %}
+
+<script>
+
+function buildText(value, _id)
+{
+		var element = document.createElement('text');
+		element.innerHTML = value;
+		document.getElementById(_id).appendChild(element);
+}
+
+
+function populateIn(type)
+{
+	services = {{ services|safe }}
+	authorizations = {{ authorizations|safe }}
+
+	for (var service in services[type])
+	{
+		buildText('<b>' + type + '</b>' + '</br>' + service, type)
+
+		for (var application in authorizations[service]['service'])
+		{
+			var name = authorizations[service]['service'][application]['name'];
+			var _id = application;
+			var description = authorizations[service]['service'][application]['description'];
+			var owner = authorizations[service]['service'][application]['owner'];
+			
+
+			buildText('</br>' + name, type)
+			buildText('</br>' + _id, type)
+			buildText('</br>' + description, type)
+			buildText('</br>' + owner, type)
+			
+					
+			for (var connector in authorizations[service]['service'][application]['connectors'])
+			{
+				buildText('</br>' + connector, type)
+				var scopes_array = [];
+				for (var scope in authorizations[service]['service'][application]['scopes'])
+				{
+					if (authorizations[service]['service'][application]['scopes'][scope]['connector'] != connector)
+						continue;
+
+					scopes_array.push(scope);
+
+					buildText('</br>' + scope, type)
+					if (authorizations[service]['service'][application]['scopes'][scope]['status'])
+					{
+						var element = document.createElement('input');
+						element.type = "checkbox"
+						element.id = scope+'_checkbox'
+						element.checked = true
+						document.getElementById(type).appendChild(element);
+					}
+					else
+					{
+						var element = document.createElement('input');
+						element.type = "checkbox"
+						element.id = scope+'_checkbox'
+						element.checked = false
+						document.getElementById(type).appendChild(element);
+					}
+
+					buildText('</br>' + authorizations[service]['service'][application]['scopes'][scope]['description'], type)
+				}
+				buildText('</br>', type)
+				var inputElement = document.createElement('input');
+				inputElement.type = "button"
+				inputElement.value = "Submit"
+				inputElement.addEventListener('click', function(){
+					submit(scopes_array, service, application, connector)
+				});
+				document.getElementById(type).appendChild(inputElement);
+			}
+		}
+	}
+}
+
+function submit(scopes_array, service, application, connector)
+{
+
+	var scopes = new Array();
+
+	for (var i in scopes_array)
+	{
+		var scope = scopes_array[i];
+		var status = document.getElementById(scope+'_checkbox').checked
+		//TODO: connector is set, use either grant or sync endpoint to authorize
+		var connector = authorizations[service]['service'][application]['scopes'][scope]['connector'];
+		console.log(authorizations[service]['service'][application]['connectors'][connector])
+		console.log(status)
+		if (status)
+		{
+			if (scopes.indexOf(connector) == -1) scopes[connector] = []
+			scopes[connector].push(scope)
+		}
+	}
+
+	for (var connector in scopes)
+	{
+		console.log(connector)	
+	}
+
+
+}
+
+
+
+populateIn('initiated')
+populateIn('enrolled')
+
+
+</script>
 
 
 {% endblock %}
