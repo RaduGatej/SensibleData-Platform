@@ -11,6 +11,7 @@ from service_manager import service_manager
 @login_required
 def dashboard(request):
 	template = {}
+	template['username'] = str(request.user.get_full_name())
 	template['services'] = service_manager.getServices(request.user)
 	template['authorizations'] = json.dumps(service_manager.getAuthorizations(request.user, template['services']))
 	#TODO: sort services by name
