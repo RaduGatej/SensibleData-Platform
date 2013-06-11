@@ -135,6 +135,7 @@ INSTALLED_APPS = (
     'oauth2_authorization_server',
     'uni_form',
     'service_manager',
+    'bootstrap_toolkit',
 )
 
 # A sample logging configuration. The only tangible logging
