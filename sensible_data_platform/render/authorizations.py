@@ -9,13 +9,12 @@ from service_manager import service_manager
 
 
 @login_required
-def dashboard(request):
-	#TODO: this should host visualizations of the data flows
+def authorizations(request):
 	template = {}
 	template['username'] = str(request.user.get_full_name())
 	template['services'] = service_manager.getServices(request.user)
-	#template['authorizations'] = json.dumps(service_manager.getAuthorizations(request.user, template['services']))
+	template['authorizations'] = json.dumps(service_manager.getAuthorizations(request.user, template['services']))
 	#TODO: sort services by name
 	template['services'] = json.dumps(template['services'])
 	#return HttpResponse(json.dumps(template))
-	return render_to_response('dashboard_bootstrap.html', template)
+	return render_to_response('authorizations.html', template)
