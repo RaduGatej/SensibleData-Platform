@@ -1,19 +1,79 @@
 <!DOCTYPE html>
+{% load bootstrap_toolkit %}
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css" />
-    <title>{% block title %}My amazing site{% endblock %}</title>
-	 {% block extra_head_content %}{% endblock %}
+    <meta charset="utf-8">
+    <title>Sensible Data</title>
+    <meta name="description" content="">
+    <meta name="author" content="Arkadiusz Stopczynski">
+    {% bootstrap_stylesheet_tag %}
+    {% bootstrap_stylesheet_tag "responsive" %}
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+        }
+    </style>
+    <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    {% bootstrap_javascript_tag %}
+    {% block extra_head %}{% endblock %}
 </head>
 
 <body>
-    <div id="sidebar">
-        {% block sidebar %}
-        {% endblock %}
-    </div>
 
-    <div id="content">
-        {% block content %}{% endblock %}
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">Sensible Data</a>
+            <ul class="nav">
+                <li><a href="{% url 'home' %}" class="">Home</a></li>
+                <li><a href="{% url 'home' %}" class="">Profile</a></li>
+                <li><a href="{% url 'home' %}" class="">Authorizations</a></li>
+                <li><a href="{% url 'home' %}" class="">Dashboard</a></li>
+                <li><a href="{% url 'home' %}" class="">Applications</a></li>
+            </ul>
+	<ul class="nav pull-right action">
+        <li class="btn-group">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+            {{ username }}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+
+
+
+        </div>
     </div>
+</div>
+
+<div class="container">
+
+    {% bootstrap_messages %}
+
+    {% block content %}Empty page{% endblock %}
+
+    <p><hr></p>
+
+    <footer class="row">
+        <div class="span6">
+            <p>This is <a href="https://github.com/organizations/MIT-Model-Open-Data-and-Identity-System">Sensible Data, a MODIS system</a></p>
+        </div>
+        <div class="span6" style="text-align:right">
+            <p>
+                &copy; <a href="http://stopczynski.com">Arkadiusz Stopczynski</a> 2013
+                |
+                <a href="https://raw.github.com/dyve/django-bootstrap-toolkit/master/LICENSE">license</a>
+            </p>
+        </div>
+    </footer>
+
+</div> <!-- container -->
+
 </body>
 </html>
