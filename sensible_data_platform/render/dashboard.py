@@ -18,4 +18,4 @@ def dashboard(request):
 	#TODO: sort services by name
 	template['services'] = json.dumps(template['services'])
 	#return HttpResponse(json.dumps(template))
-	return render_to_response('dashboard_bootstrap.html', template)
+	return render_to_response('dashboard_bootstrap.html', template, context_instance=RequestContext(request))
