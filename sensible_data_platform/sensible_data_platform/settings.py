@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     'uni_form',
     'service_manager',
     'bootstrap_toolkit',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging
