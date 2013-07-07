@@ -22,7 +22,7 @@ def get_default_sreg_data(request, orequest):
 #        'fullname': request.user.get_full_name(),
         'email': '',
  #       'nickname': str(hashlib.sha1(request.user.username).hexdigest()),
-        'nickname': Participant.objects.get(user=request.user).pseudonym,
+         'nickname': Participant.objects.get(user=request.user).pseudonym,
         'fullname': '',
     }
 
