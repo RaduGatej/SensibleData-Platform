@@ -48,6 +48,25 @@ class KeyGenerator(object):
     def __call__(self):
         return sha512(uuid4().hex).hexdigest()[0:self.length]
 
+class AccessRange(models.Model):
+    """Stores access range data, also known as scope.
+
+    **Args:**
+
+    * *key:* A string representing the access range scope. Used in access
+      token requests.
+
+    **Kwargs:**
+
+    * *description:* A string representing the access range description.
+      *Default None*
+
+    """
+    key = models.CharField(unique=True, max_length=SCOPE_LENGTH, db_index=True)
+    description = models.TextField(blank=True)
+
+    def __unicode__(self):
+	return self.key
 
 class Client(models.Model):
     """Stores client authentication data.
@@ -72,6 +91,8 @@ class Client(models.Model):
     """
     name = models.CharField(max_length=256)
     user = models.ForeignKey(User)
+    client_owner_email = models.CharField(max_length=100, null=True, blank=True)
+    type = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     key = models.CharField(
         unique=True,
@@ -82,26 +103,11 @@ class Client(models.Model):
         unique=True,
         max_length=CLIENT_SECRET_LENGTH,
         default=KeyGenerator(CLIENT_SECRET_LENGTH))
-    redirect_uri = models.URLField(null=True)
-    api_uri = models.URLField(null=True)
+    redirect_uri = models.URLField(null=True, blank=True)
+    api_uri = models.URLField(null=True, blank=True)
+    registered_scope = models.ManyToManyField(AccessRange)
 
 
-class AccessRange(models.Model):
-    """Stores access range data, also known as scope.
-
-    **Args:**
-
-    * *key:* A string representing the access range scope. Used in access
-      token requests.
-
-    **Kwargs:**
-
-    * *description:* A string representing the access range description.
-      *Default None*
-
-    """
-    key = models.CharField(unique=True, max_length=SCOPE_LENGTH, db_index=True)
-    description = models.TextField(blank=True)
 
 
 class AccessToken(models.Model):
