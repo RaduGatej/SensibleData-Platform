@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.core.context_processors import csrf
 from django.contrib.auth.models import User
 
@@ -19,6 +19,7 @@ def register(request):
 		values['password']['input'] = '<input type="text" name="password" />'
 		values['password_repeat']['label_tag'] = 'repeat password'
 		values['password_repeat']['input'] = '<input type="text" name="password_repeat" />'
+		values['next'] = request.REQUEST.get('next', '')
 		values.update(csrf(request))
 
 
@@ -27,6 +28,7 @@ def register(request):
 	if request.method == 'POST':
 		username = request.POST.get('username', '')
 		password = request.POST.get('password', '')
+		next = request.POST.get('next', '')
 
 		#TODO> validate username
 
@@ -42,4 +44,4 @@ def register(request):
 		participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())
 		participant.save()
 
-		return HttpResponse(username+' created successfully!')
+		return redirect(next)
