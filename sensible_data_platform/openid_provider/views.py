@@ -32,6 +32,8 @@ from openid.yadis.constants import YADIS_CONTENT_TYPE
 from openid_provider import conf
 from openid_provider.utils import add_sreg_data, add_ax_data, get_store
 
+import json
+
 logger = logging.getLogger('django')
 hdlr = logging.StreamHandler()   # Logs to stderr by default
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
@@ -79,13 +81,11 @@ def openid_server(request):
 
     if orequest.mode in BROWSER_REQUEST_MODES:
         if not request.user.is_authenticated():
+		
+            #return HttpResponse(orequest.return_to)
             logger.debug('no local authentication, sending landing page')
             return landing_page(request, orequest)
 	
-
-#   	orequest.identity = "http://166.78.249.214:8080/openid/arkadiusz/"
-#	return HttpResponse(str(orequest.identity))
-
         openid = openid_is_authorized(request, orequest.identity,
                                       orequest.trust_root)
 
@@ -216,7 +216,7 @@ def landing_page(request, orequest, login_url=None,
         querystring = SafeQueryDict(login_url_parts[4], mutable=True)
         querystring[redirect_field_name] = path
         login_url_parts[4] = querystring.urlencode(safe='/')
-    return HttpResponseRedirect(urlparse.urlunparse(login_url_parts))
+    return HttpResponseRedirect(urlparse.urlunparse(login_url_parts)+'&trust_root='+orequest.trust_root)
 
 def openid_is_authorized(request, identity_url, trust_root):
     """
