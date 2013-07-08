@@ -3,7 +3,7 @@
 
 from django.contrib import admin
 
-from openid_provider.models import TrustedRoot, OpenID
+from openid_provider.models import TrustedRoot, OpenID, Attribute
 
 class TrustedRootInline(admin.TabularInline):
     model = TrustedRoot
@@ -13,3 +13,8 @@ class OpenIDAdmin(admin.ModelAdmin):
     inlines = [TrustedRootInline, ]
 
 admin.site.register(OpenID, OpenIDAdmin)
+
+class AttributeAdmin(admin.ModelAdmin):
+    list_display = ['attribute']
+
+admin.site.register(Attribute, AttributeAdmin)

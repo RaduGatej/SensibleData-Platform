@@ -5,6 +5,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
 from django.contrib.auth.models import User
+from oauth2app.models import AccessRange
+
+class Attribute(models.Model):
+	scope = models.ForeignKey(AccessRange)
+	attribute = models.CharField(max_length=200, unique=True)
 
 class OpenID(models.Model):
     user = models.ForeignKey(User)
