@@ -147,7 +147,6 @@ class AccessToken(models.Model):
         default=KeyGenerator(REFRESH_TOKEN_LENGTH),
         db_index=True)
     mac_key = models.CharField(
-        unique=True,
         blank=True,
         null=True,
         max_length=MAC_KEY_LENGTH,
