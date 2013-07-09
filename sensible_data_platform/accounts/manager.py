@@ -1,6 +1,6 @@
 from django.core.context_processors import csrf
 from django.contrib.auth.models import User
-from accounts.models import Cas
+from identity_providers.models import Cas
 
 from openid_provider.models import *
 
