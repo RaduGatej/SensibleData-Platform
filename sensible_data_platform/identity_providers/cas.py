@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 import urllib2
-from accounts.models import *
+from .models import *
 from django.contrib.auth.decorators import login_required	
 import json
 from django.shortcuts import redirect
