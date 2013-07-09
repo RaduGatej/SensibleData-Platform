@@ -33,6 +33,9 @@
                 <li><a href="{% url 'authorizations' %}" class="">Authorizations</a></li>
                 <li><a href="{% url 'dashboard' %}" class="">Dashboard</a></li>
                 <li><a href="{% url 'home' %}" class="">Applications</a></li>
+		 <li class="divider-vertical"></li>
+                <li><a href="{% url 'home' %}" class="">About</a></li>
+		 <li class="divider-vertical"></li>
             </ul>
 <ul class="nav pull-right action">
         {% if user.is_authenticated %}
