@@ -33,6 +33,8 @@ from openid_provider import conf
 from openid_provider.utils import add_sreg_data, add_ax_data, get_store
 
 import json
+from oauth2app.authenticate import Authenticator, AuthenticationException
+from .models import Attribute
 
 logger = logging.getLogger('django')
 hdlr = logging.StreamHandler()   # Logs to stderr by default
@@ -40,6 +42,25 @@ formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 hdlr.setFormatter(formatter)
 logger.addHandler(hdlr) 
 logger.setLevel(logging.WARNING)
+
+def attributes(request):
+	authenticator = Authenticator()
+	requested_attributes = request.REQUEST.get('attributes', '').split(',')
+	try:
+	        authenticator.validate(request)
+    	except AuthenticationException:
+        	return authenticator.error_response(content="You didn't authenticate.")
+	scope = authenticator.scope
+	user = authenticator.user
+
+	response = {}
+	for attribute in requested_attributes:
+		try: a = Attribute.objects.get(attribute=attribute)
+		except Attribute.DoesNotExist: continue
+		if a.scope in scope:
+			response[attribute] = eval('user.'+attribute)
+
+	return HttpResponse(json.dumps(response))
 
 @csrf_exempt
 def openid_server(request):

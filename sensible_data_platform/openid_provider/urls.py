@@ -5,6 +5,7 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('openid_provider.views',
     url(r'^$', 'openid_server', name='openid-provider-root'),
+    url(r'^attributes/$', 'attributes', name='openid-provider-attributes'),
  #   url(r'^$', 'openid_xrds', {'identity': True}, name='openid-provider-root'),
     url(r'^decide/$', 'openid_decide', name='openid-provider-decide'),
     url(r'^xrds/$', 'openid_xrds', name='openid-provider-xrds'),
