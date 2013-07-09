@@ -6,6 +6,7 @@ from accounts import manager
 from utils import platform_config
 from django.contrib.auth.decorators import login_required
 from service_manager import service_manager
+from django.template import RequestContext
 
 
 @login_required
@@ -18,4 +19,4 @@ def dashboard(request):
 	#TODO: sort services by name
 	template['services'] = json.dumps(template['services'])
 	#return HttpResponse(json.dumps(template))
-	return render_to_response('dashboard_bootstrap.html', template, context_instance=RequestContext(request))
+	return render_to_response('dashboard.html', template, context_instance=RequestContext(request))
