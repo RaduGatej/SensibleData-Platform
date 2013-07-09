@@ -6,6 +6,7 @@ from accounts import manager
 from utils import platform_config
 from django.contrib.auth.decorators import login_required
 from service_manager import service_manager
+from django.template import RequestContext
 
 
 @login_required
