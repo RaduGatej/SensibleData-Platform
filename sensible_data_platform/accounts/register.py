@@ -41,7 +41,7 @@ def register(request):
 
 		participant = Participant()
 		participant.user = user
-		participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())
+		participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())[:30]
 		participant.save()
 
 		return redirect(next)
