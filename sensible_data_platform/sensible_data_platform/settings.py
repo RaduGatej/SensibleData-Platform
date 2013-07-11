@@ -10,23 +10,25 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = '/home/sensibleDTU/sensible-data-platform/SensibleData-Platform/sensible_data_platform/'
+ROOT_URL = '/sensible-data/'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-#        'NAME': '/home/arks/MODIS/Sensible-Data-Platform/sensible_data_platform/SECURE_database.db',                      # Or path to database file if using sqlite3.
-        'NAME': '/home/riccardo/MODIS/SensibleData-Platform/sensible_data_platform/SECURE_database.db',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+	'OPTIONS': {
+            'read_default_file': os.path.join(BASE_DIR,'SECURE_my.cnf'),
+        },
     }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
+
+LOGIN_URL = ROOT_URL + 'accounts/login/'
+LOGIN_REDIRECT_URL = ROOT_URL
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -64,16 +66,15 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 	# in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = ROOT_DIR+'static_root'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = '/static/'
+STATIC_URL = '/sensible-data/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    #TODO: make this relative
-    '/home/riccardo/MODIS/SensibleData-Platform/sensible_data_platform/static',
+    ROOT_DIR+'static',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -107,13 +108,18 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+        'django.core.context_processors.static',
+        'django.contrib.auth.context_processors.auth',
+)
+
 ROOT_URLCONF = 'sensible_data_platform.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'sensible_data_platform.wsgi.application'
 
 TEMPLATE_DIRS = (
-		'/home/riccardo/MODIS/SensibleData-Platform/sensible_data_platform/templates',
+		ROOT_DIR+'templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
