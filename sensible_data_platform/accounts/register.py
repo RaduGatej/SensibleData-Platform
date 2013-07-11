@@ -31,7 +31,7 @@ def check_username(request):
             except User.DoesNotExist:
                 user = None
                 status = 0
-                description = "Username free for selection"
+                description = "Username available for selection"
         return HttpResponse(json.dumps({status, description})) # If here everything ok
     return HttpResponse(json.dumps("Request method not allowed")) # Should NOT reach this point
 

@@ -21,6 +21,7 @@ function checkPass()
         pass2.style.backgroundColor = badColor;
         pass2Message.style.color = badColor;
         pass2Message.innerHTML = "Password must be at least 6 characters long"
+        return false;
     }
     else
     {
@@ -29,11 +30,14 @@ function checkPass()
             pass2.style.backgroundColor = goodColor;
             pass2Message.style.color = goodColor;
             pass2Message.innerHTML = "Ok"
+            return true;
         }else{
             pass2.style.backgroundColor = badColor;
             pass2Message.style.color = badColor;
             pass2Message.innerHTML = "Passwords Do Not Match"
+            return false;
         }
+        return false;
     }
 }  
 </script>
@@ -59,16 +63,20 @@ function validateUsername()
         input_style.backgroundColor = badColor;
         message.style.color = badColor;
         message.innerHTML = "The username must be at least 6 characters long and it can contain only letters, numbers, and underscores.";
+        return false;
     }
-    else if ( username.length < 6) { // Wrong length
+    
+    if ( username.length < 6) { // Wrong length
         input_style.backgroundColor = badColor;
         message.style.color = badColor;
         message.innerHTML = "The username must be at least 6 characters long.";
+        return false;
     }
     else if (illegalChars.test(username)) { // Illegal chars
         input_style.backgroundColor = badColor;
         message.style.color = badColor;
         message.innerHTML = "The username can contain only letters, numbers, and underscores.";
+        return false;
     }
     else {
         message.style.color = goodColor;
@@ -76,7 +84,6 @@ function validateUsername()
         input_style.background = goodColor;
         return true;
     }
-    return false;
 }
 </script>
 
@@ -127,7 +134,9 @@ function formValidation()
     var pass2 = document.getElementById('pass2');
     var button = document.getElementById("button_id")
 
-    if ( isTaken() && validateUsername()) 
+
+
+    if ( isTaken() && validateUsername() && checkPass() ) 
     {
         button.disabled = false;
     }
@@ -142,7 +151,7 @@ function formValidation()
 
 
 <div class="tutorialWrapper">
-    <form method="post" name="form" id="form_id" action="{% url 'login' %}" onChange="formValidation();">
+    <form method="post" name="form" id="form_id" action="{% url 'login' %}" onchange="formValidation();">
         {% csrf_token %}
         <h1>Registration</h1>
         <div class="usernameWrapper">
