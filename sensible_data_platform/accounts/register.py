@@ -9,6 +9,38 @@ from .models import *
 from collections import defaultdict
 import hashlib
 
+import bson.json_util as json
+
+import utils.user_db as user_db
+
+
+def check_username(request):
+    username = None
+    status = None
+    description = None
+
+    if request.method == "GET":
+        username = request.GET.get("username")
+
+# TODO: sanitize input
+# Check is username contains only Capital, small and good symbols, no spaces, no....
+
+        if len(username) < 6 :
+            status = -1
+            description = "Username must be at lest 6 characters"
+        else :
+            if user_db.username_taken(username) :
+                status = -2
+                description = "Username already taken"
+
+            else :
+                status = 0
+                description = "Username free for selection"
+
+        return HttpResponse(json.dumps({status, description})) # If here everything ok
+    
+    return HttpResponse(json.dumps("Request method not allowed")) # Should NOT reach this point
+
 def register(request):
 
 	if request.method == 'GET':
@@ -21,7 +53,6 @@ def register(request):
 		values['password_repeat']['input'] = '<input type="text" name="password_repeat" />'
 		values['next'] = request.REQUEST.get('next', '')
 		values.update(csrf(request))
-
 
 		return render_to_response('registration/register.html', values)
 	
@@ -45,3 +76,6 @@ def register(request):
 		participant.save()
 
 		return redirect(next)
+
+
+

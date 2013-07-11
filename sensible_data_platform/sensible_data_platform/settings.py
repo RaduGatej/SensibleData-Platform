@@ -14,7 +14,8 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/home/arks/MODIS/Sensible-Data-Platform/sensible_data_platform/SECURE_database.db',                      # Or path to database file if using sqlite3.
+#        'NAME': '/home/arks/MODIS/Sensible-Data-Platform/sensible_data_platform/SECURE_database.db',                      # Or path to database file if using sqlite3.
+        'NAME': '/home/riccardo/MODIS/SensibleData-Platform/sensible_data_platform/SECURE_database.db',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -72,7 +73,7 @@ STATIC_URL = '/static/'
 # Additional locations of static files
 STATICFILES_DIRS = (
     #TODO: make this relative
-    '/home/arks/MODIS/Sensible-Data-Platform/sensible_data_platform/static',
+    '/home/riccardo/MODIS/SensibleData-Platform/sensible_data_platform/static',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -112,7 +113,7 @@ ROOT_URLCONF = 'sensible_data_platform.urls'
 WSGI_APPLICATION = 'sensible_data_platform.wsgi.application'
 
 TEMPLATE_DIRS = (
-		'/home/arks/MODIS/Sensible-Data-Platform/sensible_data_platform/templates',
+		'/home/riccardo/MODIS/SensibleData-Platform/sensible_data_platform/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

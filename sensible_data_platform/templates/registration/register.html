@@ -3,28 +3,142 @@
 {% block content %}
 
 {% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
+<script>
+function checkPass()
+{
+    var pass1 = document.getElementById('pass1');
+    var pass2 = document.getElementById('pass2');
+    var pass2Message = document.getElementById('pass2Message');
+    var goodColor = "#66cc66";
+    var badColor = "#ff6666";
 
-<form method="post" action="{% url 'accounts.register.register' %}">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ username.label_tag }}</td>
-    <td>{{ username.input | safe }}</td>
-</tr>
-<tr>
-    <td>{{ password.label_tag }}</td>
-    <td>{{ password.input | safe }}</td>
-</tr>
-<tr>
-    <td>{{ password_repeat.label_tag }}</td>
-    <td>{{ password_repeat.input | safe }}</td>
-</tr>
-</table>
+    if ( pass1.value.length < 6 || pass2.value.length < 6 )
+    {
+        pass1.style.backgroundColor = badColor;
+        pass2.style.backgroundColor = badColor;
+        pass2Message.style.color = badColor;
+        pass2Message.innerHTML = "Password must be at least 6 characters long"
+    }
+    else
+    {
+        if (pass1.value == pass2.value ){
+            pass1.style.backgroundColor = goodColor;
+            pass2.style.backgroundColor = goodColor;
+            pass2Message.style.color = goodColor;
+            pass2Message.innerHTML = "Ok"
+        }else{
+            pass2.style.backgroundColor = badColor;
+            pass2Message.style.color = badColor;
+            pass2Message.innerHTML = "Passwords Do Not Match"
+        }
+    }
+}  
+</script>
 
-<p><input class="btn btn-primary" type="submit" value="register" /></p>
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
+
+<script>
+function validateUsername()
+{
+    var goodColor = "#66cc66";
+    var badColor = "#ff6666";
+    var white = "#ffffff";
+
+    var input = document.getElementById("username_input");
+    var message = document.getElementById("username_message");
+    username = username_input.value;
+    input_style = username_input.style;
+
+    // Static controls
+    var input = ""
+    var illegalChars = /\W/; // allow letters, numbers, and underscores
+
+    if ( username.length < 6 && illegalChars.test(username)) { // Wrong
+        input_style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = "The username must be at least 6 characters long and it can contain only letters, numbers, and underscores.";
+    }
+    else if ( username.length < 6) { // Wrong length
+        input_style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = "The username must be at least 6 characters long.";
+    }
+    else if (illegalChars.test(username)) { // Illegal chars
+        input_style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = "The username can contain only letters, numbers, and underscores.";
+    }
+    else {
+        message.style.color = goodColor;
+        message.innerHTML = "";
+        input_style.background = goodColor;
+    }
+    return true
+}
+</script>
+
+
+<script>
+function isTaken()
+{
+    var goodColor = "#66cc66";
+    var badColor = "#ff6666";
+    var white = "#ffffff";
+
+    var input = document.getElementById("username_input");
+    var message = document.getElementById("username_message");
+
+    var myOtherUrl = "http://166.78.249.214:9081/accounts/check_username/?username=" + username;
+    var xmlHttp = null;
+    xmlHttp = new XMLHttpRequest();
+    
+    xmlHttp.open( "GET", myOtherUrl, false );
+    xmlHttp.send( null );
+    var response = jQuery.parseJSON(xmlHttp.responseText);
+
+    if ( response[0] < 0)
+    {
+        input.style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = response[1];
+ 
+    }
+    else 
+    {
+        input.style.backgroundColor = goodColor;
+        message.style.color = goodColor;
+        message.innerHTML = response[1];
+    }
+
+    return response[0];
+
+}
+</script>
+
+
+
+<div class="tutorialWrapper">
+    <form method="post" name="form" action="{% url 'login' %}" >
+        {% csrf_token %}
+        <h1>Registration</h1>
+        <div class="usernameWrapper">
+        <input type="text" name="username" id="username_input" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Username" onkeyup="validateUsername();" onblur="isTaken();">
+            <span id="username_message" class="confirmMessage"></span>
+        </div>
+        <div class="pass1Wrapper">
+            <input type="password" name="pass1" id="pass1" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Confirm password" >
+            <span id="pass1Message" class="confirmMessage"></span>
+        </div>
+        <div class="pass2Wrapper">
+            <input type="password" name="pass2" id="pass2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Password" onkeyup="checkPass(); return false;" >
+            <span id="pass2Message" class="confirmMessage"></span>
+        </div>
+        <div class="buttonWrapper">
+            <input class="btn btn-primary" type="submit" value="Register" disabled >
+        </div>    
+    </form>
+</div>
 
 {% endblock %}
