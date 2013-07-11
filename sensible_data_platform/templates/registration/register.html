@@ -74,8 +74,9 @@ function validateUsername()
         message.style.color = goodColor;
         message.innerHTML = "";
         input_style.background = goodColor;
+        return true;
     }
-    return true
+    return false;
 }
 </script>
 
@@ -110,17 +111,38 @@ function isTaken()
         input.style.backgroundColor = goodColor;
         message.style.color = goodColor;
         message.innerHTML = response[1];
+        return true;
+    }
+    
+    return false;
+
+}
+</script>
+
+<script>
+function formValidation()
+{
+    var username = document.getElementById("username_input")
+    var pass1 = document.getElementById('pass1');
+    var pass2 = document.getElementById('pass2');
+    var button = document.getElementById("button_id")
+
+    if ( isTaken() && validateUsername()) 
+    {
+        button.disabled = false;
+    }
+    else
+    {
+        button.disabled = true;
     }
 
-    return response[0];
 
 }
 </script>
 
 
-
 <div class="tutorialWrapper">
-    <form method="post" name="form" action="{% url 'login' %}" >
+    <form method="post" name="form" id="form_id" action="{% url 'login' %}" onChange="formValidation();">
         {% csrf_token %}
         <h1>Registration</h1>
         <div class="usernameWrapper">
@@ -136,7 +158,7 @@ function isTaken()
             <span id="pass2Message" class="confirmMessage"></span>
         </div>
         <div class="buttonWrapper">
-            <input class="btn btn-primary" type="submit" value="Register" disabled >
+            <input class="btn btn-primary" type="submit" id="button_id" value="Register" disabled  >
         </div>    
     </form>
 </div>
