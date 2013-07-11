@@ -28,7 +28,9 @@ function checkPass()
         if (pass1.value == pass2.value ){
             pass1.style.backgroundColor = goodColor;
             pass2.style.backgroundColor = goodColor;
+            pass1Message.style.color = goodColor;
             pass2Message.style.color = goodColor;
+            pass1Message.innerHTML = "Ok"
             pass2Message.innerHTML = "Ok"
             return true;
         }else{
@@ -79,9 +81,6 @@ function validateUsername()
         return false;
     }
     else {
-        message.style.color = goodColor;
-        message.innerHTML = "";
-        input_style.background = goodColor;
         return true;
     }
 }
