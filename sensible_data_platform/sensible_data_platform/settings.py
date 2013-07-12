@@ -11,8 +11,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-#ROOT_DIR = '/home/sensibleDTU/sensible-data-platform/SensibleData-Platform/sensible_data_platform/'
-ROOT_DIR = '/home/riccardo/MODIS/SensibleData-Platform/sensible_data_platform/'
+ROOT_DIR = '/home/sensibleDTU/sensible-data-platform/SensibleData-Platform/sensible_data_platform/'
+#ROOT_DIR = '/home/riccardo/MODIS/SensibleData-Platform/sensible_data_platform/'
 ROOT_URL = '/sensible-data/'
 
 DATABASES = {
@@ -80,7 +80,7 @@ STATIC_ROOT = ROOT_DIR+'static_root'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
-STATIC_URL = '/sensible-data/static/'
+STATIC_URL = ROOT_URL+'static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
