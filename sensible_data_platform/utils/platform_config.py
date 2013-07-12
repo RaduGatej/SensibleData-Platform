@@ -1,6 +1,9 @@
+PLATFORM_URI = 'https://www.sensible.dtu.dk/sensible-data'
+
 IDENTITY_PROVIDERS = {
 	'CAS':	{
 		'connector': 'cas.py',
-		'link': '/identity_providers/cas/',
+		'auth_uri': 'https://auth.dtu.dk/dtu/',
+		'endpoint': '/identity_providers/cas/',
 	}
 }
