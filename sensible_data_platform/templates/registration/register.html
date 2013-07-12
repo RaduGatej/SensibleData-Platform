@@ -7,7 +7,7 @@
 {% endif %}
 
 <div class="tutorialWrapper">
-    <form method="post" name="form" id="form_id" action="{% url 'login' %}" onkeyup="validateForm();">
+    <form method="post" name="form" id="form_id" action="{% url 'register' %}" onkeyup="validateForm();">
         {% csrf_token %}
         <h1>Registration</h1>
         <div class="usernameWrapper">
@@ -212,28 +212,5 @@ function validateForm()
 }
 </script>
 
-
-<div class="tutorialWrapper">
-    <form method="post" name="form" id="form_id" action="{% url 'register' %}" onchange="formValidation();">
-        {% csrf_token %}
-        <h1>Registration</h1>
-        <div class="usernameWrapper">
-        <input type="text" name="username" id="username_input" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Username" onkeyup="validateUsername();" onblur="isTaken();">
-            <span id="username_message" class="confirmMessage"></span>
-        </div>
-        <div class="pass1Wrapper">
-            <input type="password" name="pass1" id="pass1" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Confirm password" >
-            <span id="pass1Message" class="confirmMessage"></span>
-        </div>
-        <div class="pass2Wrapper">
-            <input type="password" name="pass2" id="pass2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Password" onkeyup="checkPass(); return false;" >
-            <span id="pass2Message" class="confirmMessage"></span>
-        </div>
-        <div class="buttonWrapper">
-            <input class="btn btn-primary" type="submit" id="button_id" value="Register"  disabled >
-        </div>    
-	<input type="hidden" name="next" value="{{ next }}" />
-    </form>
-</div>
 
 {% endblock %}
