@@ -3,32 +3,34 @@
 {% block content %}
 
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+<div class="alert alert-error">
+Your username and password didn't match. Please try again.
+</div>
 {% endif %}
 
 
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
 <div class="row">
-<fieldset class="well span=4">
+<fieldset class="well span4">
 <h1>Login</h1>
     	<div class="form-actions">
 	<div class="input-prepend">
 		<span class="add-on">
 			<i class="icon-user"></i>
 		</span>
-		<input type="text" name="username" id="id_username" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Username"></div>
+		<input type="text" class="span4" name="username" id="id_username" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Username">
+	</div>
     	</br>
 	<div class="input-prepend">
 		<span class="add-on">
 			<i class="icon-lock"></i>
 		</span>
-		<input type="password" name="password" id="id_password" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Password"></div>
-	</br>
-	<input type="submit" name="submit" value="Login" class="btn btn-primary btn-large">
-	<p>
-	</br>
-	<a class="btn btn-primary" href="{% url 'register' %}?next={{ trust_root }}">Register</a></p>
+		<input type="password" class="span4" name="password" id="id_password" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Password"></div>
+	<p></p>
+	<p><button type="submit" name="submit" value="Login" class="btn btn-primary btn-large"><i class="icon-user icon-white"></i> Login</button></p>
+	<p></p>
+	<p><a class="btn btn-large" href="{% url 'register' %}?next={{ trust_root }}">Register</a></p>
 </div>
   </fieldset>
 </div>
