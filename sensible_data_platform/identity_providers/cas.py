@@ -10,9 +10,8 @@ from utils import platform_config, SECURE_platform_config
 
 @login_required
 def link(request):
-	#TODO: make this nicer code, read url from platform_config
-	auth_base_url = "https://auth.dtu.dk/dtu"
-	service_url = "http://166.78.249.214:9081/identity_providers/cas/"
+	auth_base_url = platform_config.IDENTITY_PROVIDERS['CAS']['auth_uri']
+	service_url = platform_config.PLATFORM_URI+platform_config.IDENTITY_PROVIDERS['CAS']['endpoint']
 	ticket = request.GET.get('ticket', '')
 	if ticket == '':
 		return HttpResponseRedirect(auth_base_url+"/login?service="+service_url+"&renew=true")
@@ -31,7 +30,7 @@ def link(request):
 		else: return HttpResponseRedirect(auth_base_url+"/login?service="+service_url)
 	#TODO> pass the response to profile so we can inform the user about the operation
 #	return HttpResponse(json.dumps(response))
-	return redirect('/profile/')
+	return redirect('profile')
 
 def saveStudentId(user, student_id):
 	users = User.objects.filter()
