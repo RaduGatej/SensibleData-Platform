@@ -20,7 +20,7 @@ def profile(request):
 def cas_profile(request):
     cas = {}
     cas["connector"] = {}
-    cas["connector"] = platform_config.IDENTITY_PROVIDERS['CAS']['link']
+    cas["connector"] = platform_config.IDENTITY_PROVIDERS['CAS']['endpoint']
     cas["profile"] = {}
 
     try:
