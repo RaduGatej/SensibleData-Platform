@@ -1,16 +1,71 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
 {% block content %}
 
-<h1>Hello {{ user.username }}. </h1>
+<div class="page-header">
+      <h1>Profiles</h1>
+</div>
 
-{% if user.student_id %}
-	</br>
-	Your student id is {{ user.student_id }}
+
+{% for key,value in values.items %}{{ value }}{% endfor %}
+
+
+<div class="row">
+
+{% if sensible.profile.username %}
+    <div class="span5"> 
+        <div class="well">
+            <img src="{% static "img/sensible-logo.png" %}" />
+            </br>
+            <div class="input-prepend">
+                <label> Username:</label> 
+                <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.username }} >
+            </div>
+            <br>
+            <div class="input-prepend">
+                <label> Email:</label> 
+                <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.email }} >
+            </div>
+            <br>
+            <div class="input-prepend">
+                <label>Name:</label> 
+                <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.name }} >
+            </div>
+        </div>
+
+    </div>
+
+    <div class="span2"> 
+    </div>
+
+{% endif %}
+{% if cas.profile.username %}
+
+    <div class="span5">
+        <div class="well">
+            <img src="{% static "img/dtu-logo.png" %}" />
+            </br>
+            <div class="input-prepend">
+                <label> Username:</label> 
+                <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.username }} >
+            </div>
+            <br>
+            <div class="input-prepend">
+                <label> Email:</label> 
+                <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.email }} >
+            </div>
+            <br>
+            <div class="input-prepend">
+                <label>Name:</label> 
+                <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.name }} >
+            </div>
+        </div>
+    </div>
 {% else %}
-	</br>
-	DTU student? Link to <a href='{{ connector_link.cas }}'>CAS</a>
+	DTU student? Link to <a href='{{ cas.connector }}'>CAS</a>
 {% endif %}
 
-
+ </div>
 {% endblock %}
