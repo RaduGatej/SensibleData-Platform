@@ -11,16 +11,20 @@ ADMINS = (
 
 MANAGERS = ADMINS
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_DIR = '/home/sensibleDTU/sensible-data-platform/SensibleData-Platform/sensible_data_platform/'
+#ROOT_DIR = '/home/sensibleDTU/sensible-data-platform/SensibleData-Platform/sensible_data_platform/'
+ROOT_DIR = '/home/riccardo/MODIS/SensibleData-Platform/sensible_data_platform/'
 ROOT_URL = '/sensible-data/'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-	'OPTIONS': {
-            'read_default_file': os.path.join(BASE_DIR,'SECURE_my.cnf'),
-        },
-    }
+            'default': {
+            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': '/home/riccardo/MODIS/SensibleData-Platform/sensible_data_platform/SECURE_database.db',                      # Or path to database file if using sqlite3.
+            # The following settings are not used with sqlite3:
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',                      # Set to empty string for default.
+                }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False

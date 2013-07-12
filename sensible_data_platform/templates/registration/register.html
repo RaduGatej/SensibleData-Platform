@@ -6,24 +6,83 @@
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
+<div class="tutorialWrapper">
+    <form method="post" name="form" id="form_id" action="{% url 'login' %}" onkeyup="validateForm();">
+        {% csrf_token %}
+        <h1>Registration</h1>
+        <div class="usernameWrapper">
+        <input type="text" name="username" id="username_input" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Username" onkeyup="validateUsername();" onblur="isTaken();">
+            <span id="username_message" class="confirmMessage"></span>
+        </div>
+        <div class="pass1Wrapper">
+            <input type="password" name="pass1" id="pass1" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Password" onkeyup="checkPass1();">
+            <span id="pass1Message" class="confirmMessage"></span>
+        </div>
+        <div class="pass2Wrapper">
+            <input type="password" name="pass2" id="pass2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Confirm password" onkeyup="checkPass2()"; >
+            <span id="pass2Message" class="confirmMessage"></span>
+        </div>
+        <div class="buttonWrapper">
+            <input class="btn btn-primary" type="submit" id="button_id" value="Register" disabled  >
+        </div>    
+    </form>
+</div>
+
+
 <script>
-function checkPass()
+var pass1_OK = false;
+var pass2_OK = false;
+var username_OK = false;
+
+function checkPass1()
 {
+    pass1_OK = false;
+    var pass1 = document.getElementById('pass1');
+    var pass1Message = document.getElementById('pass1Message');
+    var goodColor = "#66cc66";
+    var badColor = "#ff6666";
+
+    if ( pass1.value.length > 0) {
+        if ( !checkLength(pass1) )
+        {
+            pass1.style.backgroundColor = badColor;
+            pass1Message.style.color = badColor;
+            pass1Message.innerHTML = "Password must be at least 6 characters long"
+            return false;
+        }
+        else
+        {
+            pass1.style.backgroundColor = goodColor;
+            pass1Message.style.color = goodColor;
+            pass1Message.innerHTML = "Valid password"
+            pass1_OK = true;
+            return true;
+        }
+    }
+    return false;
+}  
+
+function checkLength(obj)
+{
+
+    var enough = false;
+    if ( obj.value.length > 5 )
+    {
+        enough = true;
+    }
+    return enough;
+}
+
+function checkPass2()
+{
+    pass2_OK = false;
     var pass1 = document.getElementById('pass1');
     var pass2 = document.getElementById('pass2');
     var pass2Message = document.getElementById('pass2Message');
     var goodColor = "#66cc66";
     var badColor = "#ff6666";
 
-    if ( pass1.value.length < 6 || pass2.value.length < 6 )
-    {
-        pass1.style.backgroundColor = badColor;
-        pass2.style.backgroundColor = badColor;
-        pass2Message.style.color = badColor;
-        pass2Message.innerHTML = "Password must be at least 6 characters long"
-        return false;
-    }
-    else
+    if (checkPass1()) 
     {
         if (pass1.value == pass2.value ){
             pass1.style.backgroundColor = goodColor;
@@ -32,6 +91,7 @@ function checkPass()
             pass2Message.style.color = goodColor;
             pass1Message.innerHTML = "Ok"
             pass2Message.innerHTML = "Ok"
+            pass2_OK = true;
             return true;
         }else{
             pass2.style.backgroundColor = badColor;
@@ -39,15 +99,13 @@ function checkPass()
             pass2Message.innerHTML = "Passwords Do Not Match"
             return false;
         }
-        return false;
     }
+    return false;
 }  
-</script>
 
-
-<script>
 function validateUsername()
 {
+    username_OK = false;
     var goodColor = "#66cc66";
     var badColor = "#ff6666";
     var white = "#ffffff";
@@ -57,39 +115,52 @@ function validateUsername()
     username = username_input.value;
     input_style = username_input.style;
 
-    // Static controls
     var input = ""
     var illegalChars = /\W/; // allow letters, numbers, and underscores
 
-    if ( username.length < 6 && illegalChars.test(username)) { // Wrong
-        input_style.backgroundColor = badColor;
-        message.style.color = badColor;
-        message.innerHTML = "The username must be at least 6 characters long and it can contain only letters, numbers, and underscores.";
-        return false;
+    if ( username.length > 0  ) {
+
+        if ( username.length < 6 && illegalChars.test(username)) { // Wrong
+            input_style.backgroundColor = badColor;
+            message.style.color = badColor;
+            message.innerHTML = "The username must be at least 6 characters long and it can contain only letters, numbers, and underscores.";
+            username_OK = false;
+            return false;
+        }
+        
+        if ( username.length < 6) { // Wrong length
+            input_style.backgroundColor = badColor;
+            message.style.color = badColor;
+            message.innerHTML = "The username must be at least 6 characters long.";
+            username_OK = false;
+            return false;
+        }
+        else if (illegalChars.test(username)) { // Illegal chars
+            input_style.backgroundColor = badColor;
+            message.style.color = badColor;
+            message.innerHTML = "The username can contain only letters, numbers, and underscores.";
+            username_OK = false;
+            return false;
+        }
+        else {
+            input_style.backgroundColor = goodColor;
+            message.style.color = goodColor;
+            message.innerHTML = "";
+            username_OK = true;
+            return true;
+        }
     }
-    
-    if ( username.length < 6) { // Wrong length
-        input_style.backgroundColor = badColor;
-        message.style.color = badColor;
-        message.innerHTML = "The username must be at least 6 characters long.";
-        return false;
-    }
-    else if (illegalChars.test(username)) { // Illegal chars
-        input_style.backgroundColor = badColor;
-        message.style.color = badColor;
-        message.innerHTML = "The username can contain only letters, numbers, and underscores.";
-        return false;
-    }
-    else {
-        return true;
-    }
+    return false;
 }
-</script>
 
-
-<script>
 function isTaken()
 {
+    username_OK = false;
+    if (!validateUsername())
+    {
+        return false;
+    }
+
     var goodColor = "#66cc66";
     var badColor = "#ff6666";
     var white = "#ffffff";
@@ -110,32 +181,25 @@ function isTaken()
         input.style.backgroundColor = badColor;
         message.style.color = badColor;
         message.innerHTML = response[1];
- 
     }
     else 
     {
         input.style.backgroundColor = goodColor;
         message.style.color = goodColor;
         message.innerHTML = response[1];
+        username_OK = trueM
         return true;
     }
-    
+    username_OK = false;
     return false;
 
 }
-</script>
 
-<script>
-function formValidation()
+function validateForm()
 {
-    var username = document.getElementById("username_input")
-    var pass1 = document.getElementById('pass1');
-    var pass2 = document.getElementById('pass2');
     var button = document.getElementById("button_id")
 
-
-
-    if ( isTaken() && validateUsername() && checkPass() ) 
+    if ( pass1_OK && pass2_OK && username_OK ) 
     {
         button.disabled = false;
     }
@@ -147,28 +211,5 @@ function formValidation()
 
 }
 </script>
-
-
-<div class="tutorialWrapper">
-    <form method="post" name="form" id="form_id" action="{% url 'login' %}" onchange="formValidation();">
-        {% csrf_token %}
-        <h1>Registration</h1>
-        <div class="usernameWrapper">
-        <input type="text" name="username" id="username_input" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Username" onkeyup="validateUsername();" onblur="isTaken();">
-            <span id="username_message" class="confirmMessage"></span>
-        </div>
-        <div class="pass1Wrapper">
-            <input type="password" name="pass1" id="pass1" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Confirm password" >
-            <span id="pass1Message" class="confirmMessage"></span>
-        </div>
-        <div class="pass2Wrapper">
-            <input type="password" name="pass2" id="pass2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Password" onkeyup="checkPass(); return false;" >
-            <span id="pass2Message" class="confirmMessage"></span>
-        </div>
-        <div class="buttonWrapper">
-            <input class="btn btn-primary" type="submit" id="button_id" value="Register" disabled  >
-        </div>    
-    </form>
-</div>
 
 {% endblock %}
