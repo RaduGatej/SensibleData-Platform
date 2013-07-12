@@ -1,1 +1,2 @@
 django-bootstrap-toolkit
+python-openid

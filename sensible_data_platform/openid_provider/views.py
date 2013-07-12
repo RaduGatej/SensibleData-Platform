@@ -237,7 +237,7 @@ def landing_page(request, orequest, login_url=None,
         querystring = SafeQueryDict(login_url_parts[4], mutable=True)
         querystring[redirect_field_name] = path
         login_url_parts[4] = querystring.urlencode(safe='/')
-    return HttpResponseRedirect(urlparse.urlunparse(login_url_parts)+'&trust_root='+orequest.trust_root)
+    return HttpResponseRedirect(urlparse.urlunparse(login_url_parts)+'&trust_root='+orequest.return_to)
 
 def openid_is_authorized(request, identity_url, trust_root):
     """

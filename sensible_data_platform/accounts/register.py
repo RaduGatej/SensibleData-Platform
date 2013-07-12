@@ -10,8 +10,7 @@ from collections import defaultdict
 import hashlib
 
 import bson.json_util as json
-
-import utils.user_db as user_db
+from django.core.urlresolvers import reverse
 
 
 def check_username(request):
@@ -39,23 +38,17 @@ def register(request):
 
 	if request.method == 'GET':
 		values = defaultdict(dict)
-		values['username']['label_tag'] = 'username'
-		values['username']['input'] = '<input type="text" name="username" />'
-		values['password']['label_tag'] = 'password'
-		values['password']['input'] = '<input type="text" name="password" />'
-		values['password_repeat']['label_tag'] = 'repeat password'
-		values['password_repeat']['input'] = '<input type="text" name="password_repeat" />'
 		values['next'] = request.REQUEST.get('next', '')
+		if values['next'] == '': values['next'] = reverse('home')
 		values.update(csrf(request))
 
 		return render_to_response('registration/register.html', values)
 	
 	if request.method == 'POST':
 		username = request.POST.get('username', '')
-		password = request.POST.get('password', '')
+		password = request.POST.get('pass1', '')
 		next = request.POST.get('next', '')
-
-		#TODO> validate username
+		
 
 		user = User.objects.create_user(username, '', password)
 
@@ -69,7 +62,7 @@ def register(request):
 		participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())[:30]
 		participant.save()
 
-		return redirect(next)
+		return redirect(reverse('login')+'?next='+next)
 
 
 

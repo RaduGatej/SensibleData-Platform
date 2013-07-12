@@ -7,7 +7,7 @@
 {% endif %}
 
 <div class="tutorialWrapper">
-    <form method="post" name="form" id="form_id" action="{% url 'login' %}" onkeyup="validateForm();">
+    <form method="post" name="form" id="form_id" action="{% url 'register' %}" onkeyup="validateForm();">
         {% csrf_token %}
         <h1>Registration</h1>
         <div class="usernameWrapper">
@@ -25,6 +25,7 @@
         <div class="buttonWrapper">
             <input class="btn btn-primary" type="submit" id="button_id" value="Register" disabled  >
         </div>    
+	<input type="hidden" name="next" value="{{ next }}" />
     </form>
 </div>
 
@@ -168,7 +169,7 @@ function isTaken()
     var input = document.getElementById("username_input");
     var message = document.getElementById("username_message");
 
-    var myOtherUrl = "http://166.78.249.214:9081/accounts/check_username/?username=" + username;
+    var myOtherUrl = "https://www.sensible.dtu.dk/sensible-data/accounts/check_username/?username=" + username;
     var xmlHttp = null;
     xmlHttp = new XMLHttpRequest();
     
@@ -211,5 +212,6 @@ function validateForm()
 
 }
 </script>
+
 
 {% endblock %}
