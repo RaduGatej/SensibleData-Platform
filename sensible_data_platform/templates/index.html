@@ -6,8 +6,8 @@
         <h1>Welcome to Sensible Data</h1>
         <p>Your place to manage studies.</p>
 	{% if not user.is_authenticated %}
-	        <p><a class="btn btn-primary" href="/accounts/login/?next=/">Login</a></p>
-        	<p><a class="btn btn-primary" href="/accounts/register/?next=/">Register</a></p>
+	        <p><a class="btn btn-primary" href="{% url 'login' %}?next=/">Login</a></p>
+        	<p><a class="btn btn-primary" href="{% url 'register' %}">Register</a></p>
 	{% endif %}
     </div>
 
