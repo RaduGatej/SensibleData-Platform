@@ -18,15 +18,13 @@
 		<h2>Authorize <i>{{ client.name }}</i> to ...</h2>
 		<div class="form-actions">
                 {% if access_ranges %}
-		<table class="table table-striped">
-			<tr>
-				<th>Description</th>
-				<th>Scope</th>
-			</tr>
+		<table class="table">
                         {% for access_range in access_ranges %}
 			<tr>
-				<td>... {{ access_range.description }}</td>
-				<td>{{ access_range.key }}</td>
+				<td>
+				<h4>... {{ access_range.description }}</h4>
+				<span class="label">{{ access_range.key }}</span>
+				</td>
 			</tr>
 			{% endfor %}
 		</table>
