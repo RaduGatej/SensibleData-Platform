@@ -1,6 +1,7 @@
 # Django settings for sensible_data_platform project.
 
 import os
+import LOCAL_SETTINGS
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -10,28 +11,10 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ROOT_DIR = '/home/sensibleDTU/sensible-data-platform/SensibleData-Platform/sensible_data_platform/'
-#ROOT_DIR = '/home/riccardo/MODIS/SensibleData-Platform/sensible_data_platform/'
-ROOT_URL = '/sensible-data/'
-
-DATABASES = {
-        'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'read_default_file': os.path.join(BASE_DIR,'SECURE_my.cnf'),
-        },
-    },
-    'dev': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': ROOT_DIR+'SECURE_data.db',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
-    }
-}
+BASE_DIR = LOCAL_SETTINGS.BASE_DIR
+ROOT_DIR = LOCAL_SETTINGS.ROOT_DIR
+ROOT_URL = LOCAL_SETTINGS.ROOT_DIR
+DATABASES = LOCAL_SETTINGS.DATABASES
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -99,7 +82,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'z^afu%#xv_!5iaqcw_6mf(5wues6csegg$(rp((7h+w%5_u-tb'
+SECRET_KEY = LOCAL_SETTINGS.SECRET_KEY
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
