@@ -1,4 +1,6 @@
-PLATFORM_URI = 'https://www.sensible.dtu.dk/sensible-data'
+#PLATFORM_URI = 'https://www.sensible.dtu.dk/sensible-data'
+PLATFORM_URI = 'http://166.78.249.214:9081'
+
 
 IDENTITY_PROVIDERS = {
 	'CAS':	{

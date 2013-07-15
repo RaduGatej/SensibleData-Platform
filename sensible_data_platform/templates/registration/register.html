@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
 {% block content %}
 
 {% if form.errors %}
@@ -22,6 +24,12 @@
             <input type="password" name="pass2" id="pass2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Confirm password" onkeyup="checkPass2()"; >
             <span id="pass2Message" class="confirmMessage"></span>
         </div>
+
+
+        <input type="email" name="email" id="email" Placeholder="Email" required onkeyup="validateEmail();">
+        <span id="emailMessage" class="confirmMessage"></span>
+
+
         <div class="buttonWrapper">
             <input class="btn btn-primary" type="submit" id="button_id" value="Register" disabled  >
         </div>    
@@ -30,18 +38,46 @@
 </div>
 
 
-<script>
+
+
+<script>    
 var pass1_OK = false;
 var pass2_OK = false;
 var username_OK = false;
+var email_OK = false;
+var goodColor = "#66cc66";
+var badColor = "#ff6666";
+var white = "#ffffff";
+
+function validateEmail() {
+    email_OK = false;
+    var emailField = document.getElementById('email');
+    var emailValue = emailField.value;
+    var emailMessage = document.getElementById('emailMessage');
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    if( !emailReg.test( emailValue ) || emailValue.length < 5 ) {
+        email_OK = false;
+        emailField.style.backgrounColor = badColor;
+        emailMessage.style.color = badColor;
+        emailMessage.innerHTML = "Not a valid email";
+
+        return false;
+    } else {
+    email_OK = true;
+        emailField.style.backgroundColor = goodColor;
+        emailMessage.style.color = goodColor;
+        emailMessage.innerHTML = "Valid email"
+
+        return true;
+    }
+    return false;
+}
 
 function checkPass1()
 {
     pass1_OK = false;
     var pass1 = document.getElementById('pass1');
     var pass1Message = document.getElementById('pass1Message');
-    var goodColor = "#66cc66";
-    var badColor = "#ff6666";
 
     if ( pass1.value.length > 0) {
         if ( !checkLength(pass1) )
@@ -80,8 +116,6 @@ function checkPass2()
     var pass1 = document.getElementById('pass1');
     var pass2 = document.getElementById('pass2');
     var pass2Message = document.getElementById('pass2Message');
-    var goodColor = "#66cc66";
-    var badColor = "#ff6666";
 
     if (checkPass1()) 
     {
@@ -107,9 +141,7 @@ function checkPass2()
 function validateUsername()
 {
     username_OK = false;
-    var goodColor = "#66cc66";
-    var badColor = "#ff6666";
-    var white = "#ffffff";
+
 
     var input = document.getElementById("username_input");
     var message = document.getElementById("username_message");
@@ -162,14 +194,10 @@ function isTaken()
         return false;
     }
 
-    var goodColor = "#66cc66";
-    var badColor = "#ff6666";
-    var white = "#ffffff";
-
     var input = document.getElementById("username_input");
     var message = document.getElementById("username_message");
 
-    var myOtherUrl = "https://www.sensible.dtu.dk/sensible-data/accounts/check_username/?username=" + username;
+    var myOtherUrl = "https://www.sensible.dtu.dk/sensible-data/accounts/check_username/?username=" + username; // TODO change the url
     var xmlHttp = null;
     xmlHttp = new XMLHttpRequest();
     
@@ -200,7 +228,7 @@ function validateForm()
 {
     var button = document.getElementById("button_id")
 
-    if ( pass1_OK && pass2_OK && username_OK ) 
+    if ( pass1_OK && pass2_OK && username_OK && email_OK ) 
     {
         button.disabled = false;
     }

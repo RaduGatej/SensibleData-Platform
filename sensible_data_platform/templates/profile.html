@@ -21,7 +21,7 @@
             </br>
             <div class="input-prepend">
                 <label> Username:</label> 
-                <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.username }} >
+                <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.username }} disabled >
             </div>
             <br>
             <div class="input-prepend">
@@ -29,9 +29,17 @@
                 <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.email }} >
             </div>
             <br>
-            <div class="input-prepend">
-                <label>Name:</label> 
-                <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.name }} >
+              <div class="input-prepend">
+                <label>First Name:</label> 
+                <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.first_name }} >
+            </div>
+           <div class="input-prepend">
+                <label>Last Name:</label> 
+                <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.last_name }} >
+            </div>
+           <div class="input-prepend">
+                <label>Phone Number:</label> 
+                <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.phone }} >
             </div>
         </div>
 
@@ -47,24 +55,27 @@
         <div class="well">
             <img src="{% static "img/dtu-logo.png" %}" />
             </br>
-            <div class="input-prepend">
+             <div class="input-prepend">
                 <label> Username:</label> 
-                <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.username }} >
+                <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.username }} disabled >
             </div>
-            <br>
             <div class="input-prepend">
                 <label> Email:</label> 
-                <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.email }} >
+                <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.email }} disabled >
             </div>
             <br>
-            <div class="input-prepend">
-                <label>Name:</label> 
-                <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.name }} >
+             <div class="input-prepend">
+                <label>Given Name:</label> 
+                <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.givenName }} disabled >
+            </div>
+           <div class="input-prepend">
+                <label>Family Name:</label> 
+                <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.familyName }} disabled >
             </div>
         </div>
     </div>
 {% else %}
-	DTU student? Link to <a href='/sensible-data/{{ cas.connector }}'>CAS</a>
+	DTU student? Link to <a href='{{ cas.connector }}'>CAS</a>
 {% endif %}
 
  </div>

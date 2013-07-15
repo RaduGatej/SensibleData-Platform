@@ -17,6 +17,22 @@ def profile(request):
     return render_to_response('profile.html', values, context_instance=RequestContext(request))
 
 
+
+def sensible_profile(request):
+    sensible = {}
+    sensible["profile"] = {}
+    user = request.user
+       
+    sensible["profile"]["username"] = user.username
+    sensible["profile"]["email"] = user.email
+    sensible["profile"]["first_name"] = user.first_name
+    sensible["profile"]["last_name"] = user.last_name
+    sensible["profile"]["email"] = user.email
+
+    return sensible
+
+
+
 def cas_profile(request):
     cas = {}
     cas["connector"] = {}
@@ -29,23 +45,12 @@ def cas_profile(request):
         print "in except"
         return cas
 
-
     cas["profile"]["username"] = user.student_id
     cas["profile"]["email"] = user.email
-    cas["profile"]["name"] = user.givenName
+    cas["profile"]["givenName"] = user.givenName
+    cas["profile"]["familyName"] = user.familyName
 
     return cas
-
-def sensible_profile(request):
-    sensible = {}
-    sensible["profile"] = {}
-    user = request.user
-       
-    sensible["profile"]["username"] = user.username
-    sensible["profile"]["email"] = user.email
-    sensible["profile"]["name"] = user.first_name
-
-    return sensible
 
 
 
