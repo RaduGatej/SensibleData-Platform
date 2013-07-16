@@ -12,6 +12,9 @@ import hashlib
 import bson.json_util as json
 from django.core.urlresolvers import reverse
 
+from utils import platform_config
+
+
 def check_username(request):
     username = None
     status = None
@@ -40,6 +43,8 @@ def register(request):
 		values['next'] = request.REQUEST.get('next', '')
 		if values['next'] == '': values['next'] = reverse('home')
 		values.update(csrf(request))
+                
+                values['platformUri'] = platform_config.PLATFORM_URI
 
 		return render_to_response('registration/register.html', values)
 	
@@ -49,6 +54,8 @@ def register(request):
 		next = request.POST.get('next', '')
 		
 		user = User.objects.create_user(username, '', password)
+                user.email = request.POST.get("email_field", "")
+                user.save()
 
 		openid = OpenID()
 		openid.user = user

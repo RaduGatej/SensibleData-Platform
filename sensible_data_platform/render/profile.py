@@ -29,12 +29,13 @@ def profile(request):
         user.last_name = request.POST.get("last_name_field", "")
         user.save()
 
+
+        print username
         extra = None
         try:
-            extra = Extra.objects.get(user__exact = username)
+            extra = Extra.objects.get(user = request.user)
         except Extra.DoesNotExist:
             print "Extra does not exists"
-        user.save()
      
         extra.phone = request.POST.get("phone_field", "")
         extra.save()

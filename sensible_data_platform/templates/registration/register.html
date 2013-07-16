@@ -13,7 +13,7 @@
         {% csrf_token %}
         <h1>Registration</h1>
         <div class="usernameWrapper">
-        <input type="text" name="username" id="username_input" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Username" onkeyup="validateUsername();" onblur="isTaken();">
+            <input type="text" name="username" id="username_input" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Username" onkeyup="validateUsername();" onblur="isTaken( '{{platformUri}}' );">
             <span id="username_message" class="confirmMessage"></span>
         </div>
         <div class="pass1Wrapper">
@@ -26,7 +26,7 @@
         </div>
 
 
-        <input type="email" name="email" id="email" Placeholder="Email" required onkeyup="validateEmail();">
+        <input type="email" name="email_field" id="email" Placeholder="Email" required onkeyup="validateEmail();">
         <span id="emailMessage" class="confirmMessage"></span>
 
 
@@ -185,7 +185,7 @@ function validateUsername()
     return false;
 }
 
-function isTaken()
+function isTaken(uri)
 {
     username_OK = false;
     if (!validateUsername())
@@ -196,11 +196,11 @@ function isTaken()
     var input = document.getElementById("username_input");
     var message = document.getElementById("username_message");
 
-    var myOtherUrl = "https://www.sensible.dtu.dk/sensible-data/accounts/check_username/?username=" + username; // TODO change the url
+    var url = uri + "/accounts/check_username/?username=" + username; // TODO change the url
     var xmlHttp = null;
     xmlHttp = new XMLHttpRequest();
     
-    xmlHttp.open( "GET", myOtherUrl, false );
+    xmlHttp.open( "GET", url, false );
     xmlHttp.send( null );
     var response = jQuery.parseJSON(xmlHttp.responseText);
 
@@ -215,7 +215,7 @@ function isTaken()
         input.style.backgroundColor = goodColor;
         message.style.color = goodColor;
         message.innerHTML = response[1];
-        username_OK = trueM
+        username_OK = true;
         return true;
     }
     username_OK = false;
