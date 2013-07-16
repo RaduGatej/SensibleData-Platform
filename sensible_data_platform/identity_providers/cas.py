@@ -42,7 +42,7 @@ def saveStudentId(user, student_id):
 		except Cas.DoesNotExist: continue
 
 	if len(found_users) > 1:
-		return {"error": "user with student id already exists %s"%str(found_user)}
+		return {"error": "user with student id already exists %s"%str(found_users)}
 
 	try:
 		student = Cas.objects.get(user=user)
@@ -54,7 +54,7 @@ def saveStudentId(user, student_id):
 	return {"ok": "student id linked"}
 
 def saveStudentAttributes(student_id, attributes):
-	student = Cas.objects.get(student_id = student_id)
+        student = Cas.objects.get(student_id = student_id)
 	student.email = attributes['email']
 	student.givenName = attributes['givenName']
 	student.familyName = attributes['familyName']
