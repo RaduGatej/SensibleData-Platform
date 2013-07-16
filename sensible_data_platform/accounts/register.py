@@ -12,7 +12,6 @@ import hashlib
 import bson.json_util as json
 from django.core.urlresolvers import reverse
 
-
 def check_username(request):
     username = None
     status = None
@@ -49,7 +48,6 @@ def register(request):
 		password = request.POST.get('pass1', '')
 		next = request.POST.get('next', '')
 		
-
 		user = User.objects.create_user(username, '', password)
 
 		openid = OpenID()
@@ -61,6 +59,11 @@ def register(request):
 		participant.user = user
 		participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())[:30]
 		participant.save()
+
+                extra = Extra()
+                extra.user = user
+                extra.phone = ""
+                extra.save()
 
 		return redirect(reverse('login')+'?next='+next)
 

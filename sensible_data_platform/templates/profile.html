@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load staticfiles %}
+{% load static %}
 
 {% block content %}
 
@@ -8,39 +8,43 @@
       <h1>Profiles</h1>
 </div>
 
-
 {% for key,value in values.items %}{{ value }}{% endfor %}
-
 
 <div class="row">
 
 {% if sensible.profile.username %}
     <div class="span5"> 
         <div class="well">
-            <img src="{% static "img/sensible-logo.png" %}" />
-            </br>
-            <div class="input-prepend">
-                <label> Username:</label> 
-                <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.username }} disabled >
-            </div>
-            <br>
-            <div class="input-prepend">
-                <label> Email:</label> 
-                <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.email }} >
-            </div>
-            <br>
-              <div class="input-prepend">
-                <label>First Name:</label> 
-                <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.first_name }} >
-            </div>
-           <div class="input-prepend">
-                <label>Last Name:</label> 
-                <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.last_name }} >
-            </div>
-           <div class="input-prepend">
-                <label>Phone Number:</label> 
-                <input class="input-large" id="prependedInput" type="text" value={{ sensible.profile.phone }} >
-            </div>
+            <form id="sensible_form_id" name="sensible_form" action="{% url 'profile' %}"  method="post">
+                {% csrf_token %}
+                <img src="{% static "img/sensible_dtu_logo.png" %}" />
+                </br>
+                <div class="input-prepend">
+                    <label> Username:</label> 
+                    <input class="input-large" id="sensible_username" type="text" value={{ sensible.profile.username }} disabled >
+                </div>
+                <br>
+                <div class="input-prepend">
+                    <label> Email:</label> 
+                    <input class="input-large" id="sensible_email" name="email_field" type="text" value={{ sensible.profile.email }} >
+                </div>
+                <br>
+                  <div class="input-prepend">
+                    <label>First Name:</label> 
+                    <input class="input-large" id="sensible_first" name="first_name_field" type="text" value={{ sensible.profile.first_name }} >
+                </div>
+               <div class="input-prepend">
+                    <label>Last Name:</label> 
+                    <input class="input-large" id="sensible_last" name="last_name_field" type="text" value={{ sensible.profile.last_name }} >
+                </div>
+               <div class="input-prepend">
+                    <label>Phone Number:</label> 
+                    <input class="input-large" id="sensible_phone" name="phone_field" type="text" value={{ sensible.profile.phone }} >
+                </div>
+                <div class="buttonWrapper">
+                    <input class="btn btn-primary" type="submit" name="button" id="update_button_id" value="Update"  >
+                </div>    
+            </form>
         </div>
 
     </div>
@@ -79,4 +83,6 @@
 {% endif %}
 
  </div>
-{% endblock %}
+ {% endblock %}
+
+
