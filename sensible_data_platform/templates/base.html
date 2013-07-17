@@ -44,14 +44,11 @@
         {% if user.is_authenticated %}
 	<div class="nav-collapse collapse">
             <ul class="nav">
-                <li><a href="{% url 'home' %}" class="">Home</a></li>
-                <li><a href="{% url 'profile' %}" class="">Profile</a></li>
-                <li><a href="{% url 'authorizations' %}" class="">Authorizations</a></li>
-                <li><a href="{% url 'dashboard' %}" class="">Dashboard</a></li>
-                <li><a href="{% url 'home' %}" class="">Applications</a></li>
-		 <li class="divider-vertical"></li>
-                <li><a href="{% url 'home' %}" class="">About</a></li>
-		 <li class="divider-vertical"></li>
+                <li><a href="{% url 'home' %}" class=""><i class="icon-home icon-white"></i> Home</a></li>
+                <li><a href="{% url 'profile' %}" class=""><i class="icon-user icon-white"></i> Profile</a></li>
+		<li class="divider-vertical"></li>
+		<li><a href="{% url 'home' %}" class=""><i class="icon-question-sign icon-white"></i> About</a></li>
+		<li class="divider-vertical"></li>
             </ul>
         </div>
 	{% endif %}
@@ -87,7 +84,7 @@
         <div class="span6">
             <p>This is <a href="https://github.com/organizations/MIT-Model-Open-Data-and-Identity-System">Sensible Data</a>, <a href="http://openpds.media.mit.edu/">an openPDS system</a>
 	
-	<span class="label label-info">0.0.2</span></p>
+	<span class="label label-info">0.0.2-devel</span></p>
         </div>
         <div class="span6" style="text-align:right">
             <p>

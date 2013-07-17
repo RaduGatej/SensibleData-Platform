@@ -68,6 +68,12 @@ class AccessRange(models.Model):
     def __unicode__(self):
 	return self.key
 
+class ClientType(models.Model):
+    	type = models.CharField(max_length=100, null=False, blank=False, default='id_client')
+	def __unicode__(self):
+		return self.type
+	
+
 class Client(models.Model):
     """Stores client authentication data.
 
@@ -92,8 +98,8 @@ class Client(models.Model):
     name = models.CharField(max_length=256)
     user = models.ForeignKey(User)
     client_owner_email = models.CharField(max_length=100, null=True, blank=True)
-    type = models.CharField(max_length=100, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    type = models.ForeignKey(ClientType, null=True)
     key = models.CharField(
         unique=True,
         max_length=CLIENT_KEY_LENGTH,
@@ -105,8 +111,8 @@ class Client(models.Model):
         default=KeyGenerator(CLIENT_SECRET_LENGTH))
     redirect_uri = models.URLField(null=True, blank=True)
     api_uri = models.URLField(null=True, blank=True)
+    authorize_uri = models.URLField(null=True, blank=True)
     registered_scope = models.ManyToManyField(AccessRange)
-
 
 
 
