@@ -54,7 +54,7 @@ $(':input').each(function() {
     <div class="span5"> 
         <div class="well">
             <img src="{% static "img/sensible_dtu_logo.png" %}" />
-            </br>
+			<div class="form-actions">
             <form id="sensible_form_id" name="sensible_form" action="{% url 'profile' %}"  method="post" >
                 {% csrf_token %}
                 <div class="input-prepend">
@@ -86,7 +86,7 @@ $(':input').each(function() {
             </form>
         </div>
     </div>
-
+	</div>
     <div class="span2"> 
     </div>
 
@@ -94,10 +94,10 @@ $(':input').each(function() {
 
 {% if cas.profile.username %}
 
-    <div class="span5">
+    <div class="span4">
         <div class="well">
-            <img src="{% static "img/dtu-logo.png" %}" />
-            </br>
+            <img  src="{% static "img/dtu-logo.png" %}" />
+			<div class="form-actions">
              <div class="input-prepend">
                 <label> Username:</label> 
                 <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.username }} disabled >
@@ -117,20 +117,22 @@ $(':input').each(function() {
             </div>
         </div>
     </div>
-
+	</div>
 
 
     {% else %}
     <div class="span5">
         <div class="well">
+             <a href='{{ cas.connector }}'>
+                 <img src="{% static "img/dtu-logo.png" %}" style="display: block; margin: 0 auto;" />
+             </a>
             <table style="width: 100%;">
                   <tr>
                            <td style="text-align: center; vertical-align: middle;">
-                               <a href='{{ cas.connector }}'>
                                    <h4 style="color:#c51137">
-                                       DTU student? <br>Link to your account
+                                       DTU student?
+									   <p><a class="btn btn-large btn-danger" href="{{ cas.connector }}">Link to Your account</a></p>
                                    </h4>
-            </a>
                           
         <br></br>               
                            </td>
@@ -138,9 +140,6 @@ $(':input').each(function() {
                                             </table>
                                             <div>
 
-             <a href='{{ cas.connector }}'>
-                 <img src="{% static "img/dtu-logo.png" %}" style="display: block; margin: 0 auto;" />
-             </a>
             </div>
 
         </div>
