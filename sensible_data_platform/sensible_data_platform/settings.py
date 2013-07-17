@@ -3,7 +3,7 @@
 import os
 import LOCAL_SETTINGS
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -18,7 +18,7 @@ DATABASES = LOCAL_SETTINGS.DATABASES
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.sensible.dtu.dk']
 
 LOGIN_URL = ROOT_URL + 'accounts/login/'
 LOGIN_REDIRECT_URL = ROOT_URL
