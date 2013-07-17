@@ -9,6 +9,11 @@ class AccessRangeAdmin(admin.ModelAdmin):
 
 admin.site.register(AccessRange, AccessRangeAdmin)
 
+
+class ClientTypeAdmin(admin.ModelAdmin):
+	list_display = ('type',)
+admin.site.register(ClientType, ClientTypeAdmin)
+
 class ClientAdmin(admin.ModelAdmin):
 	list_display = ('name', 'description', 'user', 'api_uri')
 	def get_readonly_fields(self, request, obj=None):
