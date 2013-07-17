@@ -59,12 +59,12 @@ def sensible_profile(request, values):
 
 
     extra = None
-    try:
-        extra = Extra.objects.get(user__exact = request.user)
-    except Extra.DoesNotExist:
-        print "Extra does not exists"
-        user.save()
-        return sensible
+    try: 
+		extra = Extra.objects.get(user__exact = request.user)
+    except Extra.DoesNotExist: 
+		extra = Extra.objects.create(user = request.user)
+		user.save()
+		return sensible
 
     sensible["profile"]["phone"] = extra.phone
 
@@ -77,8 +77,7 @@ def cas_profile(request):
     cas["connector"] = platform_config.IDENTITY_PROVIDERS['CAS']['endpoint']
     cas["profile"] = {}
 
-    try:
-        user = Cas.objects.get(user=request.user) 
+    try: user = Cas.objects.get(user=request.user) 
     except Cas.DoesNotExist:
         print "No CAS profile"
         return cas
@@ -90,4 +89,3 @@ def cas_profile(request):
     cas["profile"]["familyName"] = user.familyName
 
     return cas
-
