@@ -198,6 +198,7 @@ function isTaken(uri)
 
     var input = document.getElementById("username_input");
     var message = document.getElementById("username_message");
+    var username = input.value;
 
     var url = uri + "/accounts/check_username/?username=" + username; 
     var xmlHttp = null;
