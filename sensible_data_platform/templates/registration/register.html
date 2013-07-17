@@ -21,7 +21,7 @@
             <span id="pass1Message" class="confirmMessage"></span>
         </div>
         <div class="pass2Wrapper">
-            <input type="password" name="pass2" id="pass2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Confirm password" onkeyup="checkPass2()"; >
+            <input type="password" name="pass2" id="pass2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Confirm password" onkeyup="checkPass2();" >
             <span id="pass2Message" class="confirmMessage"></span>
         </div>
 
@@ -147,8 +147,8 @@ function validateUsername()
 
     var input = document.getElementById("username_input");
     var message = document.getElementById("username_message");
-    username = username_input.value;
-    input_style = username_input.style;
+    var username = input.value;
+    var input_style = input.style;
 
     var input = ""
     var illegalChars = /\W/; // allow letters, numbers, and underscores
