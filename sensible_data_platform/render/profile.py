@@ -18,7 +18,8 @@ def profile(request):
         values = {}
         values["cas"] = cas_profile(request)
         values["sensible"] = sensible_profile(request, values) # TODO: dynamic
-    
+        values['platformUri'] = platform_config.PLATFORM_URI
+
         return render_to_response('profile.html', values, context_instance=RequestContext(request))
 
     if request.method == 'POST':
@@ -30,7 +31,6 @@ def profile(request):
         user.save()
 
 
-        print username
         extra = None
         try:
             extra = Extra.objects.get(user = request.user)
