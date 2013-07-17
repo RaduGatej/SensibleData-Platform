@@ -9,5 +9,6 @@ urlpatterns = patterns('',
     url(r'^authorizations/?$', 'render.authorizations.authorizations', name='authorizations'),
     url(r'^applications/?$', 'render.applications.applications', name='applications'),
     url(r'^home/?$', 'render.views.home', name='home'),
+    url(r'^about/?$', 'render.about.about', name='about'),
     url(r'^', 'render.views.home'),
 )
