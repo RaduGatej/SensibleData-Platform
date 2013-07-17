@@ -3,7 +3,10 @@ import urllib2
 import json
 from collections import defaultdict
 from oauth2app.models import *
+import whitelist
+from django.core.urlresolvers import reverse
 
+#depricated
 def getResource(resource, client, user):
 	token = manager.getTokenForUser(client, user)
 	if token == None: return {'error': 'no token available'}
@@ -25,6 +28,8 @@ def userStatus(client, user):
         return status
 
 
+
+#depricated
 def getServices(user):
 	services = defaultdict(lambda: defaultdict(dict))
         clients = manager.getClients(user)
@@ -44,6 +49,34 @@ def getServices(user):
 
         return dict(services)
 
+def getServices2(user):
+	services = {}
+	clients = manager.getClients(user, 'study')
+	for client in clients:
+		if not whitelist.checkWhitelist(user, client): continue
+		services[client.name] = {}
+		token = manager.getTokenForUser(client=client, user=user, scope='enroll')
+
+		if 'error' in token: 
+			services[client.name]['error'] = 'unauthorized'
+			services[client.name]['authorize_url'] = client.authorize_uri
+			services[client.name]['description'] = 'HERE SHOULD BE DESCRIPTION'
+			continue
+
+		status = getUserStatus(client, token)
+		services[client.name] = status
+
+	return services
+
+def getUserStatus(client, token):
+	url = client.api_uri+'userStatus/'
+	url += '?access_token='+token
+	try: response = urllib2.urlopen(url).read()
+	except: response = {'error': 'connection error'}
+	
+	if type(response) == str: response = json.loads(response)
+	return response
+
 def getAuthorizations(user, services):
 	authorizations = {}
 	for user_status in services:
@@ -53,8 +86,10 @@ def getAuthorizations(user, services):
 
 	return authorizations
 
-
 def getAuthorizationsForService(user, service):
 	client = Client.objects.get(key=service['client_id'])
 	authorizations = getResource('serviceAuthorizations', client, user)
 	return authorizations
+
+
+
