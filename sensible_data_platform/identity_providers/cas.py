@@ -8,8 +8,14 @@ import base64
 from xml.dom.minidom import parse, parseString
 from utils import platform_config, SECURE_platform_config
 
+from django.core.exceptions import MultipleObjectsReturned
+from django.shortcuts import render_to_response, redirect
+from django.template import RequestContext
+
 @login_required
 def link(request):
+        values = {}
+        values['profilePage'] = platform_config.PLATFORM_URI + "/profile/"
 	auth_base_url = platform_config.IDENTITY_PROVIDERS['CAS']['auth_uri']
 	service_url = platform_config.PLATFORM_URI+platform_config.IDENTITY_PROVIDERS['CAS']['endpoint']
 	ticket = request.GET.get('ticket', '')
@@ -20,41 +26,50 @@ def link(request):
 		response_auth = urllib2.urlopen(validation_url).read()
 		if "cas:authenticationSuccess" in response_auth:
 			student_id = response_auth.split("<cas:user>")[1].split("</cas:user>")[0]
-			response = saveStudentId(request.user, student_id)
-			if 'ok' in response:
+			response = checkCas(request.user, student_id)
+                        values['response'] = response
+			if 'ok' in response["status"]:
 				student_attributes = getStudentAttributes(student_id)
 				if len(student_attributes) == 1: 
 					response = saveStudentAttributes(student_id, student_attributes[0])
-			
+		        else :
+                                return render_to_response('profile.html', values , context_instance=RequestContext(request))
 
 		else: return HttpResponseRedirect(auth_base_url+"/login?service="+service_url)
 	#TODO> pass the response to profile so we can inform the user about the operation
 #	return HttpResponse(json.dumps(response))
 	return redirect('profile')
 
-def saveStudentId(user, student_id):
-	users = User.objects.filter()
+def checkCas(user, student_id):
+ 	users = User.objects.filter()
 	found_users = set()
 	for u in users:
-		try:
-			if u.cas.student_id == student_id: 
-				found_users.add(u)
+                try: 
+                        if u.cas.student_id == student_id: 
+                                found_users.add(u)
 		except Cas.DoesNotExist: continue
 
-	if len(found_users) > 1:
-		return {"error": "user with student id already exists %s"%str(found_users)}
+	if len(found_users) > 0:
+                return {"status" : "error", "message" :  "User with student id <%s> already exists."%str(student_id)}
 
-	try:
-		student = Cas.objects.get(user=user)
-		student.student_id = student_id
-		student.save()
-	except Cas.DoesNotExist:
-		student = Cas.objects.create(user=user, student_id=student_id)
+        try:
+                student = Cas.objects.get(student_id = student_id)
 
-	return {"ok": "student id linked"}
+	except Cas.DoesNotExist: 
+                student = Cas.objects.create(user=user, student_id=student_id)
+                student.student_id = student_id
+                student.save()
+
+        except Cas.MultipleObjectsReturned:
+                return {"status" : "error", "message" : "user with student id already exists %s"%str(student_id)}
+        return {"status" : "ok", "message" : "student id linked"}
 
 def saveStudentAttributes(student_id, attributes):
-        student = Cas.objects.get(student_id = student_id)
+        try:
+            student = Cas.objects.get(student_id = student_id)
+        except Cas.MultipleObjectsReturned as e:
+            return render_to_response('profile.html', {"status" : "error", "message" : "user with student id already exists %s"%str(student_id)}, context_instance=RequestContext(request))
+
 	student.email = attributes['email']
 	student.givenName = attributes['givenName']
 	student.familyName = attributes['familyName']
