@@ -32,11 +32,9 @@ def profile(request):
 
 
         extra = None
-        try:
-            extra = Extra.objects.get(user = request.user)
-        except Extra.DoesNotExist:
-            print "Extra does not exists"
-     
+        try: extra = Extra.objects.get(user = request.user)
+        except Extra.DoesNotExist: extra = Extra.objects.create(user = request.user)
+
         extra.phone = request.POST.get("phone_field", "")
         extra.save()
 
