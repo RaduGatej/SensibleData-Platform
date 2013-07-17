@@ -11,13 +11,14 @@ from utils import platform_config, SECURE_platform_config
 from django.core.exceptions import MultipleObjectsReturned
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
 
 @login_required
 def link(request):
         values = {}
         values['profilePage'] = platform_config.PLATFORM_URI + "/profile/"
 	auth_base_url = platform_config.IDENTITY_PROVIDERS['CAS']['auth_uri']
-	service_url = platform_config.PLATFORM_URI+platform_config.IDENTITY_PROVIDERS['CAS']['endpoint']
+	service_url = request.build_absolute_uri(reverse('id_cas'))
 	ticket = request.GET.get('ticket', '')
 	if ticket == '':
 		return HttpResponseRedirect(auth_base_url+"/login?service="+service_url+"&renew=true")

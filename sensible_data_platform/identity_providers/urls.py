@@ -4,5 +4,5 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^cas/', 'identity_providers.cas.link'),
+    url(r'^cas/', 'identity_providers.cas.link', name='id_cas'),
 )

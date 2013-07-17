@@ -11,6 +11,7 @@ from .models import *
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from accounts.models import Extra
+from django.core.urlresolvers import reverse
 
 @login_required
 def profile(request):
@@ -74,7 +75,7 @@ def sensible_profile(request, values):
 def cas_profile(request):
     cas = {}
     cas["connector"] = {}
-    cas["connector"] = platform_config.IDENTITY_PROVIDERS['CAS']['endpoint']
+    cas["connector"] = reverse('id_cas')
     cas["profile"] = {}
 
     try: user = Cas.objects.get(user=request.user) 
