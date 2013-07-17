@@ -75,38 +75,42 @@ def saveStudentAttributes(student_id, attributes):
 	student.familyName = attributes['familyName']
 	student.closed = attributes['closed']
 	student.save()
+
+	if student.user.first_name == '':
+		student.user.first_name = attributes['givenName']
+		student.user.save()
+	if student.user.last_name == '':
+		student.user.last_name = attributes['familyName']
+		student.user.save()
+
 	return student.student_id
 	
 
 def getStudentAttributes(student_id):
-        app_name = SECURE_platform_config.IDENTITY_PROVIDERS['CAS']['app_name']
-        app_token = SECURE_platform_config.IDENTITY_PROVIDERS['CAS']['app_token']
-        base64string = base64.encodestring('%s:%s' % (SECURE_platform_config.IDENTITY_PROVIDERS['CAS']['requestor'], SECURE_platform_config.IDENTITY_PROVIDERS['CAS']['requestor_password'])).replace('\n', '')
-        request = urllib2.Request("https://www.campusnet.dtu.dk/data/CurrentUser/Users/Search?query=%s&first=&amount="%student_id)
-        request.add_header("Authorization", "Basic %s"%base64string)
-        request.add_header("X-appname", app_name)
-        request.add_header("X-token", app_token)
-        response = urllib2.urlopen(request).read()
-        dom = parseString(response)
-        users = []
-        for node in dom.childNodes:
-                if not node.localName == 'ArrayOfUsers': continue
-                for u in node.childNodes:
-                        user = {}
-                        try:
-                                user['email'] = u.attributes['Email'].value
-                        except KeyError: pass
-                        try:
-                                user['givenName'] = u.attributes['GivenName'].value
-                        except KeyError: pass
-                        try:
-                                user['familyName'] = u.attributes['FamilyName'].value
-                        except KeyError: pass
-                        try:
-                                user['closed'] = u.attributes['Closed'].value
-                        except KeyError: pass
-
-                        users.append(user)
-
-        return users
-
+	app_name = SECURE_platform_config.IDENTITY_PROVIDERS['CAS']['app_name']
+	app_token = SECURE_platform_config.IDENTITY_PROVIDERS['CAS']['app_token']
+	base64string = base64.encodestring('%s:%s' % (SECURE_platform_config.IDENTITY_PROVIDERS['CAS']['requestor'], SECURE_platform_config.IDENTITY_PROVIDERS['CAS']['requestor_password'])).replace('\n', '')
+	request = urllib2.Request("https://www.campusnet.dtu.dk/data/CurrentUser/Users/Search?query=%s&first=&amount="%student_id)
+	request.add_header("Authorization", "Basic %s"%base64string)
+	request.add_header("X-appname", app_name)
+	request.add_header("X-token", app_token)
+	users = []
+	try:
+		response = urllib2.urlopen(request).read()
+	except urllib2.HTTPError:
+		return users
+	dom = parseString(response)
+	for node in dom.childNodes:
+		if not node.localName == 'ArrayOfUsers': continue
+		for u in node.childNodes:
+			user = {}
+			try: user['email'] = u.attributes['Email'].value
+			except KeyError: pass
+			try: user['givenName'] = u.attributes['GivenName'].value
+			except KeyError: pass
+			try: user['familyName'] = u.attributes['FamilyName'].value
+			except KeyError: pass
+			try: user['closed'] = u.attributes['Closed'].value
+			except KeyError: pass
+			users.append(user)
+	return users
