@@ -37,17 +37,19 @@ $(':input').each(function() {
 </div>
 
 
-
-{% if 'error' in response.status %}
-<div class="alert">
+{% if status == 'failed' %}
+<div class="alert alert-error">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Error</strong> {{ response.message }}
+    <strong>Error</strong> {{ message }}
 </div>
+{% endif %}
 
-<a href= {{ profilePage }} >
-    <button type="button" class="btn btn-primary" > Go back to Profiles</button>
-</a>
-{% else %}
+{% if status == 'success' %}
+<div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Profile linked!</strong>
+</div>
+{% endif %}
 
 {% if sensible.profile.username %}
 <div class="row">
@@ -166,7 +168,6 @@ $(':input').each(function() {
 
 
 
-{% endif %}
 
 
 </div>
