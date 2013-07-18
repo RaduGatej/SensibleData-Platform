@@ -12,8 +12,8 @@ import hashlib
 import bson.json_util as json
 from django.core.urlresolvers import reverse
 
-from utils import platform_config
-
+from django.conf import settings
+from django.contrib.auth import authenticate, login
 
 def check_username(request):
     username = None
@@ -43,19 +43,19 @@ def register(request):
 		values['next'] = request.REQUEST.get('next', '')
 		if values['next'] == '': values['next'] = reverse('home')
 		values.update(csrf(request))
-                
-                values['platformUri'] = platform_config.PLATFORM_URI
-
+		values['platformUri'] = settings.BASE_URL
 		return render_to_response('registration/register.html', values)
 	
 	if request.method == 'POST':
 		username = request.POST.get('username', '')
 		password = request.POST.get('pass1', '')
 		next = request.POST.get('next', '')
-		
+
+
+
 		user = User.objects.create_user(username, '', password)
-                user.email = request.POST.get("email_field", "")
-                user.save()
+		user.email = request.POST.get("email_field", "")
+		user.save()
 
 		openid = OpenID()
 		openid.user = user
@@ -67,12 +67,17 @@ def register(request):
 		participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())[:30]
 		participant.save()
 
-                extra = Extra()
-                extra.user = user
-                extra.phone = ""
-                extra.save()
+		extra = Extra()
+		extra.user = user
+		extra.phone = ""
+		extra.save()
+		
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			if user.is_active: login(request, user)
 
-		return redirect(reverse('login')+'?next='+next)
+		#return redirect(reverse('login')+'?next='+next)
+		return redirect(next)
 
 
 
