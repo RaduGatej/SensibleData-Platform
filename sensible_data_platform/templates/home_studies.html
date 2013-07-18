@@ -52,7 +52,9 @@
 					{% endfor %}
 					</br>
 				{% if params.authorized == 1 %}
-			   		<p><button type="submit" name="submit" value="" class="btn btn-primary">Visit <i class="icon-chevron-right icon-white"></i></button></p>
+					{% if not params.uri == '' %}
+			   			<p><button type="submit" name="submit" value="" class="btn btn-primary">Visit <i class="icon-chevron-right icon-white"></i></button></p>
+					{% endif %}
 				{% else %}
 			   		<p><button type="submit" name="submit" value="" class="btn btn-primary">Authorize <i class="icon-chevron-right icon-white"></i></button></p>
 			
