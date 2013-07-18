@@ -12,11 +12,12 @@ from django.core.exceptions import MultipleObjectsReturned
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 @login_required
 def link(request):
-        values = {}
-        values['profilePage'] = platform_config.PLATFORM_URI + "/profile/"
+	values = {}
+	values['profilePage'] = settings.BASE_URL + "profile/"
 	auth_base_url = platform_config.IDENTITY_PROVIDERS['CAS']['auth_uri']
 	service_url = request.build_absolute_uri(reverse('id_cas'))
 	ticket = request.GET.get('ticket', '')
@@ -28,18 +29,22 @@ def link(request):
 		if "cas:authenticationSuccess" in response_auth:
 			student_id = response_auth.split("<cas:user>")[1].split("</cas:user>")[0]
 			response = checkCas(request.user, student_id)
-                        values['response'] = response
+			values['response'] = response
 			if 'ok' in response["status"]:
 				student_attributes = getStudentAttributes(student_id)
 				if len(student_attributes) == 1: 
 					response = saveStudentAttributes(student_id, student_attributes[0])
 		        else :
-                                return render_to_response('profile.html', values , context_instance=RequestContext(request))
-
+					r = redirect('profile')
+					r['Location'] += '?status=failed&message='+response['message']
+					return r
 		else: return HttpResponseRedirect(auth_base_url+"/login?service="+service_url)
-	#TODO> pass the response to profile so we can inform the user about the operation
-#	return HttpResponse(json.dumps(response))
-	return redirect('profile')
+		
+		
+		
+	r = redirect('profile')
+	r['Location'] += '?status=success'
+	return r
 
 def checkCas(user, student_id):
  	users = User.objects.filter()
