@@ -26,4 +26,3 @@ def home(request):
 
 	#return HttpResponse(json.dumps(services))
 	return render_to_response('home_studies.html', {'services': services}, context_instance=RequestContext(request))
-
