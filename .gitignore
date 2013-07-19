@@ -6,3 +6,4 @@ SECURE_*
 TEMP_*
 LOCAL_*
 *.swp
+.DS_Store
