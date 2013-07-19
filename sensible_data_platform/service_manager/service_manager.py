@@ -64,6 +64,11 @@ def getServices2(user):
 			continue
 
 		status = getUserStatus(client, token)
+		if 'error' in status: 
+			services[client.name]['error'] = 'unauthorized'
+			services[client.name]['authorize_url'] = client.authorize_uri
+			services[client.name]['description'] = 'HERE SHOULD BE DESCRIPTION'
+			continue
 		services[client.name] = status
 
 	return services
