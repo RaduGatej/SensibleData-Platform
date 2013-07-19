@@ -7,7 +7,7 @@ def clientAuthorizations(client, user):
 		ass += [k.key for k in a.scope.all()]
 	return ass
 
-def getClients(user, type):
+def getClients(type):
 	try: clients = Client.objects.filter(type=ClientType.objects.get(type=type))
 	except ClientType.DoesNotExist: return []
 	return clients
