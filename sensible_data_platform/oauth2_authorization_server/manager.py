@@ -8,7 +8,8 @@ def clientAuthorizations(client, user):
 	return ass
 
 def getClients(user, type):
-	clients = Client.objects.filter(type=ClientType.objects.get(type=type))
+	try: clients = Client.objects.filter(type=ClientType.objects.get(type=type))
+	except ClientType.DoesNotExist: return []
 	return clients
 	
 def getTokenForUser(client, user, scope):
