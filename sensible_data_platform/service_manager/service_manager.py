@@ -76,8 +76,11 @@ def getServices2(user):
 	return services
 
 def discoverService(client):
+	#TODO set service to 'offline' if there is an error
 	url = client.api_uri + 'discover/'
-	response = urllib2.urlopen(url).read()
+	try:response = urllib2.urlopen(url).read()
+	except urllib2.HTTPError: return {'error':'connection refused'}
+	except urllib2.URLError: return {'error':'connection refused'}
 	return json.loads(response)
 
 def getTos(client):
