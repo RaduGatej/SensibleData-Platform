@@ -54,7 +54,7 @@ def register(request):
 
 
 		user = User.objects.create_user(username, '', password)
-		user.email = request.POST.get("email_field", "")
+		user.email = request.POST.get("username", "")
 		user.save()
 
 		openid = OpenID()
