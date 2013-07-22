@@ -42,7 +42,7 @@ def profile(request):
         extra.phone = request.POST.get("phone_field", "")
         extra.save()
 
-        return redirect('profile.html', context_instance=RequestContext(request))
+        return redirect('profile')
 
 
 def sensible_profile(request, values):
