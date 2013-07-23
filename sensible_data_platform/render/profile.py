@@ -3,7 +3,6 @@ from django.shortcuts import render_to_response
 import json
 
 from accounts import manager
-from utils import platform_config
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from identity_providers.models import Cas
@@ -12,16 +11,20 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from accounts.models import Extra
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 @login_required
 def profile(request):
     if request.method == 'GET':
-        values = {}
-        values["cas"] = cas_profile(request)
-        values["sensible"] = sensible_profile(request, values) # TODO: dynamic
-        values['platformUri'] = platform_config.PLATFORM_URI
+		status = request.REQUEST.get('status', '')
+		message = request.REQUEST.get('message', '')
+		values = {}
+		values["cas"] = cas_profile(request)
+		values["sensible"] = sensible_profile(request, values) # TODO: dynamic
+		values['status'] = status
+		values['message'] = message
 
-        return render_to_response('profile.html', values, context_instance=RequestContext(request))
+		return render_to_response('profile.html', values, context_instance=RequestContext(request))
 
     if request.method == 'POST':
         username = request.user
@@ -39,7 +42,7 @@ def profile(request):
         extra.phone = request.POST.get("phone_field", "")
         extra.save()
 
-        return redirect('profile.html', context_instance=RequestContext(request))
+        return redirect('profile')
 
 
 def sensible_profile(request, values):

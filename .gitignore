@@ -5,3 +5,5 @@ local_settings.py
 SECURE_*
 TEMP_*
 LOCAL_*
+*.swp
+.DS_Store

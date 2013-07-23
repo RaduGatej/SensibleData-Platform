@@ -4,7 +4,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^profile/', 'render.profile.profile', name='profile'),
+	url(r'^profile/?$', 'render.profile.profile', name='profile'),
     url(r'^dashboard/?$', 'render.dashboard.dashboard', name='dashboard'),
     url(r'^authorizations/?$', 'render.authorizations.authorizations', name='authorizations'),
     url(r'^applications/?$', 'render.applications.applications', name='applications'),

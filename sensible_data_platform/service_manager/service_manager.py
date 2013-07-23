@@ -5,6 +5,7 @@ from collections import defaultdict
 from oauth2app.models import *
 import whitelist
 from django.core.urlresolvers import reverse
+import urllib2
 
 #depricated
 def getResource(resource, client, user):
@@ -51,22 +52,43 @@ def getServices(user):
 
 def getServices2(user):
 	services = {}
-	clients = manager.getClients(user, 'study')
+	clients = manager.getClients('study')
 	for client in clients:
 		if not whitelist.checkWhitelist(user, client): continue
+		discovery = discoverService(client)
 		services[client.name] = {}
 		token = manager.getTokenForUser(client=client, user=user, scope='enroll')
 
 		if 'error' in token: 
 			services[client.name]['error'] = 'unauthorized'
 			services[client.name]['authorize_url'] = client.authorize_uri
-			services[client.name]['description'] = 'HERE SHOULD BE DESCRIPTION'
+			services[client.name]['discovery'] = discovery
 			continue
 
 		status = getUserStatus(client, token)
+		if 'error' in status: 
+			services[client.name]['error'] = 'unauthorized'
+			services[client.name]['authorize_url'] = client.authorize_uri
+			services[client.name]['discovery'] = discovery
+			continue
 		services[client.name] = status
 
 	return services
+
+def discoverService(client):
+	#TODO set service to 'offline' if there is an error
+	url = client.api_uri + 'discover/'
+	try:response = urllib2.urlopen(url).read()
+	except urllib2.HTTPError: return {'error':'connection refused'}
+	except urllib2.URLError: return {'error':'connection refused'}
+	try: response = json.loads(response)
+	except ValueError: return {'error':'connection refused'}
+	return response
+
+def getTos(client):
+	url = client.api_uri + 'tos/'
+	response = urllib2.urlopen(url).read()
+	return json.loads(response)
 
 def getUserStatus(client, token):
 	url = client.api_uri+'userStatus/'
