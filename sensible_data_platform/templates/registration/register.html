@@ -11,19 +11,40 @@
 <div class="tutorialWrapper">
     <form method="post" name="form" id="form_id" action="{% url 'register' %}" onkeyup="validateForm();">
         {% csrf_token %}
-        <h1>Registration</h1>
+		<div class="row">
+		<div class="well span12">
+        <h1>Register</h1>
+		<div class="form-actions">
+
+
+
         <div class="usernameWrapper">
+		<div class="input-prepend">
+			<span class="add-on">
+				<i class="icon-user"></i>
+				        </span>
         	<input type="email" name="username" id="username_input" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" Placeholder="Email" onkeyup="validateEmail();" onblur="isTaken( '{{platformUri}}' );">
-        	<span id="username_message" class="confirmMessage"></span>
+			</div>
+        	<span id="username_message" class="confirmMessage">Email</span>
         </div>
 
         <div class="pass1Wrapper">
+		<div class="input-prepend">
+			<span class="add-on">
+				<i class="icon-lock"></i>
+				        </span>
             <input type="password" name="pass1" id="pass1" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Create Password" onkeyup="checkPass1();">
-            <span id="pass1Message" class="confirmMessage"></span>
+			</div>
+            <span id="pass1Message" class="confirmMessage">Create Password</span>
         </div>
         <div class="pass2Wrapper">
+		<div class="input-prepend">
+			<span class="add-on">
+				<i class="icon-lock"></i>
+				        </span>
             <input type="password" name="pass2" id="pass2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Confirm password" onkeyup="checkPass2();" >
-            <span id="pass2Message" class="confirmMessage"></span>
+			</div>
+            <span id="pass2Message" class="confirmMessage">Confirm Password</span>
         </div>
 
 
@@ -34,6 +55,9 @@
         </div>    
 	<input type="hidden" name="next" value="{{ next }}" />
     </form>
+	</div>
+</div>
+</div>
 </div>
 
 
