@@ -4,5 +4,4 @@ python-openid
 south
 django-uni-form
 setuptools>=0.7
-mysql-python
 pymongo

@@ -1,5 +1,3 @@
-PLATFORM_URI = 'https://www.sensible.dtu.dk/sensible-data'
-
 
 IDENTITY_PROVIDERS = {
 	'CAS':	{

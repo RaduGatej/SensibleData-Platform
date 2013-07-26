@@ -13,11 +13,12 @@
         {% csrf_token %}
         <h1>Registration</h1>
         <div class="usernameWrapper">
-            <input type="text" name="username" id="username_input" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Username" onkeyup="validateUsername();" onblur="isTaken( '{{platformUri}}' );">
-            <span id="username_message" class="confirmMessage"></span>
+        	<input type="email" name="username" id="username_input" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" Placeholder="Email" onkeyup="validateEmail();" onblur="isTaken( '{{platformUri}}' );">
+        	<span id="username_message" class="confirmMessage"></span>
         </div>
+
         <div class="pass1Wrapper">
-            <input type="password" name="pass1" id="pass1" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Password" onkeyup="checkPass1();">
+            <input type="password" name="pass1" id="pass1" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Create Password" onkeyup="checkPass1();">
             <span id="pass1Message" class="confirmMessage"></span>
         </div>
         <div class="pass2Wrapper">
@@ -26,8 +27,6 @@
         </div>
 
 
-        <input type="email" name="email_field" id="email" Placeholder="Email" onkeyup="validateEmail();">
-        <span id="emailMessage" class="confirmMessage"></span>
 
 
         <div class="buttonWrapper">
@@ -43,33 +42,33 @@
 var pass1_OK = false;
 var pass2_OK = false;
 var username_OK = false;
-var email_OK = false;
+var email_OK = true;
 var goodColor = "#66cc66";
 var badColor = "#ff6666";
 var white = "#ffffff";
 
 function validateEmail() {
-    email_OK = false;
-    var emailField = document.getElementById('email');
+    username_OK = false;
+    var emailField = document.getElementById('username_input');
     var emailValue = emailField.value;
-    var emailMessage = document.getElementById('emailMessage');
+    var emailMessage = document.getElementById('username_message');
     var emailReg = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
 
 
 
     if (emailValue.length > 0 ) {
         if( !emailReg.test( emailValue ) ) {
-            email_OK = false;
+            username_OK = false;
             emailField.style.backgrounColor = badColor;
             emailMessage.style.color = badColor;
             emailMessage.innerHTML = "Not a valid email";
             return false;
         } 
         else {
-            email_OK = true;
+            username_OK = true;
             emailField.style.backgroundColor = goodColor;
             emailMessage.style.color = goodColor;
-            emailMessage.innerHTML = "Valid email"
+           	emailMessage.innerHTML = ""
             return true;
         }
     }
@@ -94,7 +93,7 @@ function checkPass1()
         {
             pass1.style.backgroundColor = goodColor;
             pass1Message.style.color = goodColor;
-            pass1Message.innerHTML = "Valid password"
+            pass1Message.innerHTML = ""
             pass1_OK = true;
             return true;
         }
@@ -127,8 +126,8 @@ function checkPass2()
             pass2.style.backgroundColor = goodColor;
             pass1Message.style.color = goodColor;
             pass2Message.style.color = goodColor;
-            pass1Message.innerHTML = "Ok"
-            pass2Message.innerHTML = "Ok"
+            pass1Message.innerHTML = ""
+            pass2Message.innerHTML = ""
             pass2_OK = true;
             return true;
         }else{
@@ -191,16 +190,16 @@ function validateUsername()
 function isTaken(uri)
 {
     username_OK = false;
-    if (!validateUsername())
-    {
-        return false;
-    }
+ 	if (!validateEmail())
+	{
+       return false;
+   	}
 
     var input = document.getElementById("username_input");
     var message = document.getElementById("username_message");
     var username = input.value;
 
-    var url = uri + "/accounts/check_username/?username=" + username; 
+    var url = uri + "accounts/check_username/?username=" + username; 
     var xmlHttp = null;
     xmlHttp = new XMLHttpRequest();
     
@@ -218,7 +217,8 @@ function isTaken(uri)
     {
         input.style.backgroundColor = goodColor;
         message.style.color = goodColor;
-        message.innerHTML = response[1];
+        //message.innerHTML = response[1];
+        message.innerHTML = '';
         username_OK = true;
         return true;
     }

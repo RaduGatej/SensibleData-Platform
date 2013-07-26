@@ -15,6 +15,7 @@ BASE_DIR = LOCAL_SETTINGS.BASE_DIR
 ROOT_DIR = LOCAL_SETTINGS.ROOT_DIR
 ROOT_URL = LOCAL_SETTINGS.ROOT_URL
 DATABASES = LOCAL_SETTINGS.DATABASES
+BASE_URL = LOCAL_SETTINGS.BASE_URL
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts

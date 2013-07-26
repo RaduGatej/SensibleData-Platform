@@ -4,6 +4,13 @@ from django.contrib.auth.models import User
 
 from .models import Cas
 
+from accounts.models import Participant
+
+class ParticipantInline(admin.StackedInline):
+	model = Participant
+	can_delete = True
+	verbose_name_plural = 'participant'
+
 class CasInline(admin.StackedInline):
     model = Cas
     can_delete = True
@@ -11,7 +18,7 @@ class CasInline(admin.StackedInline):
 
 
 class UserAdmin(UserAdmin):
-    inlines = (CasInline, )
+	inlines = (CasInline, ParticipantInline)
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

@@ -13,3 +13,4 @@ def checkWhitelist(user, client):
 		if user.cas.student_id in white_list: return True
 		
 		return False
+	return True #no whitelist registered, allow everyone

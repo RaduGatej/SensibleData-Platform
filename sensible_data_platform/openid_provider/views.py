@@ -47,9 +47,9 @@ def attributes(request):
 	authenticator = Authenticator()
 	requested_attributes = request.REQUEST.get('attributes', '').split(',')
 	try:
-	        authenticator.validate(request)
-    	except AuthenticationException:
-        	return authenticator.error_response(content="You didn't authenticate.")
+		authenticator.validate(request)
+	except AuthenticationException:
+		return authenticator.error_response(content="You didn't authenticate.")
 	scope = authenticator.scope
 	user = authenticator.user
 
@@ -58,7 +58,8 @@ def attributes(request):
 		try: a = Attribute.objects.get(attribute=attribute)
 		except Attribute.DoesNotExist: continue
 		if a.scope in scope:
-			response[attribute] = eval('user.'+attribute)
+			try: response[attribute] = eval('user.'+attribute)
+			except: pass
 
 	return HttpResponse(json.dumps(response))
 
