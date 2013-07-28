@@ -1,11 +1,45 @@
 {% extends "base.html" %}
-
+{% load staticfiles %}
 
 {% block content %}
 <div class="page-header">
-	      <h1>About</h1>
-	  </div>
+	<h1>About</h1>
+</div>
 
-<h2>Created by Arkadiusz 'Stopa' Stopczynski.</h2>
+<div class="row">
+	
+	<div class="well span5">
+		<h2>What?</h2>
+		<hr>
+		<p class="lead"><b>Sensible Data</b> is part of <a href="http://www.sensible.dtu.dk/"><b>Sensible DTU</b></a> project. It is a system created for participants to manage their studies, express informed consent, and check the status of their data.</p>
+	</div>
+		  		  
+	<div class="well span5">
+		<h2>Credits</h2>
+		<hr>
+		<p class="lead"><b>Arkadiusz Stopczynski</b>, arks@dtu.dk</p>
+		<p class="lead"><b>Dazza Greenwood</b>, dazza@civics.com</p>
+		<p class="lead"><b>Piotr Sapiezynski</b>, pisa@dtu.dk</p>
+		<p class="lead"><b>Alex 'Sandy' Pentland</b>, sandy@media.mit.edu</p>
+		<p class="lead"><b>Sune Lehmann</b>, sljo@dtu.dk</p>
+	</div>
 
+	<div class="well span5">
+		<h2>Collaborators</h2>
+		<hr>
+		<a href="http://www.dtu.dk/english"><img src="{% static "img/dtu-logo.png" %}"></a>
+		&nbsp;
+		<a href="http://www.media.mit.edu/"><img src="{% static "img/MIT_media_lab_logo.jpg" %}"></a>
+	</div>
+	
+	<div class="well span5">
+		<h2>Contact</h2>
+		<p class="lead"><b><a href="mailto:support@sensible.dtu.dk">Technical Support</b></a></p>
+		<p class="lead"><b><a href="mailto:research@sensible.dtu.dk">Research Contact</b></a></p>
+		<p class="lead"><b><a href="mailto:privacy@sensible.dtu.dk">Privacy Contact</b></a></p>
+	</div>
+
+
+
+</div>
 {% endblock %}
