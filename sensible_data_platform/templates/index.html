@@ -2,8 +2,12 @@
 
 {% block content %}
 
+<div class="page-header">
         <h1>Welcome to Sensible Data</h1>
-        <p>Your place to manage studies.</p>
+</div>
+
+	<p class="lead">A system for managing your studies. Enjoy!</p>
+
 	{% if not user.is_authenticated %}
 	<a class="btn" href="{% url 'register' %}"><i class="icon-pencil"></i> Register</a>
 	        <a class="btn btn-primary" href="{% url 'login' %}"><i class="icon-user icon-white"></i> Sign in</a>
