@@ -33,7 +33,7 @@
 			<span class="add-on">
 				<i class="icon-lock"></i>
 				        </span>
-            <input type="password" name="pass1" id="pass1" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Create Password" onkeyup="checkPass1();">
+            <input type="password" name="pass1" id="pass1" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Create Password" onkeyup="validatePw(this, 'pass1Message', 'pass2', 'pass2Message');">
 			</div>
             <span id="pass1Message" class="confirmMessage">Create Password</span>
         </div>
@@ -42,13 +42,10 @@
 			<span class="add-on">
 				<i class="icon-lock"></i>
 				        </span>
-            <input type="password" name="pass2" id="pass2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Confirm password" onkeyup="checkPass2();" >
+            <input type="password" name="pass2" id="pass2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Confirm password" onkeyup="validatePw(this, 'pass2Message', 'pass1', 'pass1Message');" >
 			</div>
             <span id="pass2Message" class="confirmMessage">Confirm Password</span>
         </div>
-
-
-
 
         <div class="buttonWrapper">
 			<button class="btn btn-primary" type="submit" id="button_id" value="Register" disabled><i class="icon-pencil icon-white"></i> Register</button>
@@ -61,107 +58,69 @@
 </div>
 
 
-
 <script>
-var pass1_OK = false;
-var pass2_OK = false;
 var username_OK = false;
-var email_OK = true;
 var goodColor = "#66cc66";
 var badColor = "#ff6666";
 var white = "#ffffff";
+var pw_OK = false;
 
-function validateEmail() {
-    username_OK = false;
-    var emailField = document.getElementById('username_input');
-    var emailValue = emailField.value;
-    var emailMessage = document.getElementById('username_message');
-    var emailReg = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
-
-
-
-    if (emailValue.length > 0 ) {
-        if( !emailReg.test( emailValue ) ) {
-            username_OK = false;
-            emailField.style.backgrounColor = badColor;
-            emailMessage.style.color = badColor;
-            emailMessage.innerHTML = "Not a valid email";
-            return false;
-        } 
-        else {
-            username_OK = true;
-            emailField.style.backgroundColor = goodColor;
-            emailMessage.style.color = goodColor;
-           	emailMessage.innerHTML = ""
-            return true;
-        }
-    }
-    return false;
-}
-
-function checkPass1()
+function validatePw(pw, pw_message_id, other_id, other_message_id)
 {
-    pass1_OK = false;
-    var pass1 = document.getElementById('pass1');
-    var pass1Message = document.getElementById('pass1Message');
+    pw_OK = false;
+    var pw_message = document.getElementById(pw_message_id);
 
-    if ( pass1.value.length > 0) {
-        if ( !checkLength(pass1) )
+    var other = document.getElementById(other_id);
+    var other_message = document.getElementById(other_message_id);
+
+    var pl = pw.value.length
+    var ol = other.value.length
+    
+    if ( pl > 0) 
+    {
+        if ( pl > 5 )
         {
-            pass1.style.backgroundColor = badColor;
-            pass1Message.style.color = badColor;
-            pass1Message.innerHTML = "Password must be at least 6 characters long"
-            return false;
+            if ( ol > 0 ) 
+            {
+                if (pw.value == other.value )
+                {
+                    pw.style.backgroundColor = goodColor;
+                    other.style.backgroundColor = goodColor;
+                    pw_message.innerHTML = ""
+                    other_message.innerHTML = ""
+                    pw_OK = true;
+                }
+                else
+                {
+                    pw.style.backgroundColor = badColor;
+                    pw_message.style.color = badColor;
+                    pw_message.innerHTML = "Passwords Do Not Match"
+                    pw_OK = false;
+                }
+            }
+            else
+            {
+                pw.style.backgroundColor = goodColor;
+                pw_message.style.color = goodColor;
+                pw_message.innerHTML = ""
+                pw_OK = false;
+            }
         }
         else
         {
-            pass1.style.backgroundColor = goodColor;
-            pass1Message.style.color = goodColor;
-            pass1Message.innerHTML = ""
-            pass1_OK = true;
-            return true;
+            pw.style.backgroundColor = badColor;
+            pw_message.style.color = badColor;
+            pw_message.innerHTML = "Password must be at least 6 characters long"
+            pw_OK = false
         }
     }
-    return false;
-}  
-
-function checkLength(obj)
-{
-
-    var enough = false;
-    if ( obj.value.length > 5 )
+    else
     {
-        enough = true;
+        pw.style.backgroundColor = white;
+        pw_message.style.color = white;
+        pw_message.innerHTML = ""
+        pw_OK = false
     }
-    return enough;
-}
-
-function checkPass2()
-{
-    pass2_OK = false;
-    var pass1 = document.getElementById('pass1');
-    var pass2 = document.getElementById('pass2');
-    var pass2Message = document.getElementById('pass2Message');
-
-    if (checkPass1()) 
-    {
-        if (pass1.value == pass2.value ){
-            pass1.style.backgroundColor = goodColor;
-            pass2.style.backgroundColor = goodColor;
-            pass1Message.style.color = goodColor;
-            pass2Message.style.color = goodColor;
-            pass1Message.innerHTML = ""
-            pass2Message.innerHTML = ""
-            pass2_OK = true;
-            return true;
-        }else{
-            pass2.style.backgroundColor = badColor;
-            pass2Message.style.color = badColor;
-            pass2Message.innerHTML = "Passwords Do Not Match"
-            return false;
-        }
-    }
-    return false;
 }  
 
 function validateUsername()
@@ -235,7 +194,7 @@ function isTaken(uri)
     {
         input.style.backgroundColor = badColor;
         message.style.color = badColor;
-        message.innerHTML = response[1];
+        //message.innerHTML = response[1];
     }
     else 
     {
@@ -251,11 +210,49 @@ function isTaken(uri)
 
 }
 
+function validateEmail() {
+    username_OK = false;
+    var emailField = document.getElementById('username_input');
+    var emailValue = emailField.value;
+    var emailMessage = document.getElementById('username_message');
+    var emailReg = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+
+
+
+    if (emailValue.length > 0 ) {
+        if( !emailReg.test( emailValue ) ) {
+            username_OK = false;
+            emailField.style.backgroundColor = badColor;
+            emailMessage.style.color = badColor;
+            emailMessage.innerHTML = "Not a valid email";
+            return false;
+        } 
+        else {
+            username_OK = true;
+            emailField.style.backgroundColor = goodColor;
+            emailMessage.style.color = goodColor;
+            emailMessage.innerHTML = ""
+            return true;
+        }
+    }
+    else
+    {
+        username_OK = false;
+        emailField.style.backgroundColor = white;
+        emailMessage.style.color = white;
+        emailMessage.innerHTML = "";
+        return false;
+
+    }
+    return false;
+}
+
+
 function validateForm()
 {
     var button = document.getElementById("button_id")
 
-    if ( pass1_OK && pass2_OK && username_OK && email_OK ) 
+    if ( pw_OK && username_OK ) 
     {
         button.disabled = false;
     }
