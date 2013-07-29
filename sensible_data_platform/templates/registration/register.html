@@ -158,7 +158,6 @@ function isTaken()
     {
         input.style.backgroundColor = goodColor;
         message.style.color = goodColor;
-        message.innerHTML = response[1];
         username_OK = true;
         return true;
     }
@@ -221,10 +220,6 @@ function submitForm()
     {
         document.forms['form_id'].submit();
         return true
-    }
-    else
-    {
-        location.reload();
     }
 }
 
