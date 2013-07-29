@@ -23,7 +23,7 @@
 			<span class="add-on">
 				<i class="icon-user"></i>
 				        </span>
-        	<input type="email" name="username" id="username_input" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" Placeholder="Email" onkeyup="validateEmail();" onblur="isTaken( '{{platformUri}}' );">
+        	<input type="text" name="username" id="username_input" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" Placeholder="Email" onkeyup="validateEmail();" onblur="isTaken( '{{platformUri}}' );">
 			</div>
         	<span id="username_message" class="confirmMessage">Email</span>
         </div>
@@ -59,10 +59,13 @@
 
 
 <script>
-var username_OK = false;
+
 var goodColor = "#66cc66";
 var badColor = "#ff6666";
 var white = "#ffffff";
+
+
+var username_OK = false;
 var pw_OK = false;
 
 function validatePw(pw, pw_message_id, other_id, other_message_id)
@@ -123,60 +126,13 @@ function validatePw(pw, pw_message_id, other_id, other_message_id)
     }
 }  
 
-function validateUsername()
-{
-    username_OK = false;
-
-    var input = document.getElementById("username_input");
-    var message = document.getElementById("username_message");
-    var username = input.value;
-    var input_style = input.style;
-
-    var input = ""
-    var illegalChars = /\W/; // allow letters, numbers, and underscores
-
-    if ( username.length > 0  ) {
-
-        if ( username.length < 6 && illegalChars.test(username)) { 
-            input_style.backgroundColor = badColor;
-            message.style.color = badColor;
-            message.innerHTML = "The username must be at least 6 characters long and it can contain only letters, numbers, and underscores.";
-            username_OK = false;
-            return false;
-        }
-        
-        if ( username.length < 6) { 
-            input_style.backgroundColor = badColor;
-            message.style.color = badColor;
-            message.innerHTML = "The username must be at least 6 characters long.";
-            username_OK = false;
-            return false;
-        }
-        else if (illegalChars.test(username)) { 
-            input_style.backgroundColor = badColor;
-            message.style.color = badColor;
-            message.innerHTML = "The username can contain only letters, numbers, and underscores.";
-            username_OK = false;
-            return false;
-        }
-        else {
-            input_style.backgroundColor = goodColor;
-            message.style.color = goodColor;
-            message.innerHTML = "";
-            username_OK = true;
-            return true;
-        }
-    }
-    return false;
-}
-
 function isTaken(uri)
 {
     username_OK = false;
- 	if (!validateEmail())
-	{
-       return false;
-   	}
+    if (!validateEmail())
+    {
+        return false;
+    }
 
     var input = document.getElementById("username_input");
     var message = document.getElementById("username_message");
@@ -194,19 +150,17 @@ function isTaken(uri)
     {
         input.style.backgroundColor = badColor;
         message.style.color = badColor;
-        //message.innerHTML = response[1];
+        message.innerHTML = response[1];
+        username_OK = false;
     }
     else 
     {
         input.style.backgroundColor = goodColor;
         message.style.color = goodColor;
-        //message.innerHTML = response[1];
-        message.innerHTML = '';
+        message.innerHTML = response[1];
         username_OK = true;
-        return true;
     }
-    username_OK = false;
-    return false;
+//    username_OK = false;
 
 }
 
@@ -216,8 +170,6 @@ function validateEmail() {
     var emailValue = emailField.value;
     var emailMessage = document.getElementById('username_message');
     var emailReg = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
-
-
 
     if (emailValue.length > 0 ) {
         if( !emailReg.test( emailValue ) ) {
