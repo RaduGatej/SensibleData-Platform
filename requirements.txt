@@ -1,5 +1,4 @@
 django
-django-bootstrap-toolkit
 python-openid
 south
 django-uni-form

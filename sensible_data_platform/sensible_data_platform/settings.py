@@ -3,7 +3,7 @@
 import os
 import LOCAL_SETTINGS
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -19,7 +19,7 @@ BASE_URL = LOCAL_SETTINGS.BASE_URL
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['.sensible.dtu.dk']
+ALLOWED_HOSTS = ['.sensible.dtu.dk', '54.229.13.160']
 
 LOGIN_URL = ROOT_URL + 'accounts/login/'
 LOGIN_REDIRECT_URL = ROOT_URL
@@ -60,7 +60,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 	# in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ROOT_DIR+'static_root'
+STATIC_ROOT = ROOT_DIR+'static_root/'
 
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
@@ -68,7 +68,7 @@ STATIC_URL = ROOT_URL+'static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    ROOT_DIR+'static',
+    ROOT_DIR+'static/',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -136,7 +136,6 @@ INSTALLED_APPS = (
     'oauth2_authorization_server',
     'uni_form',
     'service_manager',
-    'bootstrap_toolkit',
     'south',
 )
 

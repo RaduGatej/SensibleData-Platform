@@ -30,7 +30,7 @@ def userStatus(client, user):
 
 
 
-#depricated
+#deprecated
 def getServices(user):
 	services = defaultdict(lambda: defaultdict(dict))
         clients = manager.getClients(user)
@@ -72,6 +72,7 @@ def getServices2(user):
 			services[client.name]['discovery'] = discovery
 			continue
 		services[client.name] = status
+		services[client.name]['discovery'] = discovery
 
 	return services
 
