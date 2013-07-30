@@ -19,7 +19,7 @@ BASE_URL = LOCAL_SETTINGS.BASE_URL
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['.sensible.dtu.dk']
+ALLOWED_HOSTS = ['.sensible.dtu.dk', '54.229.13.160']
 
 LOGIN_URL = ROOT_URL + 'accounts/login/'
 LOGIN_REDIRECT_URL = ROOT_URL
