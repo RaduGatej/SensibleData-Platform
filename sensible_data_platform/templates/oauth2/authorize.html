@@ -13,17 +13,20 @@
 
 {% block content %}
 
+<style>
+	table { border:none }
+</style>
+
 <div class="row">
 	<div class="well span8">
 		<h2>Authorize <i>{{ client.name }}</i> to ...</h2>
 		<div class="form-actions">
                 {% if access_ranges %}
-		<table class="table">
+			<table class="table table-condensed table-striped">
                         {% for access_range in access_ranges %}
 			<tr>
-				<td>
-				<h4>... {{ access_range.description }}</h4>
-				<span class="label">{{ access_range.key }}</span>
+				<td style="border-top: none; vertical-align:middle;">
+					<h4><span class="" style="background-color:#46a546;padding: 1px 10px 2px; font-weight: bold; white-space: nowrap; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; color: #ffffff;"> {{ access_range.description }} </span></h4>
 				</td>
 			</tr>
 			{% endfor %}
