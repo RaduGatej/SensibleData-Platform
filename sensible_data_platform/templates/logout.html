@@ -4,11 +4,10 @@
 
 {% block content %}
 
-<h1>Logout</h1>
-
-<div class="content_container">
-	<p>You are now logged out.</p>
-	<p>Return to the <a href="{% url 'home' %}">home page</a>.</p>
-</div>
+<h1>You have logged out!</h1>
+<p>
+	<a class="btn" href="{% url 'home' %}"><i class="icon-home"></i> Home</a>
+	<a class="btn btn-primary" href="{% url 'login' %}"><i class="icon-user icon-white"></i> Sign in</a>
+</p>
 
 {% endblock %}
