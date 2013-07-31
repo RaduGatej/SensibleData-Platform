@@ -15,14 +15,26 @@
 
 {% for service,status in services.items %}
 	{% if 'error' in status %}
-		<div class="well span11">
-			<form method="get" action="{{ status.authorize_url }}">
-			<h1>{{ service }}</h1>
-			<h4> {{ status.discovery.service_desc_full | safe }} </h4>
-				</br>
-			   <p><button type="submit" name="submit" value="" class="btn btn-primary btn-large">Enroll <i class="icon-chevron-right icon-white"></i></button></p>
-		</form>
-		</div>
+
+		{% if status.error == 'connection error' %}
+			<div class="well span11">
+				<form method="get" action="{{ status.authorize_url }}">
+				<h1>{{ service }}</h1>
+				<h4> {{ status.discovery.service_desc_full | safe }} </h4>
+					</br>
+					<h4><div class="span" style="margin:-13px 0px 0px; background-color:#c43c35; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 3px 3px 3px 3px; color: #ffffff;"> The Study seems to be offline at the moment. <a href="mailto:support@sensible.dtu.dk">Ping us.</a> Thanks!</div></h4>
+			</form>
+			</div>
+		{% else %}
+			<div class="well span11">
+				<form method="get" action="{{ status.authorize_url }}">
+				<h1>{{ service }}</h1>
+				<h4> {{ status.discovery.service_desc_full | safe }} </h4>
+					</br>
+				   <p><button type="submit" name="submit" value="" class="btn btn-primary btn-large">Enroll <i class="icon-chevron-right icon-white"></i></button></p>
+			</form>
+			</div>
+			{% endif %}
 	{% else%}
 		<div class="well span11">
 			<h1>{{ service }}</h1>
