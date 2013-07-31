@@ -35,7 +35,7 @@
 	<i class="icon-tasks icon-white"></i> Menu
           </button>
 		{% endif %}
-		<div class="nav"><img src="{% static "img/red_logo5.png" %}" width=40px></div>
+		<div class="nav"><img src="{% static "img/red_logo5.png" %}" width="40" style="width:40px"></div>
 		<a class="brand" href="{% url 'home' %}">Sensible Data</a>
         {% if user.is_authenticated %}
 		<div class="nav-collapse collapse">
