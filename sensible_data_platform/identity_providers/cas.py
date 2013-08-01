@@ -119,4 +119,13 @@ def getStudentAttributes(student_id):
 			try: user['closed'] = u.attributes['Closed'].value
 			except KeyError: pass
 			users.append(user)
-	return users
+
+	if len(users) == 1: return users
+
+	final_users = []
+	for user in users:
+		if not user['closed'] == 'false': continue
+		if not student_id in user['email']: continue
+		final_users.append(user)
+
+	return final_users
