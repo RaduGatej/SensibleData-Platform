@@ -60,14 +60,14 @@ def getServices2(user):
 		token = manager.getTokenForUser(client=client, user=user, scope='enroll')
 
 		if 'error' in token: 
-			services[client.name]['error'] = 'unauthorized'
+			services[client.name]['error'] = 'unauthorized_no_token'
 			services[client.name]['authorize_url'] = client.authorize_uri
 			services[client.name]['discovery'] = discovery
 			continue
 
 		status = getUserStatus(client, token)
 		if 'error' in status: 
-			services[client.name]['error'] = 'unauthorized'
+			services[client.name]['error'] = status['error']
 			services[client.name]['authorize_url'] = client.authorize_uri
 			services[client.name]['discovery'] = discovery
 			continue

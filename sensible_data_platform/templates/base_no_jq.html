@@ -2,11 +2,23 @@
 {% load staticfiles %}
 <html lang="en">
 <head>
+<noscript>
+	<meta http-equiv="refresh" content="0; url={% url "noscript" %}" />
+</noscript>
     <meta charset="utf-8">
     <title>Sensible Data</title>
     <meta name="description" content="">
     <meta name="author" content="Arkadiusz Stopczynski">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+	<script>
+		try {
+				NodeList;
+				HTMLCollection;
+			} catch (err) {
+			window.location = "{% url "changebrowser" %}";
+			}
+		</script>
     <style type="text/css">
         body {
             padding-top: 60px;
@@ -26,16 +38,13 @@
 </head>
 
 <body>
-
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-        {% if user.is_authenticated %}
-<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-	<i class="icon-tasks icon-white"></i> Menu
+		<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		<i class="icon-tasks icon-white"></i> Menu
           </button>
-		{% endif %}
-		<div class="nav"><img src="{% static "img/red_logo5.png" %}" width=40px></div>
+		<div class="nav"><img src="{% static "img/red_logo5_40px.png" %}"></div>
 		<a class="brand" href="{% url 'home' %}">Sensible Data</a>
         {% if user.is_authenticated %}
 		<div class="nav-collapse collapse">
@@ -67,7 +76,7 @@
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a href={% url 'logout' %}>Logout</a></li>
+                    <li><a href={% url 'logout' %}><i class="icon-road"></i> Logout</a></li>
                   </ul>
         {% else %}
                 <a class="btn btn-primary" href="{% url 'login' %}">
@@ -90,7 +99,7 @@
 	<div class="span6">
 		<p>This is <a href="https://github.com/organizations/MIT-Model-Open-Data-and-Identity-System">Sensible Data</a>, an <a href="http://openpds.media.mit.edu/">openPDS system</a>
 
-		<span class="label label-info">0.0.5</span></p>
+		<span class="label label-info">0.0.6</span></p>
 
 
 	</div>

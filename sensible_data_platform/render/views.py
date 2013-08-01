@@ -55,3 +55,10 @@ def home(request):
 
 	#return HttpResponse(json.dumps(render_services))
 	return render_to_response('home_studies.html', {'services': dict(render_services)}, context_instance=RequestContext(request))
+
+
+def changebrowser(request):
+	return render_to_response('changebrowser.html', {}, context_instance=RequestContext(request))
+		
+def noscript(request):
+	return render_to_response('js_disabled.html', {}, context_instance=RequestContext(request))

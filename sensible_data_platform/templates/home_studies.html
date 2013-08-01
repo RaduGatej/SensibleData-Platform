@@ -3,8 +3,9 @@
 {% block content %}
 
 <div class="page-header">
-	      <h1>My Studies</h1>
-	  </div>
+	      <h1>Mine Projekter</h1>
+		  <p class="lead">Denne side indeholder en oversigt over de projekter jeg deltager i. (I øjeblikket er det kun SensibleDTU, men der kunne potentielt være andre).</p>
+</div>
 
 <div class="row">
 
@@ -15,14 +16,26 @@
 
 {% for service,status in services.items %}
 	{% if 'error' in status %}
-		<div class="well span11">
-			<form method="get" action="{{ status.authorize_url }}">
-			<h1>{{ service }}</h1>
-			<h4> {{ status.discovery.service_desc_full | safe }} </h4>
-				</br>
-			   <p><button type="submit" name="submit" value="" class="btn btn-primary btn-large">Enroll <i class="icon-chevron-right icon-white"></i></button></p>
-		</form>
-		</div>
+
+		{% if status.error == 'connection error' %}
+			<div class="well span11">
+				<form method="get" action="{{ status.authorize_url }}">
+				<h1>{{ service }}</h1>
+				<p>{{ status.discovery.service_desc_full | safe }} </p>
+					</br>
+					<h4><div class="span" style="margin:-13px 0px 0px; background-color:#c43c35; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 3px 3px 3px 3px; color: #ffffff;"> The Study seems to be offline at the moment. <a href="mailto:support@sensible.dtu.dk">Ping us.</a> Thanks!</div></h4>
+			</form>
+			</div>
+		{% else %}
+			<div class="well span11">
+				<form method="get" action="{{ status.authorize_url }}">
+				<h1>{{ service }}</h1>
+				<h4> {{ status.discovery.service_desc_full | safe }} </h4>
+					</br>
+				   <p><button type="submit" name="submit" value="" class="btn btn-primary btn-large">Tilmeld <i class="icon-chevron-right icon-white"></i></button></p>
+			</form>
+			</div>
+			{% endif %}
 	{% else%}
 		<div class="well span11">
 			<h1>{{ service }}</h1>
@@ -31,7 +44,8 @@
 
 				<div class="row">
 				<div class="form-actions span" style="border: 1px solid #DDDDDD; background-color: #FFFFFF; border-radius: 4px 4px 4px 4px; margin-bottom:-10px; padding:2px 15px">
-			<h2>Applications</h2>
+					<h2>Applikationer</h2>
+					<h4>Nedenfor ser du en oversigt over de applikationer du har godkend til studiet. Indtil videre har vi kun spørgeskemaet klar, men det bliver fx her at du skal godkende de apps der kører på telefonen for at indsamle data, osv.</h4>
 				</div>
 				</div>
 
@@ -49,7 +63,7 @@
 
 					{% endif %}
 					</h2>
-					<p><h4>{{ params.description | safe}}</h4></p>
+					<p><h5>{{ params.description | safe}}</h5></p>
 					</br>
 
 					<table class="table table-condensed table-striped">
@@ -65,7 +79,7 @@
 									{{ scope_params.description_extra | safe }}
 								{% else %}
 								<div class="span4" style="border-color: #c43c35; padding: 2px 3px 0px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px 3px 3px 3px; border-width:1px; border-style:solid; border-top-style:solid; margin: 20px 10px 20px">
-								<h4><div class="" style="margin:-13px 0px 0px; background-color:#c43c35; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 0px 0px 3px 3px; color: #ffffff;"> cannot {{ scope_params.description | safe }}</div></h4>
+								<h4><div class="" style="margin:-13px 0px 0px; background-color:#c43c35; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 0px 0px 3px 3px; color: #ffffff;"> cannot {{ scope_params.description | safe }} yet</div></h4>
 									{{ scope_params.description_extra | safe }}
 								</div>
 								{% endif %}
@@ -78,7 +92,7 @@
 
 						<td style="text-align:left; vertical-align:middle; border-top: none">
 						{% if auth_uri != '' %}
-						<a href="{{ auth_uri }}"><button value="" class="btn btn-success">Auhtorize <i class="icon-chevron-right icon-white"></i></button></a>
+						<a href="{{ auth_uri }}"><button value="" class="btn btn-success btn-large">Auhtorize <i class="icon-chevron-right icon-white"></i></button></a>
 						{% else %}
 							<button disabled value="" class="btn btn-success">{{ scopes.message | safe}}</button>
 						{% endif %}
