@@ -62,6 +62,11 @@ def register(request):
 		openid.default = True
 		openid.save()
 
+		for trust_root in settings.TRUST_ROOTS:
+			try: TrustedRoot.objects.create(openid=openid, trust_root=trust_root)	
+			except: pass
+
+
 		participant = Participant()
 		participant.user = user
 		try: participant.pseudonym = str(hashlib.sha1(user.username.encode('utf-8')).hexdigest())[:30]
