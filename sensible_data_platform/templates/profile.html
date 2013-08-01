@@ -60,22 +60,22 @@ $(':input').each(function() {
             <form id="sensible_form_id" name="sensible_form" action="{% url 'profile' %}"  method="post" >
                 {% csrf_token %}
                 <div class="input-prepend">
-                    <label> Username:</label> 
+                    <label> Username</label> 
                     <input class="input-large" id="sensible_username" type="text" value={{ sensible.profile.username }} disabled >
                 </div>
                 <br>
                 <div class="input-prepend">
-                    <label>First Name:</label> 
+                    <label>First Name</label> 
                     <input class="input-large" id="sensible_first" name="first_name_field" type="text" value={{ sensible.profile.first_name }} >
                 </div>
                 <br>
                <div class="input-prepend">
-                    <label>Last Name:</label> 
+                    <label>Last Name</label> 
                     <input class="input-large" id="sensible_last" name="last_name_field" type="text" value={{ sensible.profile.last_name }} >
                 </div>
                 <br>
                <div class="input-prepend">
-                    <label>Phone Number:</label> 
+                    <label>Phone Number</label> 
                     <input class="input-large" id="sensible_phone" name="phone_field" type="text" value={{ sensible.profile.phone }} >
                 </div>
                 <div class="buttonWrapper">
@@ -105,22 +105,22 @@ $(':input').each(function() {
         </table>
             <div class="form-actions">
              <div class="input-prepend">
-                <label> Student ID:</label> 
+                <label> Student ID</label> 
                 <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.student_id }} disabled >
             </div>
             <br>
             <div class="input-prepend">
-                <label> Email:</label> 
+                <label> Email</label> 
                 <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.email }} disabled >
             </div>
             <br>
              <div class="input-prepend">
-                <label>Given Name:</label> 
+                <label>Given Name</label> 
                 <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.givenName }} disabled >
             </div>
             <br>
            <div class="input-prepend">
-                <label>Family Name:</label> 
+                <label>Family Name</label> 
                 <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.familyName }} disabled >
             </div>
         </div>
