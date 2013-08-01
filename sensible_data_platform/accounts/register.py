@@ -64,7 +64,8 @@ def register(request):
 
 		participant = Participant()
 		participant.user = user
-		participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())[:30]
+		try: participant.pseudonym = str(hashlib.sha1(user.username.encode('utf-8')).hexdigest())[:30]
+		except: participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())[:30]
 		participant.save()
 
 		extra = Extra()
