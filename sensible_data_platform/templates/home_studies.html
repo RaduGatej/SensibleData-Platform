@@ -1,6 +1,52 @@
 {% extends "base.html" %}
-
+{% load staticfiles %}
 {% block content %}
+
+
+{% if status == 'failed' %}
+<div class="alert alert-error">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	<strong>Error</strong> {{ message }}
+</div>
+{% endif %}
+
+{% if status == 'success' %}
+<div class="alert alert-success">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	<strong>Success!</strong> {{ message }}
+</div>
+{% endif %}
+
+
+{% if status == 'auth_error' %}
+<div class="alert alert-error">
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+	<strong>Error</strong> You clicked No, cannot proceed :(
+</div>
+{% endif %}
+
+<script>
+if(window.location.hash) {
+	var hash = window.location.hash.substring(1).split('&');
+	for (var h in hash) {
+		key = hash[h].split('=')[0]
+		value = hash[h].split('=')[1]
+		if (key == 'error' && value == 'access_denied')
+		{
+			displayAuthError();
+			break;
+		}
+	}
+} 
+
+function displayAuthError()	{
+	error_status = '<div class="alert alert-error"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong>Error</strong> You clicked No, cannot proceed :( </div>'
+	document.write(error_status)
+
+}
+
+
+</script>
 
 <div class="page-header">
 	      <h1>Mine Projekter</h1>
@@ -10,9 +56,55 @@
 
 <div class="row">
 
-	<style>
-		table { border:none }
-		</style>
+<style>
+	table { border:none }
+</style>
+
+
+
+{% if not services %}
+	{% if user.cas.student_id %}
+	<div class="span11">
+		<div class="well">
+				<img src="{% static "img/dtu-logo.png" %}" style="display: block; margin: 0 auto;" />
+				<p><h3>Hey, {{ user.cas.givenName }} ({{ user.cas.student_id }})! You seem to have a DTU account, but are not on our list of students who can join SensibleDTU.</h3></p>
+				<p><h3>Is this a mistake? <a href="mailto:support@sensible.dtu.dk">Let us know!</a></h3></p>
+
+
+		</div>
+	</div>
+	{% else %}
+	<div class="span11">
+		<div class="well">
+			<div style="text-align:center">
+			<p><h3>For at deltage i SensibleDTU skal du være DTU studerende.</h3></p>
+			</div>
+			</br>
+				<img src="{% static "img/dtu-logo.png" %}" style="display: block; margin: 0 auto;" />
+			<table style="width: 100%;">
+				<tr>
+					<td style="text-align: center; vertical-align: middle;">
+						<h4 style="color:#c51137">
+							DTU student?
+							<div class="form-actions">
+								<p><a class="btn btn-large btn-danger" href="{% url "id_cas" %}">Link to Your account</a></p>
+							</div>
+						</h4>
+
+					</td>
+				</tr>
+			</table>
+			<div>
+
+			</div>
+
+		</div>
+	</div>
+
+
+
+	{% endif %}
+{% endif %}
 
 
 {% for service,status in services.items %}
@@ -32,8 +124,10 @@
 				<form method="get" action="{{ status.authorize_url }}">
 				<h1>{{ service }}</h1>
 				<h4> {{ status.discovery.service_desc_full | safe }} </h4>
-					</br>
+					
+							<div class="form-actions">
 				   <p><button type="submit" name="submit" value="" class="btn btn-primary btn-large">Tilmeld <i class="icon-chevron-right icon-white"></i></button></p>
+				   </div>
 			</form>
 			</div>
 			{% endif %}
@@ -65,8 +159,7 @@
 					{% endif %}
 					</h2>
 					<p><h5>{{ params.description | safe}}</h5></p>
-					</br>
-
+					<p></hr></p>
 					<table class="table table-condensed table-striped">
 						<tbody >
 					{% for auth_uri, scopes in params.scopes.items %}
@@ -80,7 +173,7 @@
 									{{ scope_params.description_extra | safe }}
 								{% else %}
 								<div class="span4" style="border-color: #c43c35; padding: 2px 3px 0px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px 3px 3px 3px; border-width:1px; border-style:solid; border-top-style:solid; margin: 20px 10px 20px">
-								<h4><div class="" style="margin:-13px 0px 0px; background-color:#c43c35; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 0px 0px 3px 3px; color: #ffffff;"> cannot {{ scope_params.description | safe }} yet</div></h4>
+								<h4><div class="" style="margin:-13px 0px 0px; background-color:#c43c35; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 0px 0px 3px 3px; color: #ffffff;"> is not allowed to {{ scope_params.description | safe }}</div></h4>
 									{{ scope_params.description_extra | safe }}
 								</div>
 								{% endif %}
@@ -93,9 +186,9 @@
 
 						<td style="text-align:left; vertical-align:middle; border-top: none">
 						{% if auth_uri != '' %}
-						<a href="{{ auth_uri }}"><button value="" class="btn btn-success btn-large">Auhtorize <i class="icon-chevron-right icon-white"></i></button></a>
+						<a href="{{ auth_uri }}"><button value="" class="btn btn-success btn-large">Allow <i class="icon-chevron-right icon-white"></i></button></a>
 						{% else %}
-							<button disabled value="" class="btn btn-success">{{ scopes.message | safe}}</button>
+							<button disabled value="" class="btn btn-success btn-large">{{ scopes.message | safe}}</button>
 						{% endif %}
 
 						{% endif %}
