@@ -9,6 +9,6 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('accounts.urls')),
     url(r'^identity_providers/', include('identity_providers.urls')),
     url(r'^admin/', include(admin.site.urls)),
-#    url(r'^test/', 'utils.test.test', name='test'),
+#	url(r'^test/', 'utils.test.test', name='test'),
     url(r'^', include('render.urls')),
 )
