@@ -166,13 +166,10 @@ def openid_decide(request):
     # If user is logged in, ask if they want to trust this trust_root
     # If they are NOT logged in, show the landing page
     """
-    #return error_page(request, str(request.user)+" "+orequest.identity)
     orequest = request.session.get('OPENID_REQUEST')
 
     if not request.user.is_authenticated():
         return landing_page(request, orequest)
-
- #   orequest.identity = "http://166.78.249.214:8080/openid/arkadiusz"
 
     openid = openid_get_identity(request, orequest.identity)
     if openid is None:
