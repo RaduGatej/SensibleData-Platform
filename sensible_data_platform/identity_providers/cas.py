@@ -35,15 +35,15 @@ def link(request):
 				if len(student_attributes) == 1: 
 					response = saveStudentAttributes(student_id, student_attributes[0])
 		        else :
-					r = redirect('profile')
+					r = redirect('home')
 					r['Location'] += '?status=failed&message='+response['message']
 					return r
 		else: return HttpResponseRedirect(auth_base_url+"/login?service="+service_url)
 		
 		
 		
-	r = redirect('profile')
-	r['Location'] += '?status=success'
+	r = redirect('home')
+	r['Location'] += '?status=success&message=Profile linked!'
 	return r
 
 def checkCas(user, student_id):
