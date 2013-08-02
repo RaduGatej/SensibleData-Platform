@@ -31,11 +31,11 @@
 		<p class="lead">
 		{% if user.cas.student_id %}
 			{{ user.cas.givenName }} {{ user.cas.familyName }} 
-			({{ user.cas.student_id }})
+			({{ user.cas.student_id }}).
 		{% else %}
-			{{ user.first_name }} {{ user.last_name }} 
-
+			{{ user.first_name }} {{ user.last_name }}. 
 		{% endif %}
+		<a href="{% url "logout" %}">Not you?</a>
 		</p>
         
 	<div class="form_container">
