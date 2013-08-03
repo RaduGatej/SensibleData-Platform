@@ -13,6 +13,8 @@ def home(request):
 	if not request.user.is_authenticated():
 		return render_to_response('index.html', {}, context_instance=RequestContext(request))
 
+	status = request.REQUEST.get('status', '')
+	message = request.REQUEST.get('message', '')
 
 	services = service_manager.getServices2(request.user)
 	render_services = dict()
@@ -54,7 +56,7 @@ def home(request):
 
 
 	#return HttpResponse(json.dumps(render_services))
-	return render_to_response('home_studies.html', {'services': dict(render_services)}, context_instance=RequestContext(request))
+	return render_to_response('home_studies.html', {'services': dict(render_services), 'status': status, 'message': message}, context_instance=RequestContext(request))
 
 
 def changebrowser(request):

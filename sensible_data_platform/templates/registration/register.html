@@ -12,49 +12,51 @@
     <form method="post" name="form" id="form_id" action="{% url 'register' %}" onkeyup="validateForm();" >
         {% csrf_token %}
 		<div class="row">
-		<div class="well span12">
+		<div class="well span11">
         <h1>Register</h1>
 		<div class="form-actions">
 
 
 
         <div class="usernameWrapper">
-		<div class="input-prepend">
+			<strong><p style="margin-bottom: 0px";><span id="username_message" class="confirmMessage">Email</span></p></strong>
+		<div class="input-prepend" >
 			<span class="add-on">
 				<i class="icon-user"></i>
 				        </span>
-        	<input type="text" name="username" id="username_input" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" Placeholder="Email" onkeyup="validateEmailSoft();"  onblur="isTakenSoft();">
+        	<input  type="text" name="username" id="username_input" value="" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" Placeholder="Email" onkeyup="validateEmailSoft();"  onblur="isTakenSoft();">
 			</div>
-        	<span id="username_message" class="confirmMessage">Email</span>
         </div>
 
         <div class="pass1Wrapper">
+			<strong><p style="margin-bottom: 0px;"><span id="pass1Message" class="confirmMessage">Create Password</span></p></strong>
 		<div class="input-prepend">
 			<span class="add-on">
 				<i class="icon-lock"></i>
 				        </span>
             <input type="password" name="pass1" id="pass1" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Create Password"  onkeyup="validatePw(this, 'pass1Message', 'pass2', 'pass2Message');">
 			</div>
-            <span id="pass1Message" class="confirmMessage">Create Password</span>
         </div>
         <div class="pass2Wrapper">
+			<strong><p style="margin-bottom: 0px;"><span id="pass2Message" class="confirmMessage">Confirm Password</span></p></strong>
 		<div class="input-prepend">
 			<span class="add-on">
 				<i class="icon-lock"></i>
 				        </span>
             <input type="password" name="pass2" id="pass2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Confirm password" onkeyup="validatePw(this, 'pass2Message', 'pass1', 'pass1Message');" >
 			</div>
-            <span id="pass2Message" class="confirmMessage">Confirm Password</span>
         </div>
-
+		<p></hr></p>
         <div class="buttonWrapper">
-			<button class="btn btn-primary" type="button" id="button_id" value="Register" disabled onclick="submitForm()"><i class="icon-pencil icon-white" ></i> Register</button>
+			<div class="form-actions">
+			<button class="btn btn-primary btn-large" type="submit" id="button_id" value="Register" disabled onclick="submitForm()"><i class="icon-pencil icon-white" ></i> Register</button>
+			</div>
         </div>    
 	<input type="hidden" name="next" value="{{ next }}" />
-    </form>
+</div>
 	</div>
 </div>
-</div>
+    </form>
 </div>
 
 

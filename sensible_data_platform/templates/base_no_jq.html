@@ -5,6 +5,9 @@
 <noscript>
 	<meta http-equiv="refresh" content="0; url={% url "noscript" %}" />
 </noscript>
+<link rel="icon" 
+	type="image/png" 
+	href="{% static "img/favicon.png" %}">
     <meta charset="utf-8">
     <title>Sensible Data</title>
     <meta name="description" content="">
@@ -41,9 +44,7 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-		<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-		<i class="icon-tasks icon-white"></i> Menu
-          </button>
+			{% block menu %}{% endblock menu %}
 		<div class="nav"><img src="{% static "img/red_logo5_40px.png" %}"></div>
 		<a class="brand" href="{% url 'home' %}">Sensible Data</a>
         {% if user.is_authenticated %}
@@ -52,12 +53,14 @@
                 <li><a href="{% url 'home' %}" class=""><i class="icon-home icon-white"></i> Home</a></li>
                 <li><a href="{% url 'profile' %}" class=""><i class="icon-user icon-white"></i> Profile</a></li>
 				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-white"></i> About</a></li>
+				<li><a href="mailto:support@sensible.dtu.dk" class=""><i class="icon-exclamation-sign icon-white"></i> Help</a></li>
             </ul>
         </div>
 		{% else %}
 		<div class="nav-collapse collapse">
             <ul class="nav">
 				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-white"></i> About</a></li>
+				<li><a href="mailto:support@sensible.dtu.dk" class=""><i class="icon-exclamation-sign icon-white"></i> Help</a></li>
             </ul>
         </div>
 
@@ -79,8 +82,7 @@
                     <li><a href={% url 'logout' %}><i class="icon-road"></i> Logout</a></li>
                   </ul>
         {% else %}
-                <a class="btn btn-primary" href="{% url 'login' %}">
-                <i class="icon-user icon-white"></i> Sign in</a>
+				{% block sign_button %}{% endblock sign_button %}
         {% endif %}
       </ul>
 
@@ -97,16 +99,15 @@
 
 <footer class="row">
 	<div class="span6">
-		<p>This is <a href="https://github.com/organizations/MIT-Model-Open-Data-and-Identity-System">Sensible Data</a>, an <a href="http://openpds.media.mit.edu/">openPDS system</a>
+		<p>This is <a href="https://github.com/MIT-Model-Open-Data-and-Identity-System/SensibleData-Platform">Sensible Data</a>, an <a href="http://openpds.media.mit.edu/">openPDS system</a>
 
-		<span class="label label-info">0.0.7</span></p>
-
+		<span class="label label-info">0.1.0</span></p>
 
 	</div>
 	
 	<div class="span6" style="text-align:right">
 		<p>
-		&copy; <a href="https://raw.github.com/MIT-Model-Open-Data-and-Identity-System/SensibleData-Platform/master/COPYRIGHT">Technical University of Denmark</a> 2013
+		&copy; <a href="https://raw.github.com/MIT-Model-Open-Data-and-Identity-System/SensibleData-Service/master/sensible_data_service/documents/legal_notices">Technical University of Denmark</a> 2013
 		|
 		<a href="https://raw.github.com/MIT-Model-Open-Data-and-Identity-System/SensibleData-Platform/master/LICENSE">software license</a>
 		</p>

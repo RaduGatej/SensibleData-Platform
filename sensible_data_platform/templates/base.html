@@ -1,2 +1,15 @@
 {% extends "base_no_jq.html" %}
 {% block jq %}<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> {% endblock jq %}
+{% block menu %} 
+
+ <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	 <i class="icon-tasks icon-white"></i> Menu
+ </button>
+
+{% endblock menu %}
+
+
+{% block sign_button %}
+<a class="btn btn-primary" href="{% url 'login' %}">
+<i class="icon-user icon-white"></i> Sign in</a>
+{% endblock sign_button %}

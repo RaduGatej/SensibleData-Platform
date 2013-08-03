@@ -45,7 +45,7 @@ def authorize(request):
 		helper = FormHelper()
 		no_submit = Submit('connect','No', css_class='btn btn-large')
 		helper.add_input(no_submit)
-		yes_submit = Submit('connect', 'Yes', css_class='btn btn-large btn-primary')
+		yes_submit = Submit('connect', 'Yes', css_class='btn btn-large btn-success')
 		helper.add_input(yes_submit)
 		helper.form_action = reverse('oauth2_authorize')+'?%s' % authorizer.query_string
 		helper.form_method = 'POST'
@@ -58,7 +58,7 @@ def authorize(request):
 
 		if is_enrollment:
 	
-			template['tos'] = service_manager.getTos(authorizer.client)
+			template['informed_consent'] = service_manager.getInformedConsent(authorizer.client)
 
 			return render_to_response(
 				'oauth2/authorize_enroll.html', 

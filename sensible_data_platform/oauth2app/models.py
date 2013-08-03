@@ -64,6 +64,7 @@ class AccessRange(models.Model):
     """
     key = models.CharField(unique=True, max_length=SCOPE_LENGTH, db_index=True)
     description = models.TextField(blank=True)
+    description_extra = models.TextField(blank=True)
 
     def __unicode__(self):
 	return self.key

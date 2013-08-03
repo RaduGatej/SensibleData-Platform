@@ -29,7 +29,6 @@ def profile(request):
     if request.method == 'POST':
         username = request.user
         user = User.objects.get(username__exact=username) # TODO: sanitize input server-side
-        user.email = request.POST.get("email_field", "")
         user.first_name = request.POST.get("first_name_field", "")
         user.last_name = request.POST.get("last_name_field", "")
         user.save()
