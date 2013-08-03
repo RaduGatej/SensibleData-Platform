@@ -19,7 +19,7 @@
 
 
         <div class="usernameWrapper">
-			<p><span id="username_message" class="confirmMessage" style="margin-left: -10px">Email</span></p>
+			<strong><p style="margin-bottom: 0px";><span id="username_message" class="confirmMessage">Email</span></p></strong>
 		<div class="input-prepend" >
 			<span class="add-on">
 				<i class="icon-user"></i>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="pass1Wrapper">
-			<p><span id="pass1Message" class="confirmMessage" style="margin-left: -10px">Create Password</span></p>
+			<strong><p style="margin-bottom: 0px;"><span id="pass1Message" class="confirmMessage">Create Password</span></p></strong>
 		<div class="input-prepend">
 			<span class="add-on">
 				<i class="icon-lock"></i>
@@ -38,7 +38,7 @@
 			</div>
         </div>
         <div class="pass2Wrapper">
-			<p><span id="pass2Message" class="confirmMessage" style="margin-left: -10px">Confirm Password</span></p>
+			<strong><p style="margin-bottom: 0px;"><span id="pass2Message" class="confirmMessage">Confirm Password</span></p></strong>
 		<div class="input-prepend">
 			<span class="add-on">
 				<i class="icon-lock"></i>
@@ -48,7 +48,9 @@
         </div>
 		<p></hr></p>
         <div class="buttonWrapper">
-			<button class="btn btn-primary" type="button" id="button_id" value="Register" disabled onclick="submitForm()"><i class="icon-pencil icon-white" ></i> Register</button>
+			<div class="form-actions">
+			<button class="btn btn-primary btn-large" type="submit" id="button_id" value="Register" disabled onclick="submitForm()"><i class="icon-pencil icon-white" ></i> Register</button>
+			</div>
         </div>    
 	<input type="hidden" name="next" value="{{ next }}" />
 </div>
