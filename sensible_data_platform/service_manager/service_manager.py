@@ -86,8 +86,8 @@ def discoverService(client):
 	except ValueError: return {'error':'connection refused'}
 	return response
 
-def getTos(client):
-	url = client.api_uri + 'tos/'
+def getInformedConsent(client):
+	url = client.api_uri + 'informed_consent/'
 	response = urllib2.urlopen(url).read()
 	return json.loads(response)
 
