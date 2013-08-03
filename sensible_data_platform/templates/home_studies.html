@@ -152,7 +152,7 @@ function displayAuthError()	{
 					<h2>
 					{% if params.uri != '' %}
 						<a href="{{ params.uri }}">{{ application }}
-						<button value="" class="btn btn-primary btn-small"><i class="icon-chevron-right icon-white"></i><i class="icon-chevron-right icon-white"></i></button></a>
+						<button value="" class="btn btn-primary btn-small" style="margin-bottom: 2px"><i class="icon-chevron-right icon-white"></i><i class="icon-chevron-right icon-white"></i></button></a>
 					{% else %}
 						{{ application }}
 
@@ -170,11 +170,11 @@ function displayAuthError()	{
 								{% if scope_params.authorized == 1 %}
 								<div class="span4" style="border-color: #46a546; padding: 2px 3px 0px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px 3px 3px 3px; border-width:1px; border-style:solid; border-top-style:solid; margin: 20px 10px 20px">
 								<h4><div class="" style="margin:-13px 0px 0px; background-color:#46a546; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 0px 0px 3px 3px; color: #ffffff;"> can {{ scope_params.description | safe }}</div></h4>
-									{{ scope_params.description_extra | safe }}
+								<strong>{{ scope_params.description_extra | safe }}</strong>
 								{% else %}
 								<div class="span4" style="border-color: #c43c35; padding: 2px 3px 0px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px 3px 3px 3px; border-width:1px; border-style:solid; border-top-style:solid; margin: 20px 10px 20px">
 								<h4><div class="" style="margin:-13px 0px 0px; background-color:#c43c35; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 0px 0px 3px 3px; color: #ffffff;"> is not allowed to {{ scope_params.description | safe }}</div></h4>
-									{{ scope_params.description_extra | safe }}
+								<strong>{{ scope_params.description_extra | safe }}</strong>
 								</div>
 								{% endif %}
 							{% endif %}
@@ -197,7 +197,6 @@ function displayAuthError()	{
 					
 					</tr>
 
-
 					{% endfor %}
 						</tbody>
 					</table>
@@ -206,6 +205,9 @@ function displayAuthError()	{
 		</div>
 			{% endfor %}
 
+			<div style="margin-top: 20px">
+				<h5><p>Projektet er frivilligt og du kan altid melde dig ud af det. Kontakt os på <a href="mailto:support@sensible.dtu.dk">support@sensible.dtu.dk</a> hvis dette er dit ønske.</p></h5>
+			</div>
 
 		</div>
 	{% endif %}
