@@ -20,11 +20,12 @@
 <div class="row">
 	<div class="well span11">
 		<h2>Enroll to <i>{{ client.name }}</i></h2>
+		<h3>Informed Consent</h3> 
+		<h5 style="margin-top:-20px;">version {{ informed_consent.service_informed_consent_version | safe }}</h5>
 
 		<p><hr></p>
 		<div style="border: 1px solid #DDDDDD; background-color: #FFFFFF; border-radius: 4px 4px 4px 4px;">
-			<div style="margin:10px;"><h4>{{ tos.service_tos | safe }}</h4></div>
-			<div style="margin:10px; text-align:right">agreement version {{ tos.service_tos_version | safe }}</div>
+			<div style="margin:10px;"><h4>{{ informed_consent.service_informed_consent | safe }}</h4></div>
 		</div>
 		</br>
 
