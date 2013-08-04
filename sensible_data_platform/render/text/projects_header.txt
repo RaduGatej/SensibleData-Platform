@@ -1,0 +1,3 @@
+<span id="projects_header.txt">
+Denne side indeholder en oversigt over de applikationer jeg har givet lov til at indsamle data (fx spørgeskemaet og App'en på min smartphone).
+</span>

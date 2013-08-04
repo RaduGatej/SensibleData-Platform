@@ -8,10 +8,13 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from service_manager import service_manager
 from collections import defaultdict
+from text.get import getText
 
 def home(request):
 	if not request.user.is_authenticated():
-		return render_to_response('index.html', {}, context_instance=RequestContext(request))
+		text = {}
+		text['welcome'] = getText('welcome_text')
+		return render_to_response('index.html', {'text': text}, context_instance=RequestContext(request))
 
 	status = request.REQUEST.get('status', '')
 	message = request.REQUEST.get('message', '')
@@ -53,10 +56,11 @@ def home(request):
 					render_services[service]['applications'][application]['scopes'][services[service]['applications'][application]['scopes'][scope]['auth_url']['url']]['status'] *= int(services[service]['applications'][application]['scopes'][scope]['authorized'])
 	
 
-
+	text = {}
+	text['projects_header'] = getText('projects_header')
 
 	#return HttpResponse(json.dumps(render_services))
-	return render_to_response('home_studies.html', {'services': dict(render_services), 'status': status, 'message': message}, context_instance=RequestContext(request))
+	return render_to_response('home_studies.html', {'services': dict(render_services), 'status': status, 'message': message, 'text': text}, context_instance=RequestContext(request))
 
 
 def changebrowser(request):
