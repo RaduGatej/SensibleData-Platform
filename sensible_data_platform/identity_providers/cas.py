@@ -47,28 +47,28 @@ def link(request):
 	return r
 
 def checkCas(user, student_id):
- 	users = User.objects.filter()
+	users = User.objects.filter()
 	found_users = set()
 	for u in users:
-                try: 
-                        if u.cas.student_id == student_id: 
-                                found_users.add(u)
+		try: 
+			if u.cas.student_id == student_id: 
+				found_users.add(u)
 		except Cas.DoesNotExist: continue
 
 	if len(found_users) > 0:
-                return {"status" : "error", "message" :  "User with student id <%s> already exists."%str(student_id)}
-
-        try:
-                student = Cas.objects.get(student_id = student_id)
-
+		return {"status" : "error", "message" :  "User with student id <%s> already exists."%str(student_id)}
+	
+	try: student = Cas.objects.get(student_id = student_id)
 	except Cas.DoesNotExist: 
-                student = Cas.objects.create(user=user, student_id=student_id)
-                student.student_id = student_id
-                student.save()
+		try:
+			student = Cas.objects.create(user=user, student_id=student_id)
+			student.student_id = student_id
+			student.save()
+		except: return {"status" : "error", "message" : "something went wrong, please try again"}
 
-        except Cas.MultipleObjectsReturned:
-                return {"status" : "error", "message" : "user with student id already exists %s"%str(student_id)}
-        return {"status" : "ok", "message" : "student id linked"}
+	except Cas.MultipleObjectsReturned:
+		return {"status" : "error", "message" : "user with student id already exists %s"%str(student_id)}
+	return {"status" : "ok", "message" : "student id linked"}
 
 def saveStudentAttributes(student_id, attributes):
         try:
