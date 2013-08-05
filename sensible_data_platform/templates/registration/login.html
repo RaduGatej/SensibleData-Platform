@@ -32,7 +32,7 @@ Your username and password didn't match. Please try again.
 <div class="row">
 <fieldset class="well span">
 <h1>Please sign in</h1>
-    <div class="form-actions">
+    <div class="form-actions" style="margin-bottom: 0px;">
 		<strong><p style="margin-bottom: 0px;"><span id="pass1Message" class="confirmMessage">Email</span></p></strong>
 	<div class="input-prepend">
 		<span class="add-on">
@@ -51,7 +51,9 @@ Your username and password didn't match. Please try again.
 	<p></p>
 	<p><button type="submit" name="submit" value="Login" class="btn btn-primary btn-large"><i class="icon-user icon-white"></i> Sign in</button></p>
 	<p></p>
-	<p><a class="btn" href="{% url 'register' %}?next={{ trust_root }}"><i class="icon-pencil"></i> Register</a></p>
+	<p><a class="btn btn-success" href="{% url 'register' %}?next={{ trust_root }}"><i class="icon-pencil icon-white"></i> Register</a></p>
+	<p>Forgot your password? </br>
+	<a href="mailto:support@sensible.dtu.dk?subject=Password reset for Sensible Data&body=My student number is ">Contact us</a> with your student number.</p>
     </div>
   </fieldset>
 </div>
