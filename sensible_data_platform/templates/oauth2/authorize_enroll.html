@@ -20,7 +20,9 @@
 <div class="row">
 	<div class="well span11">
 		<h2>Enroll to <i>{{ client.name }}</i></h2>
-		<h3>Informed Consent</h3> 
+		<h3>Tiltrædelseserklæring for  
+		{{ user.cas.givenName }} {{ user.cas.familyName }} 
+		({{ user.cas.student_id }}).</h3>
 		<h5 style="margin-top:-20px;">version {{ informed_consent.service_informed_consent_version | safe }}</h5>
 
 		<p><hr></p>
