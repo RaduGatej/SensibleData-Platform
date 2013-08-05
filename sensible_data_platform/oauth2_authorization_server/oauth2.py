@@ -45,7 +45,7 @@ def authorize(request):
 		helper = FormHelper()
 		no_submit = Submit('connect','No', css_class='btn btn-large')
 		helper.add_input(no_submit)
-		yes_submit = Submit('connect', 'Yes', css_class='btn btn-large btn-success')
+		yes_submit = Submit('connect', 'Godkend', css_class='btn btn-large btn-success')
 		helper.add_input(yes_submit)
 		helper.form_action = reverse('oauth2_authorize')+'?%s' % authorizer.query_string
 		helper.form_method = 'POST'
@@ -71,7 +71,7 @@ def authorize(request):
 	elif request.method == 'POST':
 		form = AuthorizeForm(request.POST)
 		if form.is_valid():
-			if request.POST.get("connect") == "Yes":
+			if request.POST.get("connect") == "Godkend":
 				return authorizer.grant_redirect()
 			else:
 				return authorizer.error_redirect()
