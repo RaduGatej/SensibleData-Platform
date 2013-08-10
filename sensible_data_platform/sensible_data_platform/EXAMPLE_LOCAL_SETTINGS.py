@@ -9,6 +9,12 @@ ROOT_DIR = '/home/user/sensible_data_platform/'
 #Root url prefix
 ROOT_URL = '/sensible-data/'
 
+#Base url prefix (the entire thing)
+BASE_URL = 'https://nowhere.com/sensible-data/'
+
+#URLS TO FIRST /
+TRUST_ROOTS = ["https://nowhere.com/"]
+
 #Secret key for the project
 #Can be generated with 
 

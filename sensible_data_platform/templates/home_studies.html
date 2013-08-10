@@ -163,18 +163,22 @@ function displayAuthError()	{
 						<tbody >
 					{% for auth_uri, scopes in params.scopes.items %}
 							<tr>
-								<td class="span6" style="border-top: none; vertical-align:middle;">
+								<form method="get" action="{{ auth_uri }}">
+								<td class="span8" style="border-top: none; vertical-align:middle;">
 						{% for scope, scope_params in scopes.items %}
 							{% if scope != 'message' and scope != 'status' %}
 								{% if scope_params.authorized == 1 %}
-								<div class="span4" style="border-color: #46a546; padding: 2px 3px 0px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px 3px 3px 3px; border-width:1px; border-style:solid; border-top-style:solid; margin: 20px 10px 20px">
+								<div class="span6" style="border-color: #46a546; padding: 2px 3px 0px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px 3px 3px 3px; border-width:1px; border-style:solid; border-top-style:solid; margin: 20px 10px 20px">
 								<h4><div class="" style="margin:-13px 0px 0px; background-color:#46a546; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 0px 0px 3px 3px; color: #ffffff;"> can {{ scope_params.description | safe }}</div></h4>
 								<strong>{{ scope_params.description_extra | safe }}</strong>
+								</div>
 								{% else %}
-								<div class="span4" style="border-color: #c43c35; padding: 2px 3px 0px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px 3px 3px 3px; border-width:1px; border-style:solid; border-top-style:solid; margin: 20px 10px 20px">
-								<h4><div class="" style="margin:-13px 0px 0px; background-color:#c43c35; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 0px 0px 3px 3px; color: #ffffff;"> not allowed to {{ scope_params.description | safe }}</div></h4>
+								<div class="span6" style="border-color: #c43c35; padding: 2px 3px 0px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px 3px 3px 3px; border-width:1px; border-style:solid; border-top-style:solid; margin: 20px 10px 20px"><input type="checkbox" name="scope_{{ scope }}" checked id="cb_{{ service }}_{{ application }}_{{ auth_uri }}_{{ scope }}" value="checked" hidden />
+								<h4><div class="" style="margin:-13px 0px 0px; background-color:#c43c35; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 0px 0px 3px 3px; color: #ffffff;"> not allowed to {{ scope_params.description | safe }} </div></h4>
 								<strong>{{ scope_params.description_extra | safe }}</strong>
 								</div>
+
+
 								{% endif %}
 							{% endif %}
 						{% endfor %}
@@ -185,11 +189,11 @@ function displayAuthError()	{
 
 						<td style="text-align:left; vertical-align:middle; border-top: none">
 						{% if auth_uri != '' %}
-						<a href="{{ auth_uri }}"><button value="" class="btn btn-success btn-large">Allow <i class="icon-chevron-right icon-white"></i></button></a>
+				   <p><button type="submit" name="submit" value="" class="btn btn-success btn-large">Allow <i class="icon-chevron-right icon-white"></i></button></p>
 						{% else %}
 							<button disabled value="" class="btn btn-success btn-large">{{ scopes.message | safe}}</button>
 						{% endif %}
-
+						</form>
 						{% endif %}
 
 						</td>
