@@ -26,8 +26,18 @@ Your username and password didn't match. Please try again.
 {% endif %}
 </p>
 
+
 {% else %}
-<form method="post" action="{% url 'login' %}">
+
+<script>
+	function disableSubmitButton()
+	{
+		document.getElementById('submit_button').disabled = true;
+		return true;
+	}
+</script>
+
+<form method="post" action="{% url 'login' %}" onsubmit="return disableSubmitButton()">
 {% csrf_token %}
 <div class="row">
 <fieldset class="well span">
@@ -49,7 +59,7 @@ Your username and password didn't match. Please try again.
                 <input type="password" class="span" name="password" id="id_password" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Password">
         </div>
 	<p></p>
-	<p><button type="submit" name="submit" value="Login" class="btn btn-primary btn-large"><i class="icon-user icon-white"></i> Sign in</button></p>
+	<p><button id="submit_button" type="submit" name="submit" value="Login" class="btn btn-primary btn-large"><i class="icon-user icon-white"></i> Sign in</button></p>
 	<p></p>
 	<p><a class="btn btn-success" href="{% url 'register' %}?next={{ trust_root }}"><i class="icon-pencil icon-white"></i> Register</a></p>
 	<p>Forgot your password? </br>
