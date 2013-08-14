@@ -28,6 +28,10 @@ def link(request):
 		response_auth = urllib2.urlopen(validation_url).read()
 		if "cas:authenticationSuccess" in response_auth:
 			student_id = response_auth.split("<cas:user>")[1].split("</cas:user>")[0]
+			if '@' in student_id:
+				r = redirect('home')
+				r['Location'] += '?status=failed&message='+'Fejl: Du skal indtaste dit studieid!! </br> Dit studieid formen s123456 - bogstavet "s" efterfulgt af seks tal (som ikke er 123456, men er unikke for dig).</br> Hvis du ikke kan finde dit studieid, kan du logge ind pa http://optag.dtu.dk med din email og finde det der.'
+				return r
 			response = checkCas(request.user, student_id)
 			values['response'] = response
 			if 'ok' in response["status"]:
