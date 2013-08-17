@@ -8,6 +8,7 @@ Your username and password didn't match. Please try again.
 </div>
 {% endif %}
 
+
 {% if user.is_authenticated %}
 
 
@@ -61,7 +62,7 @@ Your username and password didn't match. Please try again.
 	<p></p>
 	<p><button id="submit_button" type="submit" name="submit" value="Login" class="btn btn-primary btn-large"><i class="icon-user icon-white"></i> Sign in</button></p>
 	<p></p>
-	<p><a class="btn btn-success" href="{% url 'register' %}?next={{ trust_root }}"><i class="icon-pencil icon-white"></i> Register</a></p>
+	<div id="register_button"><p><a class="btn btn-success" href="{% url 'register' %}?next={{ trust_root }}"><i class="icon-pencil icon-white"></i> Register</a></p></div>
 	<p>Forgot your password? </br>
 	<a href="mailto:support@sensible.dtu.dk?subject=Password reset for Sensible Data&body=My student number is ">Contact us</a> with your student number.</p>
     </div>
@@ -69,6 +70,14 @@ Your username and password didn't match. Please try again.
 </div>
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
+<script>
+	var is_dtu_collector = false;
+	if (navigator.userAgent == 'dk.dtu.imm.datacollector2013') is_dtu_collector = true;
+	if (is_dtu_collector) {
+		register_button = document.getElementById('register_button');
+		register_button.style.display = 'none';
+	}
+</script>
 
 {% endif %}
 {% endblock %}
