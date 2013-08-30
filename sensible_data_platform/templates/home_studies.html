@@ -146,6 +146,7 @@ function displayAuthError()	{
 
 
 			{% for application, params in status.applications.items %}
+			<a id="{{ service }}.{{ application }}"></a>
 				<div class="form-actions" style="border: 1px solid #DDDDDD; background-color: #FFFFFF; border-radius: 4px 4px 4px 4px;margin-bottom:-10px">
 						
 					<h2>
