@@ -15,6 +15,15 @@ def checkWhitelist(user, client):
 		try: 
 			if user.email in researcher_whitelist: return True
 		except: pass
+		
+		developer_whitelist = []
+		try: 
+			developer_whitelist = json.loads(open(settings.ROOT_DIR+'service_manager/SECURE_'+client.name+'_developer_whitelist').read())
+		except: pass
+
+		try: 
+			if user.email in developer_whitelist: return True
+		except: pass
 
 		try: user.cas.student_id
 		except Cas.DoesNotExist: return False
