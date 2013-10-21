@@ -3,12 +3,11 @@ from django.shortcuts import render_to_response
 import json
 
 from accounts import manager
-from utils import platform_config
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from service_manager import service_manager
 from collections import defaultdict
-from documents.get_documents import getText
+from sensible_platform_documents.get_documents import getText
 
 def home(request):
 	if not request.user.is_authenticated():
@@ -59,7 +58,6 @@ def home(request):
 	text = {}
 	text['projects_header'] = getText('projects_header', lang='da')
 
-	#return HttpResponse(json.dumps(render_services))
 	return render_to_response('home_studies.html', {'services': dict(render_services), 'status': status, 'message': message, 'text': text}, context_instance=RequestContext(request))
 
 
