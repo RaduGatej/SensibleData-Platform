@@ -18,6 +18,9 @@ DATABASES = LOCAL_SETTINGS.DATABASES
 BASE_URL = LOCAL_SETTINGS.BASE_URL
 TRUST_ROOTS = LOCAL_SETTINGS.TRUST_ROOTS
 
+PLATFORM_NAME = LOCAL_SETTINGS.PLATFORM_NAME
+SUPPORT_EMAIL = LOCAL_SETTINGS.SUPPORT_EMAIL
+
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
@@ -106,7 +109,7 @@ MIDDLEWARE_CLASSES = (
 TEMPLATE_CONTEXT_PROCESSORS = (
         'django.core.context_processors.static',
         'django.contrib.auth.context_processors.auth',
-        'sensible_data_platform.context_processors.service',
+ 		'sensible_data_platform.context_processors.platform',
 )
 
 ROOT_URLCONF = 'sensible_data_platform.urls'
@@ -139,6 +142,7 @@ INSTALLED_APPS = (
     'uni_form',
     'service_manager',
     'south',
+    'sensible_platform_documents',
 )
 
 # A sample logging configuration. The only tangible logging
