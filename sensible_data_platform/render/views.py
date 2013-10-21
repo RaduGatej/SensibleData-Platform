@@ -8,12 +8,12 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from service_manager import service_manager
 from collections import defaultdict
-from text.get import getText
+from documents.get_documents import getText
 
 def home(request):
 	if not request.user.is_authenticated():
 		text = {}
-		text['welcome'] = getText('welcome_text')
+		text['welcome'] = getText('welcome_text', lang='da')
 		return render_to_response('index.html', {'text': text}, context_instance=RequestContext(request))
 
 	status = request.REQUEST.get('status', '')
@@ -34,30 +34,30 @@ def home(request):
 		render_services[service]['applications'] = {}
 		for application in services[service]['applications']:
 			render_services[service]['applications'][application] = {}
-			render_services[service]['applications'][application]['description'] = services[service]['applications'][application]['description'] 
-			render_services[service]['applications'][application]['uri'] = services[service]['applications'][application]['uri'] 
+			render_services[service]['applications'][application]['description'] = services[service]['applications'][application]['description']
+			render_services[service]['applications'][application]['uri'] = services[service]['applications'][application]['uri']
 
 
 			render_services[service]['applications'][application]['scopes'] = {}
 			for scope in services[service]['applications'][application]['scopes']:
 				try:
 					render_services[service]['applications'][application]['scopes'][services[service]['applications'][application]['scopes'][scope]['auth_url']['url']][scope] = services[service]['applications'][application]['scopes'][scope]
-				
+
 				except KeyError:
 					render_services[service]['applications'][application]['scopes'][services[service]['applications'][application]['scopes'][scope]['auth_url']['url']] = {}
 					render_services[service]['applications'][application]['scopes'][services[service]['applications'][application]['scopes'][scope]['auth_url']['url']][scope] = services[service]['applications'][application]['scopes'][scope]
 
 				render_services[service]['applications'][application]['scopes'][services[service]['applications'][application]['scopes'][scope]['auth_url']['url']]['message'] = services[service]['applications'][application]['scopes'][scope]['auth_url']['message']
 
-				try:				
+				try:
 					render_services[service]['applications'][application]['scopes'][services[service]['applications'][application]['scopes'][scope]['auth_url']['url']]['status'] *= int(services[service]['applications'][application]['scopes'][scope]['authorized'])
 				except KeyError:
 					render_services[service]['applications'][application]['scopes'][services[service]['applications'][application]['scopes'][scope]['auth_url']['url']]['status'] = 1
 					render_services[service]['applications'][application]['scopes'][services[service]['applications'][application]['scopes'][scope]['auth_url']['url']]['status'] *= int(services[service]['applications'][application]['scopes'][scope]['authorized'])
-	
+
 
 	text = {}
-	text['projects_header'] = getText('projects_header')
+	text['projects_header'] = getText('projects_header', lang='da')
 
 	#return HttpResponse(json.dumps(render_services))
 	return render_to_response('home_studies.html', {'services': dict(render_services), 'status': status, 'message': message, 'text': text}, context_instance=RequestContext(request))
@@ -65,6 +65,6 @@ def home(request):
 
 def changebrowser(request):
 	return render_to_response('changebrowser.html', {}, context_instance=RequestContext(request))
-		
+
 def noscript(request):
 	return render_to_response('js_disabled.html', {}, context_instance=RequestContext(request))

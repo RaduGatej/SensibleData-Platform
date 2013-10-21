@@ -1,0 +1,3 @@
+<span id="welcome_text.txt">
+Dummy text - should be replaced.
+</span>
