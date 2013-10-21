@@ -64,7 +64,7 @@ Your username and password didn't match. Please try again.
 	<p></p>
 	<div id="register_button"><p><a class="btn btn-success" href="{% url 'register' %}?next={{ trust_root }}"><i class="icon-pencil icon-white"></i> Register</a></p></div>
 	<p>Forgot your password? </br>
-	<a href="mailto:support@sensible.dtu.dk?subject=Password reset for Sensible Data&body=My student number is ">Contact us</a> with your student number.</p>
+	<a href="mailto:{{ support_mail }}?subject=Password reset for {{ service.name }}&body=My student number is ">Contact us</a> with your student number.</p>
     </div>
   </fieldset>
 </div>

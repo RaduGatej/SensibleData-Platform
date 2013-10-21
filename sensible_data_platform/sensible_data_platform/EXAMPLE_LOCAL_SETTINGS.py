@@ -37,3 +37,4 @@ DATABASES = {
 }
 
 SERVICE_NAME = "Sensible Data"
+SUPPORT_MAIL = "support@sensible.dtu.dk"

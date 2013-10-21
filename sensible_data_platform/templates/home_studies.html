@@ -31,7 +31,7 @@ if(window.location.hash) {
 			break;
 		}
 	}
-} 
+}
 
 function displayAuthError()	{
 	error_status = '<div class="alert alert-error"> <button type="button" class="close" data-dismiss="alert">&times;</button> <strong>Error</strong> You clicked No, cannot proceed :( </div>'
@@ -67,7 +67,7 @@ function displayAuthError()	{
 		<div class="well span11">
 				<img src="{% static "img/dtu-logo.png" %}" style="display: block; margin: 0 auto;" />
 				<p><h3>Hey, {{ user.cas.givenName }} ({{ user.cas.student_id }})! You seem to have a DTU account, but are not on our list of students who can join SensibleDTU.</h3></p>
-				<p><h3>Is this a mistake? <a href="mailto:support@sensible.dtu.dk">Let us know!</a></h3></p>
+				<p><h3>Is this a mistake? <a href="mailto:{{ support_mail }}">Let us know!</a></h3></p>
 
 
 		</div>
@@ -115,7 +115,7 @@ function displayAuthError()	{
 				<h1>{{ service }}</h1>
 				<p>{{ status.discovery.service_desc_full | safe }} </p>
 					</br>
-					<h4><div class="span" style="margin:-13px 0px 0px; background-color:#c43c35; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 3px 3px 3px 3px; color: #ffffff;"> The Study seems to be offline at the moment. <a href="mailto:support@sensible.dtu.dk">Ping us.</a> Thanks!</div></h4>
+					<h4><div class="span" style="margin:-13px 0px 0px; background-color:#c43c35; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 3px 3px 3px 3px; color: #ffffff;"> The Study seems to be offline at the moment. <a href="mailto:{{ support_mail }}">Ping us.</a> Thanks!</div></h4>
 			</form>
 			</div>
 		{% else %}
@@ -123,7 +123,7 @@ function displayAuthError()	{
 				<form method="get" action="{{ status.authorize_url }}">
 				<h1>{{ service }}</h1>
 				<h4> {{ status.discovery.service_desc_full | safe }} </h4>
-					
+
 							<div class="form-actions">
 				   <p><button type="submit" name="submit" value="" class="btn btn-primary btn-large">Tilmeld <i class="icon-chevron-right icon-white"></i></button></p>
 				   </div>
@@ -148,7 +148,7 @@ function displayAuthError()	{
 			{% for application, params in status.applications.items %}
 			<a id="{{ service }}.{{ application }}"></a>
 				<div class="form-actions" style="border: 1px solid #DDDDDD; background-color: #FFFFFF; border-radius: 4px 4px 4px 4px;margin-bottom:-10px">
-						
+
 					<h2>
 					{% if params.uri != '' %}
 						<a href="{{ params.uri }}">{{ application }}
@@ -198,24 +198,24 @@ function displayAuthError()	{
 						{% endif %}
 
 						</td>
-					
+
 					</tr>
 
 					{% endfor %}
 						</tbody>
 					</table>
-					
+
 		</form>
 		</div>
 			{% endfor %}
 
 			<div style="margin-top: 20px">
-				<h5><p>Deltagelse i SensibleDTU er frivillig og du kan til enhver tid melde dig ud. Hvis du ønsker at framelde dig SensibleDTU projektet kan du skrive til <a href="mailto:support@sensible.dtu.dk">support@sensible.dtu.dk</a>.</p></h5>
+				<h5><p>Deltagelse i SensibleDTU er frivillig og du kan til enhver tid melde dig ud. Hvis du ønsker at framelde dig SensibleDTU projektet kan du skrive til <a href="mailto:{{ support_mail }}">{{ support_mail }}</a>.</p></h5>
 			</div>
 
 		</div>
 	{% endif %}
-	
+
 {% endfor %}
 
 

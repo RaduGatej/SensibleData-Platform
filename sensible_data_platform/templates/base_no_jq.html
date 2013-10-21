@@ -5,11 +5,11 @@
 <noscript>
 	<meta http-equiv="refresh" content="0; url={% url "noscript" %}" />
 </noscript>
-<link rel="icon" 
-	type="image/png" 
+<link rel="icon"
+	type="image/png"
 	href="{% static "img/favicon.png" %}">
     <meta charset="utf-8">
-    <title>Sensible Data</title>
+    <title>{{ service.name }}</title>
     <meta name="description" content="">
     <meta name="author" content="Arkadiusz Stopczynski">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,22 +112,22 @@
     <div class="navbar-inner">
         <div class="container">
 			{% block menu %}{% endblock menu %}
-		<div class="nav"><img src="{% static "img/red_logo5_40px.png" %}"></div>
-		<a class="brand" href="{% url 'home' %}">Sensible Data</a>
+		<div class="nav"><img src="{% static "img/logo_40px.png" %}"></div>
+		<a class="brand" href="{% url 'home' %}">{{ service.name }}</a>
         {% if user.is_authenticated %}
 		<div class="nav-collapse collapse">
             <ul class="nav">
                 <li><a href="{% url 'home' %}" class=""><i class="icon-home icon-white"></i> Home</a></li>
                 <li><a href="{% url 'profile' %}" class=""><i class="icon-user icon-white"></i> Profile</a></li>
 				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-white"></i> About</a></li>
-				<li><a href="mailto:support@sensible.dtu.dk" class=""><i class="icon-exclamation-sign icon-white"></i> Help</a></li>
+				<li><a href="mailto:{{ support_mail }}" class=""><i class="icon-exclamation-sign icon-white"></i> Help</a></li>
             </ul>
         </div>
 		{% else %}
 		<div class="nav-collapse collapse">
             <ul class="nav">
 				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-white"></i> About</a></li>
-				<li><a href="mailto:support@sensible.dtu.dk" class=""><i class="icon-exclamation-sign icon-white"></i> Help</a></li>
+				<li><a href="mailto:{{ support_mail }}" class=""><i class="icon-exclamation-sign icon-white"></i> Help</a></li>
             </ul>
         </div>
 
@@ -166,12 +166,12 @@
 
 <footer class="row">
 	<div class="span6">
-		<p>This is <a href="https://github.com/MIT-Model-Open-Data-and-Identity-System/SensibleData-Platform">Sensible Data</a>, an <a href="http://openpds.media.mit.edu/">openPDS system</a>
+		<p>This is <a href="https://github.com/MIT-Model-Open-Data-and-Identity-System/SensibleData-Platform">{{ service.name }}</a>, an <a href="http://openpds.media.mit.edu/">openPDS system</a>
 
-		<span class="label label-important">0.1.8-devel</span></p>
+		<span class="label label-{% if service.is_devel %}important{% else %}info{% endif %}">{{ service.version }}</span></p>
 
 	</div>
-	
+
 	<div class="span6" style="text-align:right">
 		<p>
 		&copy; <a href="https://raw.github.com/MIT-Model-Open-Data-and-Identity-System/SensibleData-Service/master/sensible_data_service/documents/legal_notices">Technical University of Denmark</a> 2013

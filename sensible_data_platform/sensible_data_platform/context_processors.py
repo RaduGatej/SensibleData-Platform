@@ -7,4 +7,5 @@ def service(request):
         version = f.read()
     is_devel = '-devel' in version
 
-    return {'service':{'name':settings.SERVICE_NAME, 'version':version, 'is_devel':is_devel}}
+    return {'service':{'name':settings.SERVICE_NAME, 'version':version, 'is_devel':is_devel}
+            'support_mail': settings.SUPPORT_MAIL}
