@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.core.context_processors import csrf
 from django.contrib.auth.models import User
+from django.template import RequestContext
 
 from openid_provider.models import *
 from .models import *
@@ -49,7 +50,7 @@ def register(request):
 		values.update(csrf(request))
 		values['platformUri'] = settings.BASE_URL
 		values['next'] += '&registration=true'
-		return render_to_response('registration/register.html', values)
+		return render_to_response('registration/register.html', values, context_instance=RequestContext(request))
 	
 	if request.method == 'POST':
 		username = request.POST.get('username', '')
