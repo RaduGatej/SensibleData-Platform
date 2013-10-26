@@ -1,3 +1,3 @@
 <span id="projects_header.txt">
-projects_header_da.txt
+Denne side indeholder en oversigt over de applikationer jeg har givet lov til at indsamle mine data (fx spørgeskemaet og data der indsamles af SensibleDTU app'en på min smartphone).
 </span>
