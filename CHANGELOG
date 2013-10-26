@@ -1,4 +1,4 @@
-SensibleData-Platform 0.1.8-devel
+SensibleData-Platform 0.1.9
 
 * Documents are now a separate application.
 * Split production static and document files into seperate repository.
