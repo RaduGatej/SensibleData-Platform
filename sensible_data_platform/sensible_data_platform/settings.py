@@ -5,6 +5,7 @@ import LOCAL_SETTINGS
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+MAINTENANCE_MODE = False
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -20,6 +21,10 @@ TRUST_ROOTS = LOCAL_SETTINGS.TRUST_ROOTS
 
 PLATFORM_NAME = LOCAL_SETTINGS.PLATFORM_NAME
 SUPPORT_EMAIL = LOCAL_SETTINGS.SUPPORT_EMAIL
+
+MAINTENANCE_IGNORE_URLS = (
+		    r'^.*/admin/$',
+)
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -102,6 +107,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+	'maintenancemode.middleware.MaintenanceModeMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
