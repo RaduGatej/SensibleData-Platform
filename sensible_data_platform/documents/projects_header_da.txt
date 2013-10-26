@@ -1,0 +1,3 @@
+<span id="projects_header.txt">
+Dummy tekst - skal erstattes.
+</span>

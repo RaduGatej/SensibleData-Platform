@@ -16,7 +16,7 @@ BASE_URL = 'https://nowhere.com/sensible-data/'
 TRUST_ROOTS = ["https://nowhere.com/"]
 
 #Secret key for the project
-#Can be generated with 
+#Can be generated with
 
 #import uuid, hashlib
 #str(hashlib.sha256(str(uuid.uuid4())).hexdigest())
@@ -35,3 +35,6 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default.
     }
 }
+
+SERVICE_NAME = "Sensible Data"
+SUPPORT_MAIL = "support@sensible.dtu.dk"

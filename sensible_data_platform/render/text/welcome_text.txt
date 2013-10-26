@@ -1,6 +1,0 @@
-<span id="welcome_text.txt">
-SensibleData er stedet hvor du administrerer din deltagelse i SensibleDTU. Du kan altid logge ind og se hvilke dele af projektet du deltager i, samt få adgang til dine personlige data.
-</br>
-</br>
-Vi passer godt på de data vi indsamler. De data vi lagrer er adskilte fra navn og andre personligt identificebare oplysninger. Det vil sige at selv forskere på projektet kun har adgang til anonymiserede data. Derudover lagres alle data på fysisk sikre, krypterede servere som kun vores forskerhold kan tilgå.
-</span>

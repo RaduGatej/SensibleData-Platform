@@ -5,6 +5,7 @@ import LOCAL_SETTINGS
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+MAINTENANCE_MODE = False
 
 ADMINS = (
      ('Arkadiusz Stopczynski', 'arks@dtu.dk'),
@@ -17,6 +18,13 @@ ROOT_URL = LOCAL_SETTINGS.ROOT_URL
 DATABASES = LOCAL_SETTINGS.DATABASES
 BASE_URL = LOCAL_SETTINGS.BASE_URL
 TRUST_ROOTS = LOCAL_SETTINGS.TRUST_ROOTS
+
+PLATFORM_NAME = LOCAL_SETTINGS.PLATFORM_NAME
+SUPPORT_EMAIL = LOCAL_SETTINGS.SUPPORT_EMAIL
+
+MAINTENANCE_IGNORE_URLS = (
+		    r'^.*/admin/$',
+)
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -99,6 +107,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+	'maintenancemode.middleware.MaintenanceModeMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -106,6 +115,7 @@ MIDDLEWARE_CLASSES = (
 TEMPLATE_CONTEXT_PROCESSORS = (
         'django.core.context_processors.static',
         'django.contrib.auth.context_processors.auth',
+ 		'sensible_data_platform.context_processors.platform',
 )
 
 ROOT_URLCONF = 'sensible_data_platform.urls'
@@ -138,6 +148,7 @@ INSTALLED_APPS = (
     'uni_form',
     'service_manager',
     'south',
+    'sensible_platform_documents',
 )
 
 # A sample logging configuration. The only tangible logging
