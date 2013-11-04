@@ -1,10 +1,11 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 
 This is dashboard.html
 </br>
-Hello {{ username }}
+{% trans "Hello" %} {{ username }}
 </br>
 
 <div id = 'initiated'>
@@ -16,7 +17,7 @@ Hello {{ username }}
 
 </br>
 
-<b>available</b>
+<b>{% trans "available" %}</b>
 </br>
 {% for service, value in services.available.items %}
 	<li> {{ value.status }}: {{ service }}  

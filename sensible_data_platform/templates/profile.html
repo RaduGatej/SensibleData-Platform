@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load staticfiles %}
+{% load i18n %} 
 
 {% block content %}
 
@@ -40,14 +41,14 @@ $(':input').each(function() {
 {% if status == 'failed' %}
 <div class="alert alert-error">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Error</strong> {{ message }}
+    <strong>{% trans "Error" %}</strong> {{ message }}
 </div>
 {% endif %}
 
 {% if status == 'success' %}
 <div class="alert alert-success">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Profile linked!</strong>
+    <strong>{% trans "Profile linked!" %}</strong>
 </div>
 {% endif %}
 
@@ -60,22 +61,22 @@ $(':input').each(function() {
             <form id="sensible_form_id" name="sensible_form" action="{% url 'profile' %}"  method="post" >
                 {% csrf_token %}
                 <div class="input-prepend">
-                    <label> Username</label>
+                    <label> {% trans "Username" %}</label>
                     <input class="input-large" id="sensible_username" type="text" value={{ sensible.profile.username }} disabled >
                 </div>
                 <br>
                 <div class="input-prepend">
-                    <label>First Name</label>
+                    <label>{% trans "First Name" %}</label>
                     <input class="input-large" id="sensible_first" name="first_name_field" type="text" value={{ sensible.profile.first_name }} >
                 </div>
                 <br>
                <div class="input-prepend">
-                    <label>Last Name</label>
+                    <label>{% trans "Last Name" %}</label>
                     <input class="input-large" id="sensible_last" name="last_name_field" type="text" value={{ sensible.profile.last_name }} >
                 </div>
                 <br>
                <div class="input-prepend">
-                    <label>Phone Number</label>
+                    <label>{% trans "Phone Number" %}</label>
                     <input class="input-large" id="sensible_phone" name="phone_field" type="text" value={{ sensible.profile.phone }} >
                 </div>
                 <div class="buttonWrapper">
@@ -105,22 +106,22 @@ $(':input').each(function() {
         </table>
             <div class="form-actions">
              <div class="input-prepend">
-                <label> Student ID</label>
+                <label>{% trans "Student ID" %}</label>
                 <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.student_id }} disabled >
             </div>
             <br>
             <div class="input-prepend">
-                <label> Email</label>
+                <label> {% trans "Email" %}</label>
                 <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.email }} disabled >
             </div>
             <br>
              <div class="input-prepend">
-                <label>Given Name</label>
+                <label>{% trans "Given Name" %}</label>
                 <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.givenName }} disabled >
             </div>
             <br>
            <div class="input-prepend">
-                <label>Family Name</label>
+                <label>{% trans "Family Name" %}</label>
                 <input class="input-large" id="prependedInput" type="text" value={{ cas.profile.familyName }} disabled >
             </div>
         </div>
@@ -138,9 +139,9 @@ $(':input').each(function() {
                   <tr>
                            <td style="text-align: center; vertical-align: middle;">
                                    <h4 style="color:#c51137">
-                                       DTU student?
+                                       {% trans "DTU student?" %}
 			<div class="form-actions">
-									   <p><a class="btn btn-large btn-danger" href="{{ cas.connector }}">Link to Your account</a></p>
+									   <p><a class="btn btn-large btn-danger" href="{{ cas.connector }}">{% trans "Link to Your account" %}</a></p>
 			</div>
                                    </h4>
 

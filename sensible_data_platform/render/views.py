@@ -12,13 +12,13 @@ from sensible_platform_documents.get_documents import getText
 def home(request):
 	if not request.user.is_authenticated():
 		text = {}
-		text['welcome'] = getText('welcome_text', lang='da')
+		text['welcome'] = getText('welcome_text', request.LANGUAGE_CODE)
 		return render_to_response('index.html', {'text': text}, context_instance=RequestContext(request))
 
 	status = request.REQUEST.get('status', '')
 	message = request.REQUEST.get('message', '')
 
-	services = service_manager.getServices2(request.user)
+	services = service_manager.getServices2(request.user,request.LANGUAGE_CODE)
 	render_services = dict()
 
 
@@ -56,7 +56,8 @@ def home(request):
 
 
 	text = {}
-	text['projects_header'] = getText('projects_header', lang='da')
+	
+	text['projects_header'] = getText('projects_header', request.LANGUAGE_CODE)
 
 	return render_to_response('home_studies.html', {'services': dict(render_services), 'status': status, 'message': message, 'text': text}, context_instance=RequestContext(request))
 

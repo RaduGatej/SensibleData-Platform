@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load i18n %} 
 <html lang="en">
 <head>
 <noscript>
@@ -9,7 +10,7 @@
 	type="image/png"
 	href="{% static "img/favicon.png" %}">
     <meta charset="utf-8">
-    <title>{{ platform.name }}</title>
+    <title>{% blocktrans %}{{ platform.name }}{% endblocktrans %}</title>
     <meta name="description" content="">
     <meta name="author" content="Arkadiusz Stopczynski">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -117,21 +118,39 @@
         {% if user.is_authenticated %}
 		<div class="nav-collapse collapse">
             <ul class="nav">
-                <li><a href="{% url 'home' %}" class=""><i class="icon-home icon-white"></i> Home</a></li>
-                <li><a href="{% url 'profile' %}" class=""><i class="icon-user icon-white"></i> Profile</a></li>
-				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-white"></i> About</a></li>
-				<li><a href="mailto:{{ support_email }}" class=""><i class="icon-exclamation-sign icon-white"></i> Help</a></li>
+                <li><a href="{% url 'home' %}" class=""><i class="icon-home icon-white"></i>{% trans "Home" %}</a></li>
+                <li><a href="{% url 'profile' %}" class=""><i class="icon-user icon-white"></i>{% trans "Profile" %}</a></li>
+				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-white"></i>{% trans "About" %}</a></li>
+				<li><a href="mailto:{{ support_email }}" class=""><i class="icon-exclamation-sign icon-white"></i>{% trans "Help" %}</a></li>
             </ul>
+		
         </div>
 		{% else %}
 		<div class="nav-collapse collapse">
             <ul class="nav">
-				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-white"></i> About</a></li>
-				<li><a href="mailto:{{ support_email }}" class=""><i class="icon-exclamation-sign icon-white"></i> Help</a></li>
+				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-white"></i>{% trans "About" %}</a></li>
+				<li><a href="mailto:{{ support_email }}" class=""><i class="icon-exclamation-sign icon-white"></i>{% trans "Help" %}</a></li>
             </ul>
         </div>
-
 		{% endif %}
+<div class="nav-collapse collapse">
+<ul class="nav">
+<form action="{% url 'set_language' %}" method="post">
+{% csrf_token %}
+<input name="next" type="hidden" value="{{ redirect_to }}" />
+<select name="language">
+{% get_language_info_list for LANGUAGES as languages %}
+{% for language in languages %}
+<option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+    {{ language.name_local }} ({{ language.code }})
+</option>
+{% endfor %}
+</select>
+<input type="submit" value="Go" />
+</form>
+ </ul>
+</div>
+
 <ul class="nav pull-right action">
         {% if user.is_authenticated %}
                   <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
@@ -146,7 +165,7 @@
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a href={% url 'logout' %}><i class="icon-road"></i> Logout</a></li>
+                    <li><a href={% url 'logout' %}><i class="icon-road"></i>{% trans "Logout" %}</a></li>
                   </ul>
         {% else %}
 				{% block sign_button %}{% endblock sign_button %}

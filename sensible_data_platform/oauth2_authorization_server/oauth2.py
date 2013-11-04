@@ -58,7 +58,7 @@ def authorize(request):
 
 		if is_enrollment:
 	
-			template['informed_consent'] = service_manager.getInformedConsent(authorizer.client)
+			template['informed_consent'] = service_manager.getInformedConsent(authorizer.client,request.LANGUAGE_CODE)
 
 			return render_to_response(
 				'oauth2/authorize_enroll.html', 
