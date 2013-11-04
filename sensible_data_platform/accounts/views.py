@@ -3,6 +3,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 
+
 @sensitive_post_parameters()
 @csrf_protect
 @never_cache

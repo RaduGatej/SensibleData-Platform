@@ -119,6 +119,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
         'django.core.context_processors.static',
         'django.contrib.auth.context_processors.auth',
  		'sensible_data_platform.context_processors.platform',
+        'social.apps.django_app.context_processors.backends',
+        'social.apps.django_app.context_processors.login_redirect',
 )
 
 ROOT_URLCONF = 'sensible_data_platform.urls'
@@ -184,14 +186,19 @@ LOGGING = {
     }
 }
 
-SOCIAL_AUTH_AUTHENTICATION_BACKENDS = (
+AUTHENTICATION_BACKENDS = (
+    'social.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
     # 'social.backends.open_id.OpenIdAuth',
     # 'social.backends.google.GoogleOpenId',
     # 'social.backends.google.GoogleOAuth2',
     # 'social.backends.google.GoogleOAuth',
-    'social.backends.twitter.TwitterOAuth',
-    'social.backends.facebook.FacebookOAuth2',
+    # 'social.backends.twitter.TwitterOAuth',
 )
+
+SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
+SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
+
 
 SOCIAL_AUTH_PIPELINE =(
     'social.pipeline.social_auth.social_details',
