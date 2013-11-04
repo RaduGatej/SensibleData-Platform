@@ -22,6 +22,9 @@ TRUST_ROOTS = LOCAL_SETTINGS.TRUST_ROOTS
 PLATFORM_NAME = LOCAL_SETTINGS.PLATFORM_NAME
 SUPPORT_EMAIL = LOCAL_SETTINGS.SUPPORT_EMAIL
 
+SOCIAL_AUTH_FACEBOOK_KEY = LOCAL_SETTINGS.SOCIAL_AUTH_FACEBOOK_KEY
+SOCIAL_AUTH_FACEBOOK_SECRET = LOCAL_SETTINGS.SOCIAL_AUTH_FACEBOOK_SECRET
+
 MAINTENANCE_IGNORE_URLS = (
 		    r'^.*/admin/$',
 )
@@ -149,6 +152,7 @@ INSTALLED_APPS = (
     'service_manager',
     'south',
     'sensible_platform_documents',
+    'social.apps.django_app.default',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -179,6 +183,27 @@ LOGGING = {
         },
     }
 }
+
+SOCIAL_AUTH_AUTHENTICATION_BACKENDS = (
+    # 'social.backends.open_id.OpenIdAuth',
+    # 'social.backends.google.GoogleOpenId',
+    # 'social.backends.google.GoogleOAuth2',
+    # 'social.backends.google.GoogleOAuth',
+    'social.backends.twitter.TwitterOAuth',
+    'social.backends.facebook.FacebookOAuth2',
+)
+
+SOCIAL_AUTH_PIPELINE =(
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details'
+)
 
 import hashlib
 SESSION_COOKIE_NAME = str(hashlib.sha1(SECRET_KEY).hexdigest())

@@ -19,9 +19,8 @@ import sys
 # We defer to a DJANGO_SETTINGS_MODULE already in the environment. This breaks
 # if running multiple sites in the same mod_wsgi process. To fix this, use
 # mod_wsgi daemon mode with each site in its own daemon process, or use
-sys.path.append('/home/sensibleDTU/sensible-data-platform/SensibleData-Platform/sensible_data_platform')
-sys.path.append('/home/sensibleDTU/sensible-data-platform/SensibleData-Platform')
-sys.path.append('/home/sensibleDTU/sensible-data-platform')
+sys.path.append('/home/sensibleDataPlatform/SensibleData-Platform/sensible_data_platform')
+sys.path.append('/home/sensibleDataPlatform/SensibleData-Platform')
 os.environ["DJANGO_SETTINGS_MODULE"] = "sensible_data_platform.settings"
 #os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sensible_data_platform.settings")
 
