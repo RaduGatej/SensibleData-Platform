@@ -1,0 +1,264 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-04 14:20+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: openid_provider/models.py:20
+msgid "OpenID"
+msgstr ""
+
+#: openid_provider/models.py:21
+msgid "OpenIDs"
+msgstr ""
+
+#: openid_provider/views.py:191
+msgid "Trust this site?"
+msgstr ""
+
+#: openid_provider/views.py:199 templates/home_studies.html:19
+#: templates/profile.html:44
+msgid "Error"
+msgstr ""
+
+#: templates/503.html:7
+msgid "We are changing something in the Matrix..."
+msgstr ""
+
+#: templates/503.html:12
+msgid "..please come back later."
+msgstr ""
+
+#: templates/about.html:6 templates/base_no_jq.html:123
+#: templates/base_no_jq.html.py:131
+msgid "About"
+msgstr "Om"
+
+#: templates/about.html:12
+msgid "What?"
+msgstr ""
+
+#: templates/about.html:14 templates/changebrowser.html:7
+#, python-format
+msgid "%(service.name)s"
+msgstr ""
+
+#: templates/about.html:14
+msgid "is part of"
+msgstr ""
+
+#: templates/about.html:14
+msgid "Sensible DTU"
+msgstr ""
+
+#: templates/about.html:14
+msgid ""
+"project. It is a system created for participants to manage their studies, "
+"express informed consent, and check the status of their data."
+msgstr ""
+
+#: templates/about.html:18
+msgid "Credits"
+msgstr ""
+
+#: templates/about.html:28
+msgid "Collaborators"
+msgstr ""
+
+#: templates/about.html:36
+msgid "Contact"
+msgstr ""
+
+#: templates/applications.html:7 templates/authorizations.html:8
+#: templates/dashboard.html:8
+msgid "Hello"
+msgstr ""
+
+#: templates/authorizations.html:20 templates/dashboard.html:20
+msgid "available"
+msgstr ""
+
+#: templates/base.html:17 templates/logout.html:12
+msgid "Sign in"
+msgstr ""
+
+#: templates/base_no_jq.html:13
+#, python-format
+msgid "%(platform.name)s"
+msgstr ""
+
+#: templates/base_no_jq.html:121 templates/logout.html:11
+msgid "Home"
+msgstr ""
+
+#: templates/base_no_jq.html:122
+msgid "Profile"
+msgstr ""
+
+#: templates/base_no_jq.html:124 templates/base_no_jq.html.py:132
+msgid "Help"
+msgstr ""
+
+#: templates/base_no_jq.html:168
+msgid "Logout"
+msgstr ""
+
+#: templates/changebrowser.html:27
+msgid "Hey, have you tried using a modern browser?"
+msgstr ""
+
+#: templates/changebrowser.html:29
+msgid ""
+"Internet Explorer starts with version 9!</strong> It seems that you have a "
+"very old browser. Unfortunately, this page does not support it, so you will "
+"need to get one of the newer ones. Here's what we support:"
+msgstr ""
+
+#: templates/changebrowser.html:36
+msgid "Wait, are using"
+msgstr ""
+
+#: templates/changebrowser.html:36
+msgid "or higher?"
+msgstr ""
+
+#: templates/changebrowser.html:36
+msgid "Then you probably are in the compatibility mode. Then, go and"
+msgstr ""
+
+#: templates/changebrowser.html:36
+msgid "check this out"
+msgstr ""
+
+#: templates/changebrowser.html:36
+msgid "And please come back!"
+msgstr ""
+
+#: templates/home_studies.html:11
+msgid "Success!"
+msgstr ""
+
+#: templates/home_studies.html:19
+msgid "You clicked No, cannot proceed"
+msgstr ""
+
+#: templates/home_studies.html:70
+msgid ""
+"You seem to have a DTU account, but are not on our list of students who can "
+"join"
+msgstr ""
+
+#: templates/home_studies.html:71
+msgid "Is this a mistake?"
+msgstr ""
+
+#: templates/home_studies.html:71
+msgid "Let us know!"
+msgstr ""
+
+#: templates/home_studies.html:80
+msgid "For at deltage i SensibleDTU skal du være DTU studerende."
+msgstr ""
+
+#: templates/home_studies.html:88 templates/profile.html:142
+msgid "DTU student?"
+msgstr ""
+
+#: templates/home_studies.html:90 templates/profile.html:144
+msgid "Link to Your account"
+msgstr ""
+
+msgid "Questionnaires"
+msgstr "Spørgeskemaer"
+
+#: templates/home_studies.html:119
+msgid "The Study seems to be offline at the moment."
+msgstr ""
+
+#: templates/home_studies.html:142
+msgid "Applications"
+msgstr "Applikationer"
+
+#: templates/home_studies.html:143
+msgid ""
+"Below here you can see an overview of your applications. The applications "
+"collect data for Sensible DTU and for seccurity reasons you should accept "
+"each application before it will collect data about you."
+msgstr ""
+"Nedenfor ser du en oversigt over dine applikationer. Applikationer indsamler "
+"data til SensibleDTU og du skal af sikkerhedsmæssige grunde godkende hver "
+"enkelt før de aktiveres."
+
+#: templates/js_disabled.html:27
+msgid "Hey, where is your JavaScript?"
+msgstr ""
+
+#: templates/js_disabled.html:29
+msgid ""
+"JavaScript is missing!</strong> It seems that you have disabled JavaScript "
+"in your browser. Unfortunately, this webpage relies on JS to work properly, "
+"so you will have to enable it again. Here's a couple of links to get you "
+"started:"
+msgstr ""
+
+#: templates/js_disabled.html:31
+msgid "How to enable JS in Internet Explorer, Firefox, Opera, and Netscape"
+msgstr ""
+
+#: templates/js_disabled.html:32
+msgid "How to enable JS in Chrome"
+msgstr ""
+
+#: templates/logout.html:8
+msgid "You have logged out!"
+msgstr ""
+
+#: templates/profile.html:51
+msgid "Profile linked!"
+msgstr ""
+
+#: templates/profile.html:64
+msgid "Username"
+msgstr ""
+
+#: templates/profile.html:69
+msgid "First Name"
+msgstr ""
+
+#: templates/profile.html:74
+msgid "Last Name"
+msgstr ""
+
+#: templates/profile.html:79
+msgid "Phone Number"
+msgstr ""
+
+#: templates/profile.html:109
+msgid "Student ID"
+msgstr ""
+
+#: templates/profile.html:114
+msgid "Email"
+msgstr ""
+
+#: templates/profile.html:119
+msgid "Given Name"
+msgstr ""
+
+#: templates/profile.html:124
+msgid "Family Name"
+msgstr ""
