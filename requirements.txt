@@ -4,3 +4,4 @@ south
 django-uni-form
 setuptools>=0.7
 pymongo
+python-social-auth
