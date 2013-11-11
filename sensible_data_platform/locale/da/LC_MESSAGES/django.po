@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 10:52+0000\n"
+"POT-Creation-Date: 2013-11-11 01:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -50,11 +50,6 @@ msgstr "Om"
 
 #: templates/about.html:12
 msgid "What?"
-msgstr ""
-
-#: templates/about.html:14 templates/changebrowser.html:7
-#, python-format
-msgid "%(service.name)s"
 msgstr ""
 
 #: templates/about.html:14
@@ -111,11 +106,16 @@ msgstr "Profil"
 
 #: templates/base_no_jq.html:124 templates/base_no_jq.html.py:132
 msgid "Help"
-msgstr "hjælp"
+msgstr "Hjælp"
 
 #: templates/base_no_jq.html:168
 msgid "Logout"
 msgstr "Logge ud"
+
+#: templates/changebrowser.html:7
+#, python-format
+msgid "%(service.name)s"
+msgstr ""
 
 #: templates/changebrowser.html:27
 msgid "Hey, have you tried using a modern browser?"
