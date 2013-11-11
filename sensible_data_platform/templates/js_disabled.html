@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
+{% load i18n %} 
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
@@ -23,12 +24,12 @@
 
 	<body>
 		<div class="container">
-			<h1>Hey, where is your JavaScript?</h1>
+			<h1>{% trans "Hey, where is your JavaScript?" %}</h1>
 			<div class="alert alert-error">
-				<p><strong>JavaScript is missing!</strong> It seems that you have disabled JavaScript in your browser. Unfortunately, this webpage relies on JS to work properly, so you will have to enable it again. Here's a couple of links to get you started: </p>
+				<p><strong>{% trans "JavaScript is missing!</strong> It seems that you have disabled JavaScript in your browser. Unfortunately, this webpage relies on JS to work properly, so you will have to enable it again. Here's a couple of links to get you started:" %} </p>
 				<ul>
-					<li /><a href="http://support.microsoft.com/gp/howtoscript">How to enable JS in Internet Explorer, Firefox, Opera, and Netscape</a>
-					<li /><a href="http://www.activatejavascript.org/en/instructions/chrome">How to enable JS in Chrome</a>
+					<li /><a href="http://support.microsoft.com/gp/howtoscript">{% trans "How to enable JS in Internet Explorer, Firefox, Opera, and Netscape" %}</a>
+					<li /><a href="http://www.activatejavascript.org/en/instructions/chrome">{% trans "How to enable JS in Chrome" %}</a>
 				</ul>
 			</div>
 		</div>

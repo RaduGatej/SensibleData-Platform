@@ -1,9 +1,11 @@
 from django.conf.urls import patterns, include, url
+from django.conf.urls.i18n import i18n_patterns
 
 from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+	(r'^i18n/', include('django.conf.urls.i18n')),
 	url(r'^changebrowser','render.views.changebrowser',name='changebrowser'),
 	url(r'^noscript','render.views.noscript', name='noscript'),
 	url(r'^profile/?$', 'render.profile.profile', name='profile'),

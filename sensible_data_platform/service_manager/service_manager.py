@@ -50,12 +50,12 @@ def getServices(user):
 
         return dict(services)
 
-def getServices2(user):
+def getServices2(user,language):
 	services = {}
 	clients = manager.getClients('study')
 	for client in clients:
 		if not whitelist.checkWhitelist(user, client): continue
-		discovery = discoverService(client)
+		discovery = discoverService(client,language)
 		services[client.name] = {}
 		token = manager.getTokenForUser(client=client, user=user, scope='enroll')
 
@@ -76,9 +76,9 @@ def getServices2(user):
 
 	return services
 
-def discoverService(client):
+def discoverService(client,language):
 	#TODO set service to 'offline' if there is an error
-	url = client.api_uri + 'discover/'
+	url = client.api_uri + 'discover/?language='+language
 	try:response = urllib2.urlopen(url).read()
 	except urllib2.HTTPError: return {'error':'connection refused'}
 	except urllib2.URLError: return {'error':'connection refused'}
@@ -86,8 +86,8 @@ def discoverService(client):
 	except ValueError: return {'error':'connection refused'}
 	return response
 
-def getInformedConsent(client):
-	url = client.api_uri + 'informed_consent/'
+def getInformedConsent(client,language):
+	url = client.api_uri + 'informed_consent/?language='+language
 	response = urllib2.urlopen(url).read()
 	return json.loads(response)
 
