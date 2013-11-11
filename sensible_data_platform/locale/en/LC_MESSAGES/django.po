@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 10:52+0000\n"
+"POT-Creation-Date: 2013-11-07 10:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: openid_provider/models.py:20
 msgid "OpenID"
@@ -46,7 +45,7 @@ msgstr ""
 #: templates/about.html:6 templates/base_no_jq.html:123
 #: templates/base_no_jq.html.py:131
 msgid "About"
-msgstr "Om"
+msgstr ""
 
 #: templates/about.html:12
 msgid "What?"
@@ -107,15 +106,15 @@ msgstr ""
 
 #: templates/base_no_jq.html:122
 msgid "Profile"
-msgstr "Profil"
+msgstr ""
 
 #: templates/base_no_jq.html:124 templates/base_no_jq.html.py:132
 msgid "Help"
-msgstr "hjælp"
+msgstr ""
 
 #: templates/base_no_jq.html:168
 msgid "Logout"
-msgstr "Logge ud"
+msgstr ""
 
 #: templates/changebrowser.html:27
 msgid "Hey, have you tried using a modern browser?"
@@ -176,11 +175,11 @@ msgstr ""
 
 #: templates/home_studies.html:88 templates/profile.html:142
 msgid "DTU student?"
-msgstr "DTU student"
+msgstr ""
 
 #: templates/home_studies.html:90 templates/profile.html:144
 msgid "Link to Your account"
-msgstr "Link til din konto"
+msgstr ""
 
 #: templates/home_studies.html:119
 msgid "The Study seems to be offline at the moment."
@@ -188,7 +187,7 @@ msgstr ""
 
 #: templates/home_studies.html:142
 msgid "Applications"
-msgstr "Applikationer"
+msgstr ""
 
 #: templates/home_studies.html:143
 msgid ""
@@ -196,18 +195,12 @@ msgid ""
 "collect data for Sensible DTU and for seccurity reasons you should accept "
 "each application before it will collect data about you."
 msgstr ""
-"Nedenfor ser du en oversigt over dine applikationer. Applikationer indsamler "
-"data til SensibleDTU og du skal af sikkerhedsmæssige grunde godkende hver "
-"enkelt før de aktiveres."
 
 #: templates/home_studies.html:214
 msgid ""
-"en_text: Deltagelse i SensibleDTU er frivillig og du kan til enhver tid "
-"melde dig ud. Hvis du ønsker at framelde dig SensibleDTU projektet kan du "
-"skrive til"
-msgstr ""
 "Deltagelse i SensibleDTU er frivillig og du kan til enhver tid melde dig ud. "
 "Hvis du ønsker at framelde dig SensibleDTU projektet kan du skrive til"
+msgstr ""
 
 #: templates/js_disabled.html:27
 msgid "Hey, where is your JavaScript?"
@@ -233,45 +226,38 @@ msgstr ""
 msgid "You have logged out!"
 msgstr ""
 
-#: templates/profile.html:37
-msgid "My profile"
-msgstr "Min profil"
-
 #: templates/profile.html:51
 msgid "Profile linked!"
-msgstr "Profile knyttet!"
+msgstr ""
 
 #: templates/profile.html:64
 msgid "Username"
-msgstr "Brugernavn"
+msgstr ""
 
 #: templates/profile.html:69
 msgid "First Name"
-msgstr "Fornavn"
+msgstr ""
 
 #: templates/profile.html:74
 msgid "Last Name"
-msgstr "Efernavn"
+msgstr ""
 
 #: templates/profile.html:79
 msgid "Phone Number"
-msgstr "Telefonnummer"
+msgstr ""
 
 #: templates/profile.html:109
 msgid "Student ID"
-msgstr "Student ID"
+msgstr ""
 
 #: templates/profile.html:114
 msgid "Email"
-msgstr "Email"
+msgstr ""
 
 #: templates/profile.html:119
 msgid "Given Name"
-msgstr "Fornavn"
+msgstr ""
 
 #: templates/profile.html:124
 msgid "Family Name"
-msgstr "Familie Navn"
-
-#~ msgid "Questionnaires"
-#~ msgstr "Spørgeskemaer"
+msgstr ""
