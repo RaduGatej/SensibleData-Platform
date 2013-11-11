@@ -135,7 +135,7 @@
 		{% endif %}
 <div class="nav-collapse collapse">
 <ul class="nav">
-<form action="{% url 'set_language' %}" method="post">
+<form class="navbar-form" action="{% url 'set_language' %}" method="post">
 {% csrf_token %}
 <input name="next" type="hidden" value="{{ redirect_to }}" />
 <select name="language">
@@ -146,7 +146,7 @@
 </option>
 {% endfor %}
 </select>
-<input type="submit" value="Go" />
+<input class="btn" type="submit" value="Set language" />
 </form>
  </ul>
 </div>
