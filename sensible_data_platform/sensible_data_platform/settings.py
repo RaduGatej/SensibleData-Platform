@@ -186,8 +186,12 @@ LOGGING = {
     }
 }
 
+# Used by social auth
+USERNAME_IS_FULL_EMAIL = True
+
 AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.FacebookOAuth2',
+    # 'social.backends.facebook.FacebookAppOAuth2',
     'django.contrib.auth.backends.ModelBackend',
     # 'social.backends.open_id.OpenIdAuth',
     # 'social.backends.google.GoogleOpenId',
@@ -199,6 +203,7 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
 SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
 
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 SOCIAL_AUTH_PIPELINE =(
     'social.pipeline.social_auth.social_details',
@@ -206,7 +211,7 @@ SOCIAL_AUTH_PIPELINE =(
     'social.pipeline.social_auth.auth_allowed',
     'social.pipeline.social_auth.social_user',
     'social.pipeline.user.get_username',
-    'social.pipeline.user.create_user',
+    'accounts.social_pipeline.register',
     'social.pipeline.social_auth.associate_user',
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details'

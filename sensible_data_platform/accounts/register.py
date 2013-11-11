@@ -58,11 +58,15 @@ def register(request):
 
 		_register(request.POST.get('username', ''), request.POST.get('pass1', ''))
 
+		user = authenticate(username=request.POST.get('username', ''), password=request.POST.get('pass1', ''))
+		if user is not None:
+			if user.is_active: login(request, user)
+
 		#return redirect(reverse('login')+'?next='+next)
 		return redirect(next)
 
 
-def _register(username, password):
+def _register(username, password = ''):
 	user = User.objects.create_user(username, '', password)
 	user.email = username
 	user.save()
@@ -88,6 +92,4 @@ def _register(username, password):
 	extra.phone = ""
 	extra.save()
 
-	user = authenticate(username=username, password=password)
-	if user is not None:
-		if user.is_active: login(request, user)
+	return user

@@ -17,8 +17,8 @@ import json
 @login_required
 def missing_redirect_uri(request):
     return render_to_response(
-        'oauth2/missing_redirect_uri.html', 
-        {}, 
+        'oauth2/missing_redirect_uri.html',
+        {},
         RequestContext(request))
 
 
@@ -30,7 +30,7 @@ def authorize(request):
 	except MissingRedirectURI, e:
 		return HttpResponseRedirect("/oauth2/oauth2/missing_redirect_uri")
 	except AuthorizationException, e:
-		# The request is malformed or invalid. Automatically 
+		# The request is malformed or invalid. Automatically
 		# redirects to the provided redirect URL.
 		return authorizer.error_redirect()
 
@@ -39,7 +39,7 @@ def authorize(request):
 
 	if request.method == 'GET':
 		template = {
-				"client":authorizer.client, 
+				"client":authorizer.client,
 				"access_ranges":authorizer.access_ranges}
 		template["form"] = AuthorizeForm()
 		helper = FormHelper()
@@ -57,16 +57,16 @@ def authorize(request):
 		except AccessRange.DoesNotExist: pass
 
 		if is_enrollment:
-	
+
 			template['informed_consent'] = service_manager.getInformedConsent(authorizer.client)
 
 			return render_to_response(
-				'oauth2/authorize_enroll.html', 
-				template, 
+				'oauth2/authorize_enroll.html',
+				template,
 				RequestContext(request))
 		return render_to_response(
-				'oauth2/authorize.html', 
-				template, 
+				'oauth2/authorize.html',
+				template,
 				RequestContext(request))
 	elif request.method == 'POST':
 		form = AuthorizeForm(request.POST)
