@@ -51,45 +51,43 @@ def register(request):
 		values['platformUri'] = settings.BASE_URL
 		values['next'] += '&registration=true'
 		return render_to_response('registration/register.html', values, context_instance=RequestContext(request))
-	
+
 	if request.method == 'POST':
-		username = request.POST.get('username', '')
-		password = request.POST.get('pass1', '')
+
 		next = request.POST.get('next', '')
 
-
-
-		user = User.objects.create_user(username, '', password)
-		user.email = request.POST.get("username", "")
-		user.save()
-
-		openid = OpenID()
-		openid.user = user
-		openid.default = True
-		openid.save()
-
-		for trust_root in settings.TRUST_ROOTS:
-			try: TrustedRoot.objects.create(openid=openid, trust_root=trust_root)	
-			except: pass
-
-
-		participant = Participant()
-		participant.user = user
-		try: participant.pseudonym = str(hashlib.sha1(user.username.encode('utf-8')).hexdigest())[:30]
-		except: participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())[:30]
-		participant.save()
-
-		extra = Extra()
-		extra.user = user
-		extra.phone = ""
-		extra.save()
-		
-		user = authenticate(username=username, password=password)
-		if user is not None:
-			if user.is_active: login(request, user)
+		_register(request.POST.get('username', ''), request.POST.get('pass1', ''))
 
 		#return redirect(reverse('login')+'?next='+next)
 		return redirect(next)
 
 
+def _register(username, password):
+	user = User.objects.create_user(username, '', password)
+	user.email = username
+	user.save()
 
+	openid = OpenID()
+	openid.user = user
+	openid.default = True
+	openid.save()
+
+	for trust_root in settings.TRUST_ROOTS:
+		try: TrustedRoot.objects.create(openid=openid, trust_root=trust_root)
+		except: pass
+
+
+	participant = Participant()
+	participant.user = user
+	try: participant.pseudonym = str(hashlib.sha1(user.username.encode('utf-8')).hexdigest())[:30]
+	except: participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())[:30]
+	participant.save()
+
+	extra = Extra()
+	extra.user = user
+	extra.phone = ""
+	extra.save()
+
+	user = authenticate(username=username, password=password)
+	if user is not None:
+		if user.is_active: login(request, user)
