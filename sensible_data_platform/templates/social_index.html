@@ -1,10 +1,16 @@
 {% extends "index.html" %}
 {% load url from future %}
+{% load staticfiles %}
+
+{% block stylesheets %}
+{{ block.super }}
+    <link href="{% static "css/socialicious.css" %}" rel="stylesheet" media="screen">
+{% endblock stylesheets %}
 
 {% block login %}
     {% if social_providers %}
         {% for provider in social_providers  %}
-            <a class="btn btn-large btn-success" href="{% url 'social:begin' provider.backend %}">Log in with {{ provider.name }}</a>
+            <a class="btn btn-large btn-{{ provider.btnstyle }}" href="{% url 'social:begin' provider.backend %}"><i class="socialicon-{{ provider.icon }}"></i>Log in with {{ provider.name }}</a>
         {% endfor %}
     {% endif %}
 {% endblock %}
