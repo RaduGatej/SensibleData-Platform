@@ -9,6 +9,4 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'accounts.session.logout', name = 'logout'),
     url(r'^register/$', 'accounts.register.register', name = 'register'),
     url(r'^check_username/$', 'accounts.register.check_username'),
-
-    url(r'^social/', include('social.apps.django_app.urls', namespace='social')),
 )

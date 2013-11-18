@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 import json
 
 from accounts import manager
+from accounts_social import accounts_social
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from service_manager import service_manager
@@ -13,7 +14,8 @@ def home(request):
 	if not request.user.is_authenticated():
 		text = {}
 		text['welcome'] = getText('welcome_text', request.LANGUAGE_CODE)
-		return render_to_response('index.html', {'text': text}, context_instance=RequestContext(request))
+		social_providers = accounts_social.getSocialProviders()
+		return render_to_response('index.html', {'text': text, 'social_providers': social_providers}, context_instance=RequestContext(request))
 
 	status = request.REQUEST.get('status', '')
 	message = request.REQUEST.get('message', '')

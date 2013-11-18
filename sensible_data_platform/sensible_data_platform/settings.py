@@ -203,9 +203,9 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     # 'social.backends.open_id.OpenIdAuth',
     # 'social.backends.google.GoogleOpenId',
-    # 'social.backends.google.GoogleOAuth2',
+    'social.backends.google.GoogleOAuth2',
     # 'social.backends.google.GoogleOAuth',
-    # 'social.backends.twitter.TwitterOAuth',
+    'social.backends.twitter.TwitterOAuth',
 )
 
 SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
