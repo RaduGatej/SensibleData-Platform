@@ -163,6 +163,7 @@ INSTALLED_APPS = (
     'south',
     'sensible_platform_documents',
     'social.apps.django_app.default',
+    'accounts_social',
 )
 
 # A sample logging configuration. The only tangible logging

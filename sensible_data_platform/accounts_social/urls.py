@@ -5,8 +5,9 @@ admin.autodiscover()
 
 
 urlpatterns = patterns('',
-    url(r'^login/$', 'accounts_social.views.login', name = 'login'),
-    url(r'^register/$', 'accounts_social.views.login', name = 'register'),
+    url(r'^authenticate/$', 'accounts_social.views.authenticate', name = 'authenticate'),
+    url(r'^login/$', 'accounts_social.views.authenticate', name = 'login'),
+    url(r'^register/$', 'accounts_social.views.authenticate', name = 'register'),
 
     url(r'^social/', include('social.apps.django_app.urls', namespace='social')),
 )

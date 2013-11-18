@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+{% load url from future %}
+
+{% block login %}
+    {% if social_providers %}
+        {% for provider in social_providers  %}
+            <a class="btn btn-large btn-success" href="{% url 'social:begin' provider.backend %}">Log in with {{ provider.name }}</a>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

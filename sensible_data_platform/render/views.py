@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 import json
 
@@ -9,13 +10,11 @@ from django.template import RequestContext
 from service_manager import service_manager
 from collections import defaultdict
 from sensible_platform_documents.get_documents import getText
+from django.core.urlresolvers import reverse
 
 def home(request):
 	if not request.user.is_authenticated():
-		text = {}
-		text['welcome'] = getText('welcome_text', request.LANGUAGE_CODE)
-		social_providers = accounts_social.getSocialProviders()
-		return render_to_response('index.html', {'text': text, 'social_providers': social_providers}, context_instance=RequestContext(request))
+		return HttpResponseRedirect(reverse("accounts.views.authenticate"))
 
 	status = request.REQUEST.get('status', '')
 	message = request.REQUEST.get('message', '')
