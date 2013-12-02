@@ -219,6 +219,7 @@ for provider_name, provider in SECURE_platform_config.SOCIAL_PROVIDERS.iteritems
 SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
 SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
 
+# Ask for email from facebook
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 SOCIAL_AUTH_PIPELINE =(
@@ -230,7 +231,7 @@ SOCIAL_AUTH_PIPELINE =(
     'accounts_social.pipeline.register',
     'social.pipeline.social_auth.associate_user',
     'social.pipeline.social_auth.load_extra_data',
-    'social.pipeline.user.user_details'
+    'social.pipeline.user.user_details' # Comment this out to not pull name-details from social provider
 )
 
 import hashlib
