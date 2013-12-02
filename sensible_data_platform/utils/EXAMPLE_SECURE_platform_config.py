@@ -5,6 +5,9 @@ IDENTITY_PROVIDERS = {
 		'requestor': '',
 		'requestor_password': '',
 	}
+}
 
-
+SOCIAL_PROVIDERS = {
+    'SOCIAL_AUTH_FACEBOOK': {'KEY': '', 
+                             'SECRET': ''}
 }

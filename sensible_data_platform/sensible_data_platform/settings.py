@@ -2,6 +2,8 @@
 
 import os
 import LOCAL_SETTINGS
+import utils.SECURE_platform_config as SECURE_platform_config
+import sys
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -22,8 +24,6 @@ TRUST_ROOTS = LOCAL_SETTINGS.TRUST_ROOTS
 PLATFORM_NAME = LOCAL_SETTINGS.PLATFORM_NAME
 SUPPORT_EMAIL = LOCAL_SETTINGS.SUPPORT_EMAIL
 
-SOCIAL_AUTH_FACEBOOK_KEY = LOCAL_SETTINGS.SOCIAL_AUTH_FACEBOOK_KEY
-SOCIAL_AUTH_FACEBOOK_SECRET = LOCAL_SETTINGS.SOCIAL_AUTH_FACEBOOK_SECRET
 
 MAINTENANCE_IGNORE_URLS = (
 		    r'^.*/admin/$',
@@ -208,6 +208,13 @@ AUTHENTICATION_BACKENDS = (
     # 'social.backends.google.GoogleOAuth',
     'social.backends.twitter.TwitterOAuth',
 )
+
+# Sets the social provider settings provided in SECURE_platform_config (i.e. SOCIAL_AUTH_FACEBOOK_KEY and SOCIAL_AUTH_FACEBOOK_SECRET)
+mod_object = sys.modules[__name__]
+for provider_name, provider in SECURE_platform_config.SOCIAL_PROVIDERS.iteritems():
+    for key,value in provider.iteritems():
+        setattr(mod_object, provider_name+'_'+key, value)
+
 
 SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
 SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
