@@ -8,10 +8,7 @@ from django.template import RequestContext
 from sensible_platform_documents.get_documents import getText
 import accounts_social
 from social.apps.django_app.default.models import UserSocialAuth
-
-# testing
-from django.http import HttpResponse
-from pprint import pformat
+from render.profile import sensible_profile, profile as _profile
 
 
 @csrf_protect
@@ -29,16 +26,10 @@ def authenticate(request):
 @csrf_protect
 @login_required
 def profile(request):
-    providers = accounts_social.getSocialProviders()
+    if request.method == 'POST':
+        return _profile(request)
+    else:
+        values = {}
+        values["sensible"] = sensible_profile(request, values)
 
-    # for provider in providers.keys():
-    #     providers[provider]['action'] = 'Link to '
-
-    # associations = UserSocialAuth.objects.filter(user=request.user)
-
-    # for association in associations:
-    #     providers[association.provider]['action'] = 'disconnect'
-
-    return render_to_response('social/profile.html', {
-                'social_providers': providers
-            }, context_instance=RequestContext(request))
+        return render_to_response('social/profile.html', values, context_instance=RequestContext(request))
