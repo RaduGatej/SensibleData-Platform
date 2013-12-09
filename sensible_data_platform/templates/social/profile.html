@@ -1,0 +1,39 @@
+{% extends "profile.html" %}
+{% load url from future %}
+{% load staticfiles %}
+{% load i18n %} 
+
+{% block stylesheets %}
+{{ block.super }}
+    <link href="{% static "css/socialicious.css" %}" rel="stylesheet" media="screen">
+{% endblock stylesheets %}
+
+
+{% block cas %}
+
+<div class="span5">
+  <div class="well">
+    <p>Associated:</p>
+    <ul>
+      {% for assoc in backends.associated %}
+        <li>
+            <a class="btn btn-large btn-{{ assoc.btnstyle }}" href="{% url 'social:disconnect_individual' assoc.provider assoc.id %}"><i class="socialicon-{{ assoc.icon }}"></i>Disconnect from {{ assoc.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <p>Associate:</p>
+    <ul>
+      {% for assoc in backends.not_associated %}
+        <li>
+         <a class="btn btn-large btn-{{ assoc.btnstyle }}" href="{% url 'social:begin' assoc.provider %}"><i class="socialicon-{{ assoc.icon }}"></i>Connect to {{ assoc.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock cas %}
+
+{% block social_links %}
+  
+{% endblock social_links %}

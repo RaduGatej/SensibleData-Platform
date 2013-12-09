@@ -116,19 +116,20 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-	'maintenancemode.middleware.MaintenanceModeMiddleware',
+    'maintenancemode.middleware.MaintenanceModeMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-        'django.core.context_processors.static',
-	'django.core.context_processors.i18n',
-        'django.contrib.auth.context_processors.auth',
- 		'sensible_data_platform.context_processors.platform',
-        'social.apps.django_app.context_processors.backends',
-        'social.apps.django_app.context_processors.login_redirect',
+    'django.core.context_processors.static',
+    'django.core.context_processors.i18n',
+    'django.contrib.auth.context_processors.auth',
+    'sensible_data_platform.context_processors.platform',
+    'accounts_social.context_processors.backends',
+    # 'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
 )
 
 ROOT_URLCONF = 'sensible_data_platform.urls'
@@ -199,14 +200,62 @@ LOGGING = {
 USERNAME_IS_FULL_EMAIL = True
 
 AUTHENTICATION_BACKENDS = (
-    'social.backends.facebook.FacebookOAuth2',
-    # 'social.backends.facebook.FacebookAppOAuth2',
     'django.contrib.auth.backends.ModelBackend',
+
+    # Full list of current providers
     # 'social.backends.open_id.OpenIdAuth',
     # 'social.backends.google.GoogleOpenId',
     'social.backends.google.GoogleOAuth2',
     # 'social.backends.google.GoogleOAuth',
+    # 'social.backends.google.GooglePlusAuth',
     'social.backends.twitter.TwitterOAuth',
+    # 'social.backends.yahoo.YahooOpenId',
+    # 'social.backends.stripe.StripeOAuth2',
+    # 'social.backends.persona.PersonaAuth',
+    'social.backends.facebook.FacebookOAuth2',
+    # 'social.backends.facebook.FacebookAppOAuth2',
+    # 'social.backends.yahoo.YahooOAuth',
+    # 'social.backends.angel.AngelOAuth2',
+    # 'social.backends.behance.BehanceOAuth2',
+    # 'social.backends.bitbucket.BitbucketOAuth',
+    # 'social.backends.box.BoxOAuth2',
+    # 'social.backends.linkedin.LinkedinOAuth',
+    # 'social.backends.linkedin.LinkedinOAuth2',
+    # 'social.backends.github.GithubOAuth2',
+    # 'social.backends.foursquare.FoursquareOAuth2',
+    # 'social.backends.instagram.InstagramOAuth2',
+    # 'social.backends.live.LiveOAuth2',
+    # 'social.backends.vk.VKOAuth2',
+    # 'social.backends.dailymotion.DailymotionOAuth2',
+    # 'social.backends.disqus.DisqusOAuth2',
+    # 'social.backends.dropbox.DropboxOAuth',
+    # 'social.backends.evernote.EvernoteSandboxOAuth',
+    # 'social.backends.fitbit.FitbitOAuth',
+    # 'social.backends.flickr.FlickrOAuth',
+    # 'social.backends.livejournal.LiveJournalOpenId',
+    # 'social.backends.soundcloud.SoundcloudOAuth2',
+    # 'social.backends.thisismyjam.ThisIsMyJamOAuth1',
+    # 'social.backends.stocktwits.StocktwitsOAuth2',
+    # 'social.backends.tripit.TripItOAuth',
+    # 'social.backends.twilio.TwilioAuth',
+    # 'social.backends.xing.XingOAuth',
+    # 'social.backends.yandex.YandexOAuth2',
+    # 'social.backends.douban.DoubanOAuth2',
+    # 'social.backends.mixcloud.MixcloudOAuth2',
+    # 'social.backends.rdio.RdioOAuth1',
+    # 'social.backends.rdio.RdioOAuth2',
+    # 'social.backends.yammer.YammerOAuth2',
+    # 'social.backends.stackoverflow.StackoverflowOAuth2',
+    # 'social.backends.readability.ReadabilityOAuth',
+    # 'social.backends.skyrock.SkyrockOAuth',
+    # 'social.backends.tumblr.TumblrOAuth',
+    # 'social.backends.reddit.RedditOAuth2',
+    # 'social.backends.steam.SteamOpenId',
+    # 'social.backends.podio.PodioOAuth2',
+    # 'social.backends.amazon.AmazonOAuth2',
+    # 'social.backends.email.EmailAuth',
+    # 'social.backends.username.UsernameAuth',
+    # 'social.apps.django_app.utils.BackendWrapper',
 )
 
 # Sets the social provider settings provided in SECURE_platform_config (i.e. SOCIAL_AUTH_FACEBOOK_KEY and SOCIAL_AUTH_FACEBOOK_SECRET)

@@ -17,4 +17,11 @@ backend_translation = {
 # Returns the name, icon and button style of the active backends
 def getSocialProviders():
     backends = social_utils.load_backends(BACKENDS)
-    return [dict(chain({'backend': backend}.iteritems(), backend_translation[backend].iteritems())) for backend in backends]
+
+    providers = {}
+    for backend in backends:
+        providers[backend] = backend_translation[backend]
+
+    return providers
+    
+    # return [dict(chain({'backend': backend}.iteritems(), backend_translation[backend].iteritems())) for backend in backends]

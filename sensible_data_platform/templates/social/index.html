@@ -8,9 +8,10 @@
 {% endblock stylesheets %}
 
 {% block login %}
+{{backends.items}}
     {% if social_providers %}
-        {% for provider in social_providers  %}
-            <a class="btn btn-large btn-{{ provider.btnstyle }}" href="{% url 'social:begin' provider.backend %}"><i class="socialicon-{{ provider.icon }}"></i>Log in with {{ provider.name }}</a>
+        {% for backend, provider in social_providers.items  %}
+            <a class="btn btn-large btn-{{ provider.btnstyle }}" href="{% url 'social:begin' backend %}"><i class="socialicon-{{ provider.icon }}"></i>Log in with {{ provider.name }}</a>
         {% endfor %}
     {% endif %}
 {% endblock %}
