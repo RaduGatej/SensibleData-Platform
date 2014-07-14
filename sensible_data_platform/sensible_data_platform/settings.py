@@ -2,6 +2,7 @@
 
 import os
 import LOCAL_SETTINGS
+from utils import SECURE_platform_config
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -21,6 +22,12 @@ TRUST_ROOTS = LOCAL_SETTINGS.TRUST_ROOTS
 
 PLATFORM_NAME = LOCAL_SETTINGS.PLATFORM_NAME
 SUPPORT_EMAIL = LOCAL_SETTINGS.SUPPORT_EMAIL
+EMAIL_HOST = LOCAL_SETTINGS.EMAIL_HOST
+EMAIL_PORT = LOCAL_SETTINGS.EMAIL_PORT
+EMAIL_HOST_USER = SECURE_platform_config.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = SECURE_platform_config.EMAIL_HOST_PASSWORD
+DEFAULT_FROM_EMAIL = LOCAL_SETTINGS.DEFAULT_FROM_EMAIL
+EMAIL_USE_TLS = LOCAL_SETTINGS.EMAIL_USE_TLS
 
 MAINTENANCE_IGNORE_URLS = (
 		    r'^.*/admin/$',
@@ -157,6 +164,7 @@ INSTALLED_APPS = (
     'service_manager',
     'south',
     'sensible_platform_documents',
+	'password_reset',
 )
 
 # A sample logging configuration. The only tangible logging

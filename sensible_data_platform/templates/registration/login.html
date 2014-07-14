@@ -63,8 +63,7 @@ Your username and password didn't match. Please try again.
 	<p><button id="submit_button" type="submit" name="submit" value="Login" class="btn btn-primary btn-large"><i class="icon-user icon-white"></i> Sign in</button></p>
 	<p></p>
 	<div id="register_button"><p><a class="btn btn-success" href="{% url 'register' %}?next={{ trust_root }}"><i class="icon-pencil icon-white"></i> Register</a></p></div>
-	<p>Forgot your password? </br>
-	<a href="mailto:{{ support_mail }}?subject=Password reset for {{ service.name }}&body=My student number is ">Contact us</a> with your student number.</p>
+	<p><a href="{% url "password_reset_recover" %}">Forgot my password</a></p>
     </div>
   </fieldset>
 </div>
