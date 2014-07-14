@@ -2,6 +2,7 @@
 
 import os
 import LOCAL_SETTINGS
+from utils import SECURE_platform_config
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -21,6 +22,12 @@ TRUST_ROOTS = LOCAL_SETTINGS.TRUST_ROOTS
 
 PLATFORM_NAME = LOCAL_SETTINGS.PLATFORM_NAME
 SUPPORT_EMAIL = LOCAL_SETTINGS.SUPPORT_EMAIL
+EMAIL_HOST = LOCAL_SETTINGS.EMAIL_HOST
+EMAIL_PORT = LOCAL_SETTINGS.EMAIL_PORT
+EMAIL_HOST_USER = SECURE_platform_config.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = SECURE_platform_config.EMAIL_HOST_PASSWORD
+DEFAULT_FROM_EMAIL = LOCAL_SETTINGS.DEFAULT_FROM_EMAIL
+EMAIL_USE_TLS = LOCAL_SETTINGS.EMAIL_USE_TLS
 
 MAINTENANCE_IGNORE_URLS = (
 		    r'^.*/admin/$',
@@ -41,7 +48,12 @@ TIME_ZONE = 'Europe/Copenhagen'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'da'
+LANGUAGES = (
+	('da', 'Danish'),
+	('en', 'English'),
+)
+
 
 SITE_ID = 1
 
@@ -102,8 +114,9 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -112,8 +125,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
+
 TEMPLATE_CONTEXT_PROCESSORS = (
         'django.core.context_processors.static',
+	'django.core.context_processors.i18n',
         'django.contrib.auth.context_processors.auth',
  		'sensible_data_platform.context_processors.platform',
 )
@@ -149,6 +164,7 @@ INSTALLED_APPS = (
     'service_manager',
     'south',
     'sensible_platform_documents',
+	'password_reset',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -182,3 +198,7 @@ LOGGING = {
 
 import hashlib
 SESSION_COOKIE_NAME = str(hashlib.sha1(SECRET_KEY).hexdigest())
+
+LOCALE_PATHS = (
+	'/home/arks/sensibledtu_DEVEL/SensibleData-Platform/sensible_data_platform/locale',
+)

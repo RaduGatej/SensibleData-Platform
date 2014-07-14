@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load i18n %} 
+
 {% block content %}
-
-
+<div class="page-header">
 
 {% if status == 'success' %}
 <div class="alert alert-success">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
-	<strong>Success!</strong> {{ message }}
+	<strong>{% trans "Success!" %}</strong> {{ message }}
 </div>
 {% endif %}
 
@@ -15,7 +16,7 @@
 {% if status == 'auth_error' %}
 <div class="alert alert-error">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
-	<strong>Error</strong> You clicked No, cannot proceed :(
+	<strong>{% trans "Error" %}</strong>{% trans "You clicked No, cannot proceed" %} :(
 </div>
 {% endif %}
 
@@ -66,8 +67,8 @@ function displayAuthError()	{
 	<div>
 		<div class="well span11">
 				<img src="{% static "img/dtu-logo.png" %}" style="display: block; margin: 0 auto;" />
-				<p><h3>Hey, {{ user.cas.givenName }} ({{ user.cas.student_id }})! You seem to have a DTU account, but are not on our list of students who can join SensibleDTU.</h3></p>
-				<p><h3>Is this a mistake? <a href="mailto:{{ support_mail }}">Let us know!</a></h3></p>
+				<p><h3>Hey, {{ user.cas.givenName }} ({{ user.cas.student_id }})! {% trans "You seem to have a DTU account, but are not on our list of students who can join" %} SensibleDTU.</h3></p>
+				<p><h3>{% trans "Is this a mistake?" %} <a href="mailto:{{ support_mail }}">{% trans "Let us know!" %}</a></h3></p>
 
 
 		</div>
@@ -76,7 +77,7 @@ function displayAuthError()	{
 	<div>
 		<div class="well span11">
 			<div style="text-align:center">
-			<p><h3>For at deltage i SensibleDTU skal du være DTU studerende.</h3></p>
+			<p><h3>{% trans "For at deltage i SensibleDTU skal du være DTU studerende." %}</h3></p>
 			</div>
 			</br>
 				<img src="{% static "img/dtu-logo.png" %}" style="display: block; margin: 0 auto;" />
@@ -84,9 +85,9 @@ function displayAuthError()	{
 				<tr>
 					<td style="text-align: center; vertical-align: middle;">
 						<h4 style="color:#c51137">
-							DTU student?
+							{% trans "DTU student?" %}
 							<div class="form-actions">
-								<p><a class="btn btn-large btn-danger" href="{% url "id_cas" %}">Link to Your account</a></p>
+								<p><a class="btn btn-large btn-danger" href="{% url "id_cas" %}">{% trans "Link to Your account" %}</a></p>
 							</div>
 						</h4>
 
@@ -115,7 +116,7 @@ function displayAuthError()	{
 				<h1>{{ service }}</h1>
 				<p>{{ status.discovery.service_desc_full | safe }} </p>
 					</br>
-					<h4><div class="span" style="margin:-13px 0px 0px; background-color:#c43c35; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 3px 3px 3px 3px; color: #ffffff;"> The Study seems to be offline at the moment. <a href="mailto:{{ support_mail }}">Ping us.</a> Thanks!</div></h4>
+					<h4><div class="span" style="margin:-13px 0px 0px; background-color:#c43c35; text-align:center; padding: 4px 20px 4px; font-weight: bold; white-space: pre-wrap; -webkit-border-radius: 3px; -moz-border-radius: 3px 3px 3px 3px; border-radius: 3px 3px 3px 3px; color: #ffffff;"> {% trans "The Study seems to be offline at the moment." %} <a href="mailto:{{ support_mail }}">Ping us.</a> Thanks!</div></h4>
 			</form>
 			</div>
 		{% else %}
@@ -138,8 +139,8 @@ function displayAuthError()	{
 
 				<div class="row">
 				<div class="form-actions span" style="border: 1px solid #DDDDDD; background-color: #FFFFFF; border-radius: 4px 4px 4px 4px; margin-bottom:-10px; padding:2px 15px">
-					<h2>Applikationer</h2>
-					<h4>Nedenfor ser du en oversigt over dine applikationer. Applikationer indsamler data til SensibleDTU og du skal af sikkerhedsmæssige grunde godkende hver enkelt før de aktiveres.</h4>
+					<h2>{% trans "Applications" %}</h2>
+					<h4>{% trans "Below here you can see an overview of your applications. The applications collect data for Sensible DTU and for seccurity reasons you should accept each application before it will collect data about you." %}</h4>
 				</div>
 				</div>
 
@@ -151,7 +152,7 @@ function displayAuthError()	{
 
 					<h2>
 					{% if params.uri != '' %}
-						<a href="{{ params.uri }}">{{ application }}
+						<a href="{{ params.uri }}">{% trans application %}
 						<button value="" class="btn btn-primary btn-small" style="margin-bottom: 2px"><i class="icon-chevron-right icon-white"></i><i class="icon-chevron-right icon-white"></i></button></a>
 					{% else %}
 						{{ application }}

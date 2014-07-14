@@ -1,5 +1,6 @@
 {% extends "base_no_jq.html" %}
 {% load staticfiles %}
+{% load i18n %}
 
 {% block jq %}<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> {% endblock jq %}
 {% block menu %} 
@@ -13,7 +14,7 @@
 
 {% block sign_button %}
 <a class="btn btn-primary" href="{% url 'login' %}">
-<i class="icon-user icon-white"></i> Sign in</a>
+<i class="icon-user icon-white"></i>{% trans "Sign in" %}</a>
 {% endblock sign_button %}
 
 

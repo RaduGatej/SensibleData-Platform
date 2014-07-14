@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-
+{% load i18n %} 
 {% block content %}
 
 This is applications.html
 </br>
-Hello {{ user.username }}
+{% trans "Hello" %} {{ user.username }}
 </br>
 
 
