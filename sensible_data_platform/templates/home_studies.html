@@ -211,6 +211,7 @@ function displayAuthError()	{
 			{% endfor %}
 
 			<div style="margin-top: 20px">
+                <h5><p>Du kan vis aftalet <a href="{% url 'informed_consent' %}?service_name={{ service }}">her</a></p></h5>
 				<h5><p>Deltagelse i SensibleDTU er frivillig og du kan til enhver tid melde dig ud. Hvis du ønsker at framelde dig SensibleDTU projektet kan du skrive til <a href="mailto:{{ support_mail }}">{{ support_mail }}</a>.</p></h5>
 			</div>
 
