@@ -5,6 +5,7 @@ import json
 from accounts import manager
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from oauth2app.models import Client
 from service_manager import service_manager
 from collections import defaultdict
 from sensible_platform_documents.get_documents import getText
@@ -67,3 +68,8 @@ def changebrowser(request):
 
 def noscript(request):
 	return render_to_response('js_disabled.html', {}, context_instance=RequestContext(request))
+
+def see_informed_consent(request):
+	service_name = request.GET.get("service_name")
+	client = Client.objects.get(name=service_name)
+	return render_to_response('informed_consent.html', {'informed_consent': service_manager.getInformedConsent(client,request.LANGUAGE_CODE)}, context_instance=RequestContext(request))
