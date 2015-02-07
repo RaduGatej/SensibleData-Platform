@@ -9,3 +9,4 @@ LOCAL_*
 .DS_Store
 *.idea
 *.iml
+wsgi.py
