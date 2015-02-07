@@ -7,3 +7,5 @@ TEMP_*
 LOCAL_*
 *.swp
 .DS_Store
+*.idea
+*.iml
