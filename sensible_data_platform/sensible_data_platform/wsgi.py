@@ -26,4 +26,3 @@ application = get_wsgi_application()
 from paste.deploy.config import PrefixMiddleware
 application = PrefixMiddleware(application, prefix='/sensible-data/')
 
-
