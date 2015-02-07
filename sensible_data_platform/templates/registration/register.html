@@ -19,7 +19,7 @@
 
 
         <div class="usernameWrapper">
-			<strong><p style="margin-bottom: 0px";><span id="username_message" class="confirmMessage">Email</span></p></strong>
+			<strong><p style="margin-bottom: 0px";><span id="username_message" class="confirmMessage">E-mail</span></p></strong>
 		<div class="input-prepend" >
 			<span class="add-on">
 				<i class="icon-user"></i>
@@ -29,23 +29,64 @@
         </div>
 
         <div class="pass1Wrapper">
-			<strong><p style="margin-bottom: 0px;"><span id="pass1Message" class="confirmMessage">Create Password</span></p></strong>
+			<strong><p style="margin-bottom: 0px;"><span id="pass1Message" class="confirmMessage">Skabe adgangskode</span></p></strong>
 		<div class="input-prepend">
 			<span class="add-on">
 				<i class="icon-lock"></i>
 				        </span>
-            <input type="password" name="pass1" id="pass1" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Create Password"  onkeyup="validatePw(this, 'pass1Message', 'pass2', 'pass2Message');">
+            <input type="password" name="pass1" id="pass1" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Skabe adgangskode"  onkeyup="validatePw(this, 'pass1Message', 'pass2', 'pass2Message');">
 			</div>
         </div>
         <div class="pass2Wrapper">
-			<strong><p style="margin-bottom: 0px;"><span id="pass2Message" class="confirmMessage">Confirm Password</span></p></strong>
+			<strong><p style="margin-bottom: 0px;"><span id="pass2Message" class="confirmMessage">Bekræfte adgangskode</span></p></strong>
 		<div class="input-prepend">
 			<span class="add-on">
 				<i class="icon-lock"></i>
 				        </span>
-            <input type="password" name="pass2" id="pass2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Confirm password" onkeyup="validatePw(this, 'pass2Message', 'pass1', 'pass1Message');" >
+            <input type="password" name="pass2" id="pass2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="Bekræfte adgangskode" onkeyup="validatePw(this, 'pass2Message', 'pass1', 'pass1Message');" >
 			</div>
         </div>
+
+        <div class="cprWrapper">
+            <strong><p style="margin-bottom: 0px;"><span id="cprMessage" class="confirmMessage">CPR-nummer</span></p></strong>
+        <div class="input-prepend">
+            <span class="add-on">
+                <i class="icon-user"></i>
+                        </span>
+            <input type="text" name="cpr" id="cpr" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="DDMMÅÅ-XXXX" onblur="validate_field(this)" >
+            </div>
+        </div>    
+
+        <div class="birthdateWrapper">
+            <strong><p style="margin-bottom: 0px;"><span id="dateMessage" class="confirmMessage">Fødselsdato</span></p></strong>
+        <div class="input-prepend">
+            <span class="add-on">
+                <i class="icon-calendar"></i>
+                        </span>
+            <input class="span2" maxlength="4" type="text" name="year" size="4" id="year" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="ÅÅÅÅ" onblur="validate_field(this)" >
+        </div>
+            <input class="span1" maxlength="2" type="text" name="month" id="month" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="MM" onblur="validate_field(this)" >
+        
+            <input class="span1" maxlength="2" type="text" name="day" id="day" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="DD" onblur="validate_field(this)" >
+            </div>
+            
+         
+
+        <div class="sexWrapper">
+            <strong><p style="margin-bottom: 0px;"><span id="sexMessage" class="confirmMessage">Køn</span></p></strong>
+        <div class="input-prepend">
+            <span class="add-on">
+                <i class="icon-user"></i>
+                        </span>
+            <select id="sex" name="sex" onchange="validate_field(this)">
+                <option value="c">Vælg venligst</option>
+                <option value="k">Kvinde</option>
+                <option value="m">Mand</option>
+            </select>
+            </div>
+        </div> 
+
+
 		<p></hr></p>
         <div class="buttonWrapper">
 			<button class="btn btn-primary btn-large" type="submit" id="button_id" value="Register" disabled onclick="submitForm()"><i class="icon-pencil icon-white" ></i> Register</button>
@@ -60,13 +101,23 @@
 
 <script>
 
-var goodColor = "#66cc66";
-var badColor = "#ff6666";
+var goodFontColor = "#66cc66";
+var badFontColor = "#ff6666";
+var goodBackColor = "#DFF0D8";
+var badBackColor = "#F2DEDE";
 var white = "#ffffff";
 
 var email_left = false;
 var username_OK = false;
 var pw_OK = false;
+var cpr_OK = false;
+var year_OK = false;
+var month_OK = false;
+var day_OK = false;
+var date_OK = false;
+var sex_GIVEN = false;
+var sex_OK = false;
+var meta_OK = false;
 
 function validatePw(pw, pw_message_id, other_id, other_message_id)
 {
@@ -87,24 +138,24 @@ function validatePw(pw, pw_message_id, other_id, other_message_id)
             {
                 if (pw.value == other.value )
                 {
-                    pw.style.backgroundColor = goodColor;
-                    other.style.backgroundColor = goodColor;
+                    pw.style.backgroundColor = goodBackColor;
+                    other.style.backgroundColor = goodBackColor;
                     pw_message.innerHTML = ""
                     other_message.innerHTML = ""
                     pw_OK = true;
                 }
                 else
                 {
-                    pw.style.backgroundColor = badColor;
-                    pw_message.style.color = badColor;
+                    pw.style.backgroundColor = badBackColor;
+                    pw_message.style.color = badFontColor;
                     pw_message.innerHTML = "Passwords Do Not Match"
                     pw_OK = false;
                 }
             }
             else
             {
-                pw.style.backgroundColor = goodColor;
-                pw_message.style.color = goodColor;
+                pw.style.backgroundColor = goodBackColor;
+                pw_message.style.color = goodFontColor;
                 pw_message.innerHTML = ""
                 pw_OK = false;
             }
@@ -113,8 +164,8 @@ function validatePw(pw, pw_message_id, other_id, other_message_id)
         {
 			if (pw_message_id=='pass1Message')
 			{
-				pw.style.backgroundColor = badColor;
-				pw_message.style.color = badColor;
+				pw.style.backgroundColor = badBackColor;
+				pw_message.style.color = badFontColor;
 				pw_message.innerHTML = "Password must be at least 6 characters long"
 				pw_OK = false
 			}
@@ -163,16 +214,16 @@ function isTaken()
 
     if ( response[0] < 0)
     {
-        input.style.backgroundColor = badColor;
-        message.style.color = badColor;
+        input.style.backgroundColor = badBackColor;
+        message.style.color = badFontColor;
         message.innerHTML = response[1];
         username_OK = false;
         return false;
     }
     else 
     {
-        input.style.backgroundColor = goodColor;
-        message.style.color = goodColor;
+        input.style.backgroundColor = goodBackColor;
+        message.style.color = goodFontColor;
         username_OK = true;
         return true;
     }
@@ -218,8 +269,8 @@ function validateEmail() {
 		if (emailValue.length > 30)
 		{
             username_OK = false;
-            emailField.style.backgroundColor = badColor;
-            emailMessage.style.color = badColor;
+            emailField.style.backgroundColor = badBackColor;
+            emailMessage.style.color = badFontColor;
             emailMessage.innerHTML = "Username should be shorter than 30 characters.";
             return false;
 
@@ -229,15 +280,15 @@ function validateEmail() {
 
         if( !emailReg.test( emailValue ) ) {
             username_OK = false;
-            emailField.style.backgroundColor = badColor;
-            emailMessage.style.color = badColor;
+            emailField.style.backgroundColor = badBackColor;
+            emailMessage.style.color = badFontColor;
             emailMessage.innerHTML = "Not a valid email";
             return false;
         } 
         else {
             username_OK = true;
-            emailField.style.backgroundColor = goodColor;
-            emailMessage.style.color = goodColor;
+            emailField.style.backgroundColor = goodBackColor;
+            emailMessage.style.color = goodFontColor;
             emailMessage.innerHTML = ""
             return true;
         }
@@ -259,7 +310,7 @@ function validateForm()
 {
     var button = document.getElementById("button_id")
 
-    if ( pw_OK && username_OK ) 
+    if ( pw_OK && username_OK && _validate()) 
     {
         button.disabled = false;
     }
@@ -276,6 +327,172 @@ function submitForm()
         document.forms['form_id'].submit();
         return true
     }
+}
+
+
+/** 
+    Added by Piotr
+*/
+
+
+function set_background(obj, success) {
+    if (success) {
+        obj.style="background-color: #DFF0D8;";
+    } else {
+        obj.style="background-color: #F2DEDE;";
+    }
+}
+
+
+function validate_field(obj) {
+    if (obj.name == 'cpr') {
+        if (obj.value != "") {
+            var result = validate_cpr(obj.value);
+            set_background(obj,result);
+            if (result) {
+                cpr_OK = true;
+                document.getElementById('cprMessage').innerHTML ="";
+            } else {
+                cpr_OK = false;
+                var cprelement = document.getElementById('cprMessage');
+                cprelement.innerHTML ="Angiv en gyldig CPR-nummer.";
+                cprelement.style.color = badFontColor;
+            }
+        }
+    } else if (obj.name == 'year') {
+        if (obj.value != "") {
+            var result = parseInt(obj.value) >= 1858 && parseInt(obj.value) <= 2015;
+            set_background(obj, result);
+            year_OK = result;
+        }
+    } else if (obj.name == 'month') {
+        if (obj.value != "") {
+            var result = parseInt(obj.value) >= 1 && parseInt(obj.value) <= 12;
+            set_background(obj, result);
+            month_OK = result;
+        }
+    } else if (obj.name == 'day') {
+        if (obj.value != "") {
+            var result = parseInt(obj.value) >= 1 && parseInt(obj.value) <= 31;
+            set_background(obj, result);
+            day_OK = result;
+        }
+    } else if (obj.name == 'sex') {
+        if (obj.value != 'c') {
+            sex_GIVEN = true;
+            document.getElementById('sexMessage').innerHTML = '';
+        } else {
+            sex_GIVEN = false;
+            document.getElementById('sexMessage').style.color = 'black';
+            document.getElementById('sexMessage').innerHTML = 'Køn';
+        }
+    }
+    _validate_sex();
+    _validate_date();
+    validateForm();
+}
+
+function _validate() {
+    return (cpr_OK && sex_OK && date_OK);
+}
+
+function _validate_sex() {
+    if (cpr_OK && sex_GIVEN) {
+        var result = validate_sex(document.getElementById('cpr').value, document.getElementById('sex').value);
+        sex_OK = result;
+        if (!result) {
+            document.getElementById('sexMessage').style.color = badFontColor;
+            document.getElementById('sex').style.backgroundColor = badBackColor;
+            document.getElementById('sexMessage').innerHTML = 'Kønen du angav matcher ikke dit CPR-nummer';
+        } else {
+            document.getElementById('sex').style.backgroundColor = goodBackColor;
+        }
+    }
+}
+
+function _validate_date() {
+    if (cpr_OK && year_OK && month_OK && day_OK) {
+        var result = validate_date(document.getElementById('cpr').value, 
+            document.getElementById('year').value,
+            document.getElementById('month').value,
+            document.getElementById('day').value);
+        date_OK = result;
+        if (result) {
+            document.getElementById('dateMessage').innerHTML = "";
+        } else {
+            document.getElementById('dateMessage').style.color = badFontColor;
+            document.getElementById('dateMessage').innerHTML = "Fødselsdatoen du angav matcher ikke dit CPR-nummer";
+        }
+
+    }
+}
+
+function strip_cpr(cpr) {
+    return cpr.replace(/[^0-9\.]+/g,"");
+}
+
+function validate_cpr(cpr) {
+    cpr = strip_cpr(cpr);
+    if (cpr.length != 10) return false;
+    var temp = 0;
+    var CONTROL = '432765432';
+    var DIVISOR = 11;
+    for (i = 0; i<9; i++) {
+        //console.log(i);
+        temp += parseInt(cpr.charAt(i)) * parseInt(CONTROL.charAt(i));
+    }
+    //console.log(temp);
+    var full = Math.floor(temp / DIVISOR);
+    var rest = temp - DIVISOR * full;
+    var control = 11 - rest;
+
+    return (control == parseInt(cpr.charAt(9)));
+}
+
+function validate_date(cpr, year, month, day) {
+    cpr = strip_cpr(cpr);
+    if (cpr.charAt(0) + cpr.charAt(1) != pad(day, 2, 0)) {
+        return false;
+    }
+    if (cpr.charAt(2) + cpr.charAt(3) != pad(month, 2, 0)) {
+        return false;
+    }
+    if (cpr.charAt(4) + cpr.charAt(5) != year.charAt(2) + year.charAt(3)) {
+        return false;
+    }
+    return true;
+}
+
+function validate_century(cpr, year) {
+    cpr = strip_cpr(cpr);
+    var contr1 = parseInt(cpr.charAt(6));
+    var y = parseInt(year);
+    if (contr1 >= 0 && contr1 <= 3) {
+        return (year >= 1900 && year <= 1999)
+    }
+    if (contr1 == 4 || contr1 == 9) {
+        return (year >=1937 && year <= 2036)
+    }
+    if (contr1 >= 5 && contr1 <= 8) {
+        return ((year >= 2000 && year <= 2036) || (year >= 1858  && year <= 1899));
+    }
+}
+
+function validate_sex(cpr, sex) {
+    cpr = strip_cpr(cpr);
+    var cpr_digit = parseInt(cpr.charAt(9));
+    if (cpr_digit / 2 == Math.floor(cpr_digit/2)) {
+        return sex == 'k';
+    } else {
+        return sex == 'm';
+    }
+
+}
+
+function pad(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
 
 </script>
