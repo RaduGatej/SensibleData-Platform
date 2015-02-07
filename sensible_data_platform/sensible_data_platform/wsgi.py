@@ -16,10 +16,14 @@ framework.
 import os
 import sys
 
-sys.path.append('/home/arks/sensibledtu_DEVEL/SensibleData-Platform/sensible_data_platform')
-sys.path.append('/home/arks/sensibledtu_DEVEL/SensibleData-Platform')
+sys.path.append('/Users/radugatej/Projects/patrick/SensibleData-Platform/sensible_data_platform')
+sys.path.append('/Users/radugatej/Projects/patrick/SensibleData-Platform')
 os.environ["DJANGO_SETTINGS_MODULE"] = "sensible_data_platform.settings"
 
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
+
+from paste.deploy.config import PrefixMiddleware
+application = PrefixMiddleware(application, prefix='/sensible-data/')
+
 
