@@ -109,11 +109,11 @@
 </head>
 
 <body>
-	<div class="navbar navbar-inverse navbar-fixed-top visible-desktop visible-tablet {% block top_bar %}{% endblock top_bar %}">
+	<div class="navbar navbar-fixed-top" {% block top_bar %}{% endblock top_bar %}">
     <div class="navbar-inner">
         <div class="container">
 			{% block menu %}{% endblock menu %}
-		<div class="nav"><img src="{% static "img/logo_40px.png" %}"></div>
+		<div class="nav"><img src="{% static "img/faelles_40px.png" %}"></div>
 		<a class="brand" href="{% url 'home' %}">{{ platform.name }}</a>
         {% if user.is_authenticated %}
 		<div class="nav-collapse collapse">
@@ -128,28 +128,28 @@
 		{% else %}
 		<div class="nav-collapse collapse">
             <ul class="nav">
-				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-white"></i>{% trans "About" %}</a></li>
-				<li><a href="mailto:{{ support_email }}" class=""><i class="icon-exclamation-sign icon-white"></i>{% trans "Help" %}</a></li>
+{#				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-white"></i>{% trans "About" %}</a></li>#}
+{#				<li><a href="mailto:{{ support_email }}" class=""><i class="icon-exclamation-sign icon-white"></i>{% trans "Help" %}</a></li>#}
             </ul>
         </div>
 		{% endif %}
-<div class="nav-collapse collapse">
-<ul class="nav">
-<form action="{% url 'set_language' %}" method="post">
-{% csrf_token %}
-<input name="next" type="hidden" value="{{ redirect_to }}" />
-<select name="language">
-{% get_language_info_list for LANGUAGES as languages %}
-{% for language in languages %}
-<option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
-    {{ language.name_local }} ({{ language.code }})
-</option>
-{% endfor %}
-</select>
-<input type="submit" value="Go" />
-</form>
- </ul>
-</div>
+{#<div class="nav-collapse collapse">#}
+{#<ul class="nav">#}
+{#<form action="{% url 'set_language' %}" method="post">#}
+{#{% csrf_token %}#}
+{#<input name="next" type="hidden" value="{{ redirect_to }}" />#}
+{#<select name="language">#}
+{#{% get_language_info_list for LANGUAGES as languages %}#}
+{#{% for language in languages %}#}
+{#<option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>#}
+{#    {{ language.name_local }} ({{ language.code }})#}
+{#</option>#}
+{#{% endfor %}#}
+{#</select>#}
+{#<input type="submit" value="Go" />#}
+{#</form>#}
+{# </ul>#}
+{#</div>#}
 
 <ul class="nav pull-right action">
         {% if user.is_authenticated %}
@@ -193,7 +193,7 @@
 
 	<div class="span6" style="text-align:right">
 		<p>
-		&copy; <a href="https://raw.github.com/MIT-Model-Open-Data-and-Identity-System/SensibleData-Service/master/sensible_data_service/documents/legal_notices">Technical University of Denmark</a> 2013
+		&copy; <a href="https://raw.github.com/MIT-Model-Open-Data-and-Identity-System/SensibleData-Service/master/sensible_data_service/documents/legal_notices">Københavns Universitet</a> 2015
 		|
 		<a href="https://raw.github.com/MIT-Model-Open-Data-and-Identity-System/SensibleData-Platform/master/LICENSE">software license</a>
 		</p>
