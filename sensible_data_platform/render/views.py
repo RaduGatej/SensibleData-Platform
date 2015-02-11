@@ -1,4 +1,5 @@
-from django.http import HttpResponse
+from django.conf import settings
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 import json
 
@@ -15,6 +16,8 @@ def home(request):
 		text = {}
 		text['welcome'] = getText('welcome_text', request.LANGUAGE_CODE)
 		return render_to_response('index.html', {'text': text}, context_instance=RequestContext(request))
+
+	return HttpResponseRedirect(settings.QUESTIONNAIRE_APP_URL)
 
 	status = request.REQUEST.get('status', '')
 	message = request.REQUEST.get('message', '')
