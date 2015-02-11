@@ -4,12 +4,12 @@ import os
 import LOCAL_SETTINGS
 from utils import SECURE_platform_config
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 MAINTENANCE_MODE = False
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+     ('Radu Gatej', 'radu.gatej@econ.ku.dk'),
 )
 
 MANAGERS = ADMINS
@@ -46,7 +46,7 @@ LOGIN_REDIRECT_URL = ROOT_URL
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Europe/Copenhagen'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -202,5 +202,5 @@ import hashlib
 SESSION_COOKIE_NAME = str(hashlib.sha1(SECRET_KEY).hexdigest())
 
 LOCALE_PATHS = (
-	'/home/arks/sensibledtu_DEVEL/SensibleData-Platform/sensible_data_platform/locale',
+	'',
 )
