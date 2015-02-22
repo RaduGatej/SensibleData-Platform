@@ -41,6 +41,14 @@ def check_username(request):
 		return HttpResponse(json.dumps([status, description])) # If here everything ok
 	return HttpResponse(json.dumps("Request method not allowed")) # Should NOT reach this point
 
+
+def informed_consent(request):
+	informed_consent = "this is the informed consent"
+	params = {}
+	params['informed_consent'] = informed_consent
+	return render_to_response('informed_consent.html', params, context_instance=RequestContext(request))
+
+
 def register(request):
 
 	if request.method == 'GET':

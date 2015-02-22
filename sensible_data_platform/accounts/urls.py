@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     url(r'^login/$', 'accounts.views.do_login', name = 'login'),
     url(r'^logout/$', 'accounts.session.logout', name = 'logout'),
     url(r'^register/$', 'accounts.register.register', name = 'register'),
+	url(r'^informed_consent/$', 'accounts.register.informed_consent', name = 'informed_consent'),
     url(r'^check_username/$', 'accounts.register.check_username'),
     url(r'^', include('password_reset.urls')),
 )
