@@ -176,9 +176,9 @@ def openid_decide(request):
         return error_page(request, "You are signed in but you don't have OpenID here!")
 
     #if request.method == 'POST' and request.POST.get('decide_page', False):
-    if orequest.trust_root == settings.QUESTIONNAIRE_APP_URL:
-        openid.trustedroot_set.create(trust_root=orequest.trust_root)
-        return HttpResponseRedirect(reverse('openid-provider-root'))
+    #if orequest.trust_root == settings.QUESTIONNAIRE_APP_URL:
+    openid.trustedroot_set.create(trust_root=orequest.trust_root)
+    return HttpResponseRedirect(reverse('openid-provider-root'))
 
     # verify return_to of trust_root
     try:
