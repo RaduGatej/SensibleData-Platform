@@ -1,4 +1,8 @@
 from django.conf import settings
+from django.contrib.auth import login
+from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
+from django.forms import model_to_dict
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 import json
@@ -6,6 +10,7 @@ import json
 from accounts import manager
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from accounts.models import Child
 from oauth2app.models import Client
 from service_manager import service_manager
 from collections import defaultdict
@@ -17,7 +22,7 @@ def home(request):
 		text['welcome'] = getText('welcome_text', request.LANGUAGE_CODE)
 		return render_to_response('index.html', {'text': text}, context_instance=RequestContext(request))
 
-	return HttpResponseRedirect(settings.QUESTIONNAIRE_APP_URL)
+	#return HttpResponseRedirect(settings.QUESTIONNAIRE_APP_URL)
 
 	status = request.REQUEST.get('status', '')
 	message = request.REQUEST.get('message', '')
@@ -27,10 +32,26 @@ def home(request):
 
 
 	#return HttpResponse(json.dumps(services))
+	service = services[services.keys()[0]]
+
+	if 'error' in service:
+		return HttpResponseRedirect(service["authorize_url"])
+	else:
+		#return HttpResponseRedirect(settings.QUESTIONNAIRE_APP_URL)
+		children_objects = Child.objects.filter(user=User.objects.get(username=request.user.username))
+		session_key = request.session.session_key
+		children = []
+		for child in children_objects:
+			questionnaire_url = settings.BASE_URL + "login_child" + "?parent_session=" + session_key + "&child_id=" + child.questionnaire_id
+			child_dict = model_to_dict(child)
+			child_dict["questionnaire_url"] = questionnaire_url
+			children.append(child_dict)
+		return render_to_response("child_list.html", {"children":children}, context_instance=RequestContext(request))
 
 	for service in services:
 		render_services[service] = {}
 		if 'error' in services[service]:
+			return HttpResponseRedirect(services[service]["authorize_url"])
 			render_services[service] = services[service] #not authorized
 			continue
 		render_services[service]['description'] = services[service]['discovery']
@@ -76,3 +97,19 @@ def see_informed_consent(request):
 	service_name = request.GET.get("service_name")
 	client = Client.objects.get(name=service_name)
 	return render_to_response('informed_consent.html', {'informed_consent': service_manager.getInformedConsent(client,request.LANGUAGE_CODE)}, context_instance=RequestContext(request))
+
+
+def login_child(request):
+	parent_session_key = request.GET.get("parent_session")
+	child_id = request.GET.get("child_id")
+	parent_session = Session.objects.get(session_key=parent_session_key)
+	uid = parent_session.get_decoded().get('_auth_user_id')
+
+	user = User.objects.get(pk=uid)
+
+	user.backend = 'django.contrib.auth.backends.ModelBackend'
+
+	login(request, user)
+
+	return HttpResponseRedirect(settings.QUESTIONNAIRE_APP_URL + "?child_id=" + child_id)
+

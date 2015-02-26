@@ -67,6 +67,7 @@ def register(request):
 
 
 
+
 		user = User.objects.create_user(username, '', password)
 		user.email = request.POST.get("username", "")
 		user.save()
@@ -96,6 +97,12 @@ def register(request):
 		if user is not None:
 			if user.is_active: login(request, user)
 
+		child_name = request.POST.get('child_0_name', '')
+		child_cpr = request.POST.get('child_0_cpr', '')
+
+		child_questionnaire_id = "child_" + str(hashlib.sha1(child_cpr).hexdigest())
+		child = Child(user=user, name=child_name, cpr=child_cpr, questionnaire_id = child_questionnaire_id)
+		child.save()
 		#return redirect(reverse('login')+'?next='+next)
 		return redirect(next)
 
