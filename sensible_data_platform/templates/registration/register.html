@@ -151,7 +151,7 @@ function add_child() {
     string += "<span class=\"add-on\">";
     string += "<i class=\"icon-user\"></i>";
     string += "</span>";
-    string += "<input type=\"text\" name=\"child_" + child_count + "_cpr\" id=\"child_" + child_count + "_cpr\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" placeholder=\"DDMMÅÅ-XXXX\" onblur=\"validate_children()\" >";
+    string += "<input type=\"text\" name=\"child_" + child_count + "_cpr\" id=\"child_" + child_count + "_cpr\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" placeholder=\"DDMMÅÅ-XXXX\" onblur=\"validate_children()\" onkeyup=\"validate_children()\">";
     string += "</div>";
     string += "</div>";
     string += "<button class=\"btn btn-medium\" type=\"button\" onclick=\"remove_child(" + child_count + ")\">Abort</button>";
@@ -236,6 +236,7 @@ function validate_children() {
         }
     }
     children_OK = result && (actual_child_count > 0);
+    validateForm();
 }
 
 function validateEmailSoft()
