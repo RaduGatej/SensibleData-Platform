@@ -48,7 +48,7 @@
         </div>
 
         <div class="cprWrapper">
-            <strong><p style="margin-bottom: 0px;"><span id="cprMessage" class="confirmMessage">CPR-nummer</span></p></strong>
+            <strong><p style="margin-bottom: 0px;"><span id="cpr_message" class="confirmMessage">CPR-nummer</span></p></strong>
         <div class="input-prepend">
             <span class="add-on">
                 <i class="icon-user"></i>
@@ -84,8 +84,9 @@
                 <option value="m">Mand</option>
             </select>
             </div>
-        </div> 
-
+        </div>             
+        <div id="child_wrapper"></div>
+        <button class="btn btn-medium" onclick="add_child()" type="button"><i class="icon-black icon-plus"></i>Add a child</button>
 
 		<p></hr></p>
         <div class="buttonWrapper">
@@ -100,6 +101,10 @@
 
 
 <script>
+
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
 
 var goodFontColor = "#66cc66";
 var badFontColor = "#ff6666";
@@ -118,6 +123,43 @@ var date_OK = false;
 var sex_GIVEN = false;
 var sex_OK = false;
 var meta_OK = false;
+var children_OK = false;
+
+var child_count = 0;
+
+function remove_child(child_id) {
+    elt = document.getElementById("child_" + child_id + "_wrapper");   
+    elt.parentNode.removeChild(elt);
+}
+
+function add_child() {
+    elt = document.getElementById("child_wrapper");
+    var node = document.createElement("div");
+    var string = "<div id=\"child_" + child_count + "_wrapper\" style=\"padding:20px;background:#ffffff;margin:20px\">";
+    string += "<div class=\"usernameWrapper\">";
+    string += "<strong><p style=\"margin-bottom: 0px\";><span id=\"child_" + child_count + "_name_message\" class=\"confirmMessage\">Navn</span></p></strong>";
+    string += "<div class=\"input-prepend\" >";
+    string += "<span class=\"add-on\">";
+    string += "<i class=\"icon-user\"></i>";
+    string += "</span>"
+    string += "<input type=\"text\" name=\"child_" + child_count + "_name\" id=\"child_" + child_count + "_name\" value=\"\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" Placeholder=\"Navn\" onblur=\"validate_children()\">";
+    string += "</div>";
+    string += "</div>";
+    string += "<div class=\"cprWrapper\">";
+    string += "<strong><p style=\"margin-bottom: 0px;\"><span id=\"child_" + child_count + "_cpr_message\" class=\"confirmMessage\">CPR-nummer</span></p></strong>";
+    string += "<div class=\"input-prepend\">";
+    string += "<span class=\"add-on\">";
+    string += "<i class=\"icon-user\"></i>";
+    string += "</span>";
+    string += "<input type=\"text\" name=\"child_" + child_count + "_cpr\" id=\"child_" + child_count + "_cpr\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" placeholder=\"DDMMÅÅ-XXXX\" onblur=\"validate_children()\" >";
+    string += "</div>";
+    string += "</div>";
+    string += "<button class=\"btn btn-medium\" type=\"button\" onclick=\"remove_child(" + child_count + ")\">Abort</button>";
+    string += "</div>";
+    node.innerHTML = string;
+    elt.appendChild(node);
+    child_count +=1;
+}
 
 function validatePw(pw, pw_message_id, other_id, other_message_id)
 {
@@ -127,8 +169,8 @@ function validatePw(pw, pw_message_id, other_id, other_message_id)
     var other = document.getElementById(other_id);
     var other_message = document.getElementById(other_message_id);
 
-    var pl = pw.value.length
-    var ol = other.value.length
+    var pl = pw.value.length;
+    var ol = other.value.length;
     
     if ( pl > 0) 
     {
@@ -140,15 +182,15 @@ function validatePw(pw, pw_message_id, other_id, other_message_id)
                 {
                     pw.style.backgroundColor = goodBackColor;
                     other.style.backgroundColor = goodBackColor;
-                    pw_message.innerHTML = ""
-                    other_message.innerHTML = ""
+                    pw_message.innerHTML = "";
+                    other_message.innerHTML = "";
                     pw_OK = true;
                 }
                 else
                 {
                     pw.style.backgroundColor = badBackColor;
                     pw_message.style.color = badFontColor;
-                    pw_message.innerHTML = "Passwords Do Not Match"
+                    pw_message.innerHTML = "Passwords Do Not Match";
                     pw_OK = false;
                 }
             }
@@ -156,7 +198,7 @@ function validatePw(pw, pw_message_id, other_id, other_message_id)
             {
                 pw.style.backgroundColor = goodBackColor;
                 pw_message.style.color = goodFontColor;
-                pw_message.innerHTML = ""
+                pw_message.innerHTML = "";
                 pw_OK = false;
             }
         }
@@ -166,8 +208,8 @@ function validatePw(pw, pw_message_id, other_id, other_message_id)
 			{
 				pw.style.backgroundColor = badBackColor;
 				pw_message.style.color = badFontColor;
-				pw_message.innerHTML = "Password must be at least 6 characters long"
-				pw_OK = false
+				pw_message.innerHTML = "Password must be at least 6 characters long";
+				pw_OK = false;
 			}
         }
     }
@@ -176,9 +218,25 @@ function validatePw(pw, pw_message_id, other_id, other_message_id)
         pw.style.backgroundColor = white;
  //       pw_message.style.color = "#555555";
   //      pw_message.innerHTML = "Password"
-        pw_OK = false
+        pw_OK = false;
     }
 }  
+
+function validate_children() {
+    children_OK = false;
+    var result = true;
+    var actual_child_count = 0;
+    for (var child_id = 0; child_id < child_count; child_id++) {
+        try {
+            result = result && validate_field(document.getElementById("child_" + child_id + "_cpr"));
+            result = result && validate_field(document.getElementById("child_" + child_id + "_name"));
+            actual_child_count+=1;
+        } catch (TypeError) {
+            continue;
+        }
+    }
+    children_OK = result && (actual_child_count > 0);
+}
 
 function validateEmailSoft()
 {
@@ -289,7 +347,7 @@ function validateEmail() {
             username_OK = true;
             emailField.style.backgroundColor = goodBackColor;
             emailMessage.style.color = goodFontColor;
-            emailMessage.innerHTML = ""
+            emailMessage.innerHTML = "";
             return true;
         }
     }
@@ -308,7 +366,7 @@ function validateEmail() {
 
 function validateForm()
 {
-    var button = document.getElementById("button_id")
+    var button = document.getElementById("button_id");
 
     if ( pw_OK && username_OK && _validate()) 
     {
@@ -325,7 +383,7 @@ function submitForm()
     if (isTaken())
     {
         document.forms['form_id'].submit();
-        return true
+        return true;
     }
 }
 
@@ -337,63 +395,78 @@ function submitForm()
 
 function set_background(obj, success) {
     if (success) {
-        obj.style="background-color: #DFF0D8;";
+        obj.style.background = "#DFF0D8";
     } else {
-        obj.style="background-color: #F2DEDE;";
+        obj.style.background = "#F2DEDE";
     }
 }
 
 
 function validate_field(obj) {
-    if (obj.name == 'cpr') {
+    var result = false;
+    if (obj.name.endsWith('cpr')) {
         if (obj.value != "") {
-            var result = validate_cpr(obj.value);
+            result = validate_cpr(obj.value);
             set_background(obj,result);
             if (result) {
                 cpr_OK = true;
-                document.getElementById('cprMessage').innerHTML ="";
+                document.getElementById(obj.id + "_message").innerHTML ="";
             } else {
                 cpr_OK = false;
-                var cprelement = document.getElementById('cprMessage');
+                var cprelement = document.getElementById(obj.id + "_message")
                 cprelement.innerHTML ="Angiv en gyldig CPR-nummer.";
                 cprelement.style.color = badFontColor;
             }
         }
     } else if (obj.name == 'year') {
         if (obj.value != "") {
-            var result = parseInt(obj.value) >= 1858 && parseInt(obj.value) <= 2015;
+            result = parseInt(obj.value) >= 1858 && parseInt(obj.value) <= 2015;
             set_background(obj, result);
             year_OK = result;
         }
     } else if (obj.name == 'month') {
         if (obj.value != "") {
-            var result = parseInt(obj.value) >= 1 && parseInt(obj.value) <= 12;
+            result = parseInt(obj.value) >= 1 && parseInt(obj.value) <= 12;
             set_background(obj, result);
             month_OK = result;
         }
     } else if (obj.name == 'day') {
         if (obj.value != "") {
-            var result = parseInt(obj.value) >= 1 && parseInt(obj.value) <= 31;
+            result = parseInt(obj.value) >= 1 && parseInt(obj.value) <= 31;
             set_background(obj, result);
             day_OK = result;
         }
     } else if (obj.name == 'sex') {
         if (obj.value != 'c') {
+            result = true;
             sex_GIVEN = true;
             document.getElementById('sexMessage').innerHTML = '';
         } else {
             sex_GIVEN = false;
+            result = false;
             document.getElementById('sexMessage').style.color = 'black';
             document.getElementById('sexMessage').innerHTML = 'Køn';
+        }
+    } else if (obj.name.endsWith('name')) {
+        if (obj.value.trim() != "") {
+            set_background(obj, true);   
+            result = true;
+        } else {
+            obj.value = "";
+            set_background(obj, false);
+            result = false;
         }
     }
     _validate_sex();
     _validate_date();
     validateForm();
+    return result;
 }
 
+
+
 function _validate() {
-    return (cpr_OK && sex_OK && date_OK);
+    return (cpr_OK && sex_OK && date_OK && children_OK);
 }
 
 function _validate_sex() {
@@ -468,10 +541,10 @@ function validate_century(cpr, year) {
     var contr1 = parseInt(cpr.charAt(6));
     var y = parseInt(year);
     if (contr1 >= 0 && contr1 <= 3) {
-        return (year >= 1900 && year <= 1999)
+        return (year >= 1900 && year <= 1999);
     }
     if (contr1 == 4 || contr1 == 9) {
-        return (year >=1937 && year <= 2036)
+        return (year >=1937 && year <= 2036);
     }
     if (contr1 >= 5 && contr1 <= 8) {
         return ((year >= 2000 && year <= 2036) || (year >= 1858  && year <= 1899));
