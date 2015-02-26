@@ -4,7 +4,7 @@ import os
 import LOCAL_SETTINGS
 from utils import SECURE_platform_config
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 MAINTENANCE_MODE = False
 
@@ -37,7 +37,7 @@ MAINTENANCE_IGNORE_URLS = (
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 LOGIN_URL = ROOT_URL + 'accounts/login/'
 LOGIN_REDIRECT_URL = ROOT_URL

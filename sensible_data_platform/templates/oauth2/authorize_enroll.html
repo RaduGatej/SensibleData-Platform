@@ -9,7 +9,6 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
         <script src="/static/js/uni-form-validation.jquery.js" type="text/javascript"></script>
 
-{% block title %}Enroll to {{ client.name }}{% endblock %}
 
 {% block content %}
 
@@ -19,11 +18,7 @@
 
 <div class="row">
 	<div class="well span11">
-		<h2>Enroll to <i>{{ client.name }}</i></h2>
-		<h3>Tiltrædelseserklæring for  
-		{{ user.cas.givenName }} {{ user.cas.familyName }} 
-		({{ user.cas.student_id }}).</h3>
-		<h5 style="margin-top:-20px;">version {{ informed_consent.service_informed_consent_version | safe }}</h5>
+		<h3>Tiltrædelseserklæring</h3>
 
 		<p><hr></p>
 		<div style="border: 1px solid #DDDDDD; background-color: #FFFFFF; border-radius: 4px 4px 4px 4px;">
@@ -31,15 +26,6 @@
 		</div>
 		</br>
 
-		<p class="lead">
-		{% if user.cas.student_id %}
-			{{ user.cas.givenName }} {{ user.cas.familyName }} 
-			({{ user.cas.student_id }}).
-		{% else %}
-			{{ user.first_name }} {{ user.last_name }}. 
-		{% endif %}
-		<a href="{% url "logout" %}">Not you?</a>
-		</p>
         
 	<div class="form_container">
 	{% uni_form form helper %}
