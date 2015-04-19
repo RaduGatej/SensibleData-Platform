@@ -42,9 +42,11 @@ def home(request):
 		session_key = request.session.session_key
 		children = []
 		for child in children_objects:
-			questionnaire_url = settings.BASE_URL + "login_child" + "?parent_session=" + session_key + "&child_id=" + child.questionnaire_id
+			child_questionnaire_url = settings.BASE_URL + "login_child" + "?parent_session=" + session_key + "&child_id=" + child.questionnaire_id
+			parent_questionnaire_url = settings.BASE_URL + "login_child" + "?parent_session=" + session_key + "&child_id=" + "parent"
 			child_dict = model_to_dict(child)
-			child_dict["questionnaire_url"] = questionnaire_url
+			child_dict["child_questionnaire_url"] = child_questionnaire_url
+			child_dict["parent_questionnaire_url"] = parent_questionnaire_url
 			children.append(child_dict)
 		return render_to_response("child_list.html", {"children":children}, context_instance=RequestContext(request))
 

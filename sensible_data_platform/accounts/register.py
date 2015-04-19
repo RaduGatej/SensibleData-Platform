@@ -1,8 +1,12 @@
+from binascii import hexlify
+import uuid
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 from django.core.context_processors import csrf
 from django.contrib.auth.models import User
 from django.template import RequestContext
+import simplecrypt
+from utils import SECURE_platform_config
 
 from openid_provider.models import *
 from .models import *
@@ -41,6 +45,26 @@ def check_username(request):
 		return HttpResponse(json.dumps([status, description])) # If here everything ok
 	return HttpResponse(json.dumps("Request method not allowed")) # Should NOT reach this point
 
+
+def check_cpr(request):
+	status = None
+	description = None
+	if request.method == "GET":
+		#TODO: encode and hexlify for checking
+		cpr = request.GET.get("cpr")
+		try:
+			Participant.objects.get(cpr__exact=cpr) # TODO: sanitize input server-side
+			status = -1
+			description = "CPR already taken"
+		except Participant.DoesNotExist:
+			status = 0
+			description = "CPR available for selection"
+		except:
+			status = -2
+			description = "Something funky with the cpr"
+
+		return HttpResponse(json.dumps([status, description])) # If here everything ok
+	return HttpResponse(json.dumps("Request method not allowed")) # Should NOT reach this point
 
 def informed_consent(request):
 	informed_consent = "this is the informed consent"
@@ -84,8 +108,10 @@ def register(request):
 
 		participant = Participant()
 		participant.user = user
+		participant.cpr = request.POST.get('cpr', '')#simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, request.POST.get('cpr', ''))
 		try: participant.pseudonym = str(hashlib.sha1(user.username.encode('utf-8')).hexdigest())[:30]
 		except: participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())[:30]
+
 		participant.save()
 
 		extra = Extra()
@@ -97,12 +123,15 @@ def register(request):
 		if user is not None:
 			if user.is_active: login(request, user)
 
-		child_name = request.POST.get('child_0_name', '')
-		child_cpr = request.POST.get('child_0_cpr', '')
+		for i in range(0,10):
+			child_name = request.POST.get('child_' + str(i) + '_name')
+			child_cpr = request.POST.get('child_' + str(i) + '_cpr')#simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, request.POST.get('child_' + str(i) + '_cpr'))
+			if child_name is None or child_cpr is None:
+				break
 
-		child_questionnaire_id = "child_" + str(hashlib.sha1(child_cpr).hexdigest())
-		child = Child(user=user, name=child_name, cpr=child_cpr, questionnaire_id = child_questionnaire_id)
-		child.save()
+			child_questionnaire_id = "child_" + str(hashlib.sha1(child_cpr+str(uuid.uuid4())).hexdigest())
+			child = Child(user=user, name=child_name, cpr=child_cpr, questionnaire_id = child_questionnaire_id)
+			child.save()
 		#return redirect(reverse('login')+'?next='+next)
 		return redirect(next)
 
