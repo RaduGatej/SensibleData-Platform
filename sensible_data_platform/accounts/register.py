@@ -1,3 +1,4 @@
+from binascii import hexlify
 import uuid
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
@@ -49,6 +50,7 @@ def check_cpr(request):
 	status = None
 	description = None
 	if request.method == "GET":
+		#TODO: encode and hexlify for checking
 		cpr = request.GET.get("cpr")
 		try:
 			Participant.objects.get(cpr__exact=cpr) # TODO: sanitize input server-side
@@ -106,7 +108,7 @@ def register(request):
 
 		participant = Participant()
 		participant.user = user
-		participant.cpr = simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, request.POST.get('cpr', ''))
+		participant.cpr = request.POST.get('cpr', '')#simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, request.POST.get('cpr', ''))
 		try: participant.pseudonym = str(hashlib.sha1(user.username.encode('utf-8')).hexdigest())[:30]
 		except: participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())[:30]
 
@@ -123,7 +125,7 @@ def register(request):
 
 		for i in range(0,10):
 			child_name = request.POST.get('child_' + str(i) + '_name')
-			child_cpr = simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, request.POST.get('child_' + str(i) + '_cpr'))
+			child_cpr = request.POST.get('child_' + str(i) + '_cpr')#simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, request.POST.get('child_' + str(i) + '_cpr'))
 			if child_name is None or child_cpr is None:
 				break
 
