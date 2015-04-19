@@ -4,6 +4,8 @@ from django.shortcuts import render_to_response, redirect
 from django.core.context_processors import csrf
 from django.contrib.auth.models import User
 from django.template import RequestContext
+import simplecrypt
+from utils import SECURE_platform_config
 
 from openid_provider.models import *
 from .models import *
@@ -104,7 +106,7 @@ def register(request):
 
 		participant = Participant()
 		participant.user = user
-		participant.cpr = request.POST.get('cpr', '')
+		participant.cpr = simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, request.POST.get('cpr', ''))
 		try: participant.pseudonym = str(hashlib.sha1(user.username.encode('utf-8')).hexdigest())[:30]
 		except: participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())[:30]
 
@@ -119,6 +121,15 @@ def register(request):
 		if user is not None:
 			if user.is_active: login(request, user)
 
+		for i in range(0,10):
+			child_name = request.POST.get('child_' + str(i) + '_name')
+			child_cpr = simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, request.POST.get('child_' + str(i) + '_cpr'))
+			if child_name is None or child_cpr is None:
+				break
+
+			child_questionnaire_id = "child_" + str(hashlib.sha1(child_cpr+str(uuid.uuid4())).hexdigest())
+			child = Child(user=user, name=child_name, cpr=child_cpr, questionnaire_id = child_questionnaire_id)
+			child.save()
 		#return redirect(reverse('login')+'?next='+next)
 		return redirect(next)
 
