@@ -292,7 +292,7 @@ function validateEmailSoft()
 function isTakenSoft()
 {
 	email_left = true;
-	isTaken();
+	userTaken();
 }
 
 
@@ -327,7 +327,8 @@ function childIsTaken(obj) {
     }
 }
 
-function isTaken()
+
+function userTaken()
 {
     username_OK = false;
     if (!validateEmail())
@@ -356,6 +357,21 @@ function isTaken()
         username_OK = true;
         return true;
     }
+
+}
+
+function cprTaken(cpr)
+{
+
+    var url =  '{{platformUri}}' + "accounts/check_cpr/?cpr=" + cpr;
+    var xmlHttp = null;
+    xmlHttp = new XMLHttpRequest();
+
+    xmlHttp.open( "GET", url, false );
+    xmlHttp.send( null );
+    var response = jQuery.parseJSON(xmlHttp.responseText);
+
+    return response[0] < 0;
 
 }
 
@@ -478,7 +494,7 @@ function validateForm()
 
 function submitForm()
 {
-    if (isTaken())
+    if (userTaken())
     {
         document.forms['form_id'].submit();
         return true;
@@ -507,8 +523,18 @@ function validate_field(obj) {
             result = validate_cpr(obj.value);
             set_background(obj,result);
             if (result) {
-                cpr_OK = true;
-                document.getElementById(obj.id + "_message").innerHTML ="";
+                var cpr_taken = cprTaken(obj.value);
+                set_background(obj,!cpr_taken);
+                if (!cpr_taken) {
+                    cpr_OK = true;
+                    document.getElementById(obj.id + "_message").innerHTML ="";
+                } else {
+                    cpr_OK = false;
+                    var cprelement = document.getElementById(obj.id + "_message")
+                    cprelement.innerHTML ="CPR-nummer er allerede taget.";
+                    cprelement.style.color = badFontColor;
+                }
+
             } else {
                 cpr_OK = false;
                 var cprelement = document.getElementById(obj.id + "_message")

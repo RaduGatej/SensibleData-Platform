@@ -5,11 +5,46 @@
 {% block title %}Your children{% endblock %}
 
 {% block content %}
-    {% for child in children %}
+    <style>
 
-        <p>Name: {{ child.name }}</p>
-        <br />
-        Questionnaire URL (copy and send this link to {{ child.name }}: <p>{{ child.questionnaire_url }}</p>
+        .popover-content {
+            word-wrap: break-word;
+        }
+
+    </style>
+
+    <script>
+    $(document).ready(function() {
+        $("[data-toggle=popover]").popover();
+        });
+    </script>
+
+    <h3>Available questionnaires:</h3>
+    <table class="table table-striped">
+        <thead>
+    			<tr>
+				    <th>Child name</th>
+				    <th>Parent questionnaire</th>
+                    <th>Child questionnaire</th>
+			    </tr>
+            </thead>
+        <tbody>
+        {% for child in children %}
+            <tr>
+                <td>{{ child.name }}</td>
+                <td>
+                    <a class="btn btn-success" type="button" href={{ child.parent_questionnaire_url }}>Start</a>
+                </td>
+                <td>
+                    <a class="btn btn-success" type="button" href={{ child.child_questionnaire_url }}>Start</a>
+                   <a href="#" data-toggle="popover" title="Questionnaire address" data-content={{ child.child_questionnaire_url }} class="btn btn-primary" type="button">See link</a>
+
+                </td>
+            </tr>
 
     {% endfor  %}
+        </tbody>
+    </table>
+
+
 {% endblock %}

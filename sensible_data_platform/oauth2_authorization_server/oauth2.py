@@ -57,7 +57,7 @@ def authorize(request):
 		except AccessRange.DoesNotExist: pass
 
 		if is_enrollment:
-	
+			return authorizer.grant_redirect()
 			template['informed_consent'] = service_manager.getInformedConsent(authorizer.client,request.LANGUAGE_CODE)
 
 			return render_to_response(
