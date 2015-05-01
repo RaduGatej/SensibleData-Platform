@@ -109,7 +109,7 @@
 </head>
 
 <body>
-	<div class="navbar navbar-fixed-top" {% block top_bar %}{% endblock top_bar %}">
+	<div class="navbar navbar-fixed-top" {% block top_bar %}{% endblock top_bar %}>
     <div class="navbar-inner">
         <div class="container">
 			{% block menu %}{% endblock menu %}
@@ -119,8 +119,8 @@
 		<div class="nav-collapse collapse">
             <ul class="nav">
                 <li><a href="{% url 'home' %}" class=""><i class="icon-home icon-white"></i>{% trans "Home" %}</a></li>
-                <li><a href="{% url 'profile' %}" class=""><i class="icon-user icon-white"></i>{% trans "Profile" %}</a></li>
-				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-white"></i>{% trans "About" %}</a></li>
+{#                <li><a href="{% url 'profile' %}" class=""><i class="icon-user icon-white"></i>{% trans "Profile" %}</a></li>#}
+{#				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-white"></i>{% trans "About" %}</a></li>#}
 				<li><a href="mailto:{{ support_email }}" class=""><i class="icon-exclamation-sign icon-white"></i>{% trans "Help" %}</a></li>
             </ul>
 		
@@ -184,20 +184,8 @@
 	<p><hr></p>
 
 <footer class="row">
-	<div class="span6">
-		<p>This is <a href="https://github.com/MIT-Model-Open-Data-and-Identity-System/SensibleData-Platform">{{ platform.name }}</a>, an <a href="http://openpds.media.mit.edu/">openPDS system</a>
 
-		<span class="label label-{% if platform.is_devel %}important{% else %}info{% endif %}">{{ platform.version }}</span></p>
 
-	</div>
-
-	<div class="span6" style="text-align:right">
-		<p>
-		&copy; <a href="https://raw.github.com/MIT-Model-Open-Data-and-Identity-System/SensibleData-Service/master/sensible_data_service/documents/legal_notices">Københavns Universitet</a> 2015
-		|
-		<a href="https://raw.github.com/MIT-Model-Open-Data-and-Identity-System/SensibleData-Platform/master/LICENSE">software license</a>
-		</p>
-	</div>
 
 	<div class="span">
 		<p><a rel="license" href="https://creativecommons.org/licenses/by/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/3.0/80x15.png" /></a> <span xmlns:dct="https://purl.org/dc/terms/" property="dct:title"></span> licensed under a <a rel="license" href="https://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a>.</p>
