@@ -127,6 +127,19 @@ var children_OK = false;
 
 var child_count = 0;
 
+
+function get_validation_message(return_code) {
+    if (return_code == -1) {
+        return "Dit brugernavn skal være på mindst seks tegn";
+    } 
+    if (return_code == -2) {
+        return "Brugernavnet er allerede taget";
+    }
+    if (return_code == -3) {
+        return "Brugernavnet er ugyldigt";
+    }
+}
+
 function remove_child(child_id) {
     elt = document.getElementById("child_" + child_id + "_wrapper");   
     elt.parentNode.removeChild(elt);
@@ -136,6 +149,7 @@ function add_child() {
     elt = document.getElementById("child_wrapper");
     var node = document.createElement("div");
     var string = "<div id=\"child_" + child_count + "_wrapper\" style=\"padding:20px;background:#ffffff;margin:20px\">";
+    
     string += "<div class=\"usernameWrapper\">";
     string += "<strong><p style=\"margin-bottom: 0px\";><span id=\"child_" + child_count + "_name_message\" class=\"confirmMessage\">Navn</span></p></strong>";
     string += "<div class=\"input-prepend\" >";
@@ -145,6 +159,7 @@ function add_child() {
     string += "<input type=\"text\" name=\"child_" + child_count + "_name\" id=\"child_" + child_count + "_name\" value=\"\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" Placeholder=\"Navn\" onblur=\"validate_children()\">";
     string += "</div>";
     string += "</div>";
+
     string += "<div class=\"cprWrapper\">";
     string += "<strong><p style=\"margin-bottom: 0px;\"><span id=\"child_" + child_count + "_cpr_message\" class=\"confirmMessage\">CPR-nummer</span></p></strong>";
     string += "<div class=\"input-prepend\">";
@@ -154,11 +169,40 @@ function add_child() {
     string += "<input type=\"text\" name=\"child_" + child_count + "_cpr\" id=\"child_" + child_count + "_cpr\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" placeholder=\"DDMMÅÅ-XXXX\" onblur=\"validate_children()\" onkeyup=\"validate_children()\">";
     string += "</div>";
     string += "</div>";
+
+    string += "<div class=\"relationWrapper\">";
+    string += "<strong><p style=\"margin-bottom: 0px;\"><span id=\"child_" + child_count + "_relation_message\" class=\"confirmMessage\">Din relation til barnet</span></p></strong>";
+    string += "<div class=\"input-prepend\">";
+    string += "<span class=\"add-on\">";
+    string += "<i class=\"icon-user\"></i>";
+    string += "</span>";
+    string += "<select name=\"child_" + child_count + "_relation\" id=\"child_" + child_count + "_relation\" onblur=\"validate_children()\" onkeyup=\"validate_children()\">";
+    string += "<option value=\"c\">Vælg venligst</option>";
+    string += "<option value=\"m\">Mor</option>";
+    string += "<option value=\"f\">Far</option>";
+    string += "<option value=\"v\">Værge</option>";
+    string += "</select>"
+    string += "</div>";
+    string += "</div>";
+
+    string += "<div class=\"childEmailWrapper\">";
+    string += "<strong><p style=\"margin-bottom: 0px;\"><span id=\"child_" + child_count + "_email_message\" class=\"confirmMessage\">Email</span></p></strong>";
+    string += "<div class=\"input-prepend\">";
+    string += "<span class=\"add-on\">";
+    string += "<i class=\"icon-envelope\"></i>";
+    string += "</span>";
+    string += "<input  type=\"text\" name=\"child_" + child_count + "_email_input\" id=\"child_" + child_count + "_email_input\" value=\"\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" Placeholder=\"Email\" onkeyup=\"_validateEmail(this);\"  onblur=\"childIsTaken(this);\">";
+    string += "</div>";
+    string += "</div>";
+
+
     string += "<button class=\"btn btn-medium\" type=\"button\" onclick=\"remove_child(" + child_count + ")\">Abort</button>";
     string += "</div>";
     node.innerHTML = string;
     elt.appendChild(node);
     child_count +=1;
+
+    //<!-- vaerge -->
 }
 
 function validatePw(pw, pw_message_id, other_id, other_message_id)
@@ -190,7 +234,7 @@ function validatePw(pw, pw_message_id, other_id, other_message_id)
                 {
                     pw.style.backgroundColor = badBackColor;
                     pw_message.style.color = badFontColor;
-                    pw_message.innerHTML = "Passwords Do Not Match";
+                    pw_message.innerHTML = "Kodeordene stemmer ikke overens.";
                     pw_OK = false;
                 }
             }
@@ -208,7 +252,7 @@ function validatePw(pw, pw_message_id, other_id, other_message_id)
 			{
 				pw.style.backgroundColor = badBackColor;
 				pw_message.style.color = badFontColor;
-				pw_message.innerHTML = "Password must be at least 6 characters long";
+				pw_message.innerHTML = "Kodeordet skal være på mindst seks tegn.";
 				pw_OK = false;
 			}
         }
@@ -251,6 +295,38 @@ function isTakenSoft()
 	isTaken();
 }
 
+
+function _isTaken(username) {
+    var url =  '{{platformUri}}' + "accounts/check_username/?username=" + username; 
+    var xmlHttp = null;
+    xmlHttp = new XMLHttpRequest();
+    
+    xmlHttp.open( "GET", url, false );
+    xmlHttp.send( null );
+    var response = jQuery.parseJSON(xmlHttp.responseText);
+    response[1] = get_validation_message(response[0]);
+    return response;
+}
+
+function childIsTaken(obj) {
+    var val = obj.value;
+    // check if the same as parents:
+    var parentEmail = document.getElementById("username_input");
+    var 
+    if (val == parentEmail.value) {
+        obj.value = "";
+        obj.placeholder = "Du skal ikke bruge din egen e-mail";
+        set_background(obj, false);  
+        return; 
+    }
+    var response = _isTaken(val);
+    if (response[0] < 0) {
+        obj.value = "";
+        obj.placeholder = get_validation_message(response[0]);
+        set_background(obj, false);
+    }
+}
+
 function isTaken()
 {
     username_OK = false;
@@ -263,13 +339,7 @@ function isTaken()
     var message = document.getElementById("username_message");
     var username = input.value;
 
-    var url =  '{{platformUri}}' + "accounts/check_username/?username=" + username; 
-    var xmlHttp = null;
-    xmlHttp = new XMLHttpRequest();
-    
-    xmlHttp.open( "GET", url, false );
-    xmlHttp.send( null );
-    var response = jQuery.parseJSON(xmlHttp.responseText);
+    var response = _isTaken(username);
 
     if ( response[0] < 0)
     {
@@ -317,6 +387,33 @@ function resetPw2() {
 }
 
 
+
+/**
+ return codes
+ -1 missing
+ -2 too long
+ -3 not valid
+ -4 taken
+ 0 correct
+ */
+function _validateEmail(emailField) {
+    var email = emailField.value;
+    if (email.length == 0) {
+        return -1;
+    }
+    if (email.length >= 30) {
+        emailField.style.backgroundColor = badBackColor;
+        return -2;
+    }
+    var emailReg = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+    if( !emailReg.test( email ) ) {
+        emailField.style.backgroundColor = badBackColor;
+        return -3;
+    }
+    emailField.style.backgroundColor = goodBackColor;
+    return 0;
+}
+
 function validateEmail() {
     username_OK = false;
     var emailField = document.getElementById('username_input');
@@ -330,7 +427,7 @@ function validateEmail() {
             username_OK = false;
             emailField.style.backgroundColor = badBackColor;
             emailMessage.style.color = badFontColor;
-            emailMessage.innerHTML = "Username should be shorter than 30 characters.";
+            emailMessage.innerHTML = "Dit brugernavn skal være kortere end 30 tegn";
             return false;
 
 
@@ -341,7 +438,7 @@ function validateEmail() {
             username_OK = false;
             emailField.style.backgroundColor = badBackColor;
             emailMessage.style.color = badFontColor;
-            emailMessage.innerHTML = "Not a valid email";
+            emailMessage.innerHTML = "Brugernavnet er ugyldigt";
             return false;
         } 
         else {
@@ -457,6 +554,11 @@ function validate_field(obj) {
             set_background(obj, false);
             result = false;
         }
+    } else if (obj.name.endsWith('email_input')) {
+        var res = _validateEmail(obj.value);
+        result = (res == 0);
+        set_background(obj, result);
+
     }
     _validate_sex();
     _validate_date();
