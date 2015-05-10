@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
+from django.core.context_processors import csrf
 from django.forms import model_to_dict
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -12,6 +13,8 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from accounts.models import Child
 from oauth2app.models import Client
+from password_reset.utils import send_email
+from render.forms import ChildNotificationForm
 from service_manager import service_manager
 from collections import defaultdict
 from sensible_platform_documents.get_documents import getText
@@ -114,4 +117,16 @@ def login_child(request):
 	login(request, user)
 
 	return HttpResponseRedirect(settings.QUESTIONNAIRE_APP_URL + "?child_id=" + child_id)
+
+
+def notify_child(request):
+	print request.method
+	if request.method == 'POST':
+		print request.POST
+		#form = ChildNotificationForm(request.POST)
+		send_email(request.POST["child_email"], "blabla", subject="subject blabla")
+		#Child.objects.get(email=form.child_email).notified = True
+		print "returning"
+		return HttpResponseRedirect('/home/')
+
 
