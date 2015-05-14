@@ -20,4 +20,5 @@ class Child(models.Model):
     questionnaire_id = models.CharField(max_length=100)
     relation_to_user = models.CharField(max_length=100, null=True)
     email = models.CharField(max_length=100, null=True)
+    notified = models.BooleanField()
 
