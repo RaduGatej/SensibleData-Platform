@@ -128,11 +128,12 @@ def register(request):
 		for i in range(0,10):
 			child_name = request.POST.get('child_' + str(i) + '_name')
 			child_cpr = request.POST.get('child_' + str(i) + '_cpr')#simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, request.POST.get('child_' + str(i) + '_cpr'))
+			child_email = request.POST.get('child_' + str(i) + '_email_input')
 			if child_name is None or child_cpr is None:
 				break
 
 			child_questionnaire_id = "child_" + str(hashlib.sha1(child_cpr+str(uuid.uuid4())).hexdigest())
-			child = Child(user=user, name=child_name, cpr=child_cpr, questionnaire_id = child_questionnaire_id)
+			child = Child(user=user, name=child_name, cpr=child_cpr, questionnaire_id = child_questionnaire_id, email = child_email)
 			child.save()
 		#return redirect(reverse('login')+'?next='+next)
 		return redirect(next)

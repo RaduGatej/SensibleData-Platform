@@ -18,4 +18,7 @@ class Child(models.Model):
     cpr = models.CharField(max_length=20)
     name = models.CharField(max_length=100)
     questionnaire_id = models.CharField(max_length=100)
+    relation_to_user = models.CharField(max_length=100, null=True)
+    email = models.CharField(max_length=100, null=True)
+    notified = models.BooleanField()
 
