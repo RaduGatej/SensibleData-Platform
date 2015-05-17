@@ -45,8 +45,8 @@ def home(request):
 		session_key = request.session.session_key
 		children = []
 		for child in children_objects:
-			child_questionnaire_url = settings.BASE_URL + "login_child" + "?parent_session=" + session_key + "&child_id=" + child.questionnaire_id
-			parent_questionnaire_url = settings.BASE_URL + "login_child" + "?parent_session=" + session_key + "&child_id=" + "parent"
+			child_questionnaire_url = settings.BASE_URL + "login_child" + "?parent_session=" + session_key + "&type_id=" "child_" + child.questionnaire_id
+			parent_questionnaire_url = settings.BASE_URL + "login_child" + "?parent_session=" + session_key + "&type_id=" + "parent_" + child.questionnaire_id
 			child_dict = model_to_dict(child)
 			child_dict["child_questionnaire_url"] = child_questionnaire_url
 			child_dict["parent_questionnaire_url"] = parent_questionnaire_url

@@ -130,7 +130,7 @@ def register(request):
 			if child_name is None or child_cpr is None:
 				break
 
-			child_questionnaire_id = "child_" + str(hashlib.sha1(child_cpr+str(uuid.uuid4())).hexdigest())
+			child_questionnaire_id = str(hashlib.sha1(child_cpr+str(uuid.uuid4())).hexdigest())
 			child = Child(user=user, name=child_name, cpr=child_cpr, questionnaire_id = child_questionnaire_id, email = child_email)
 			child.save()
 		#return redirect(reverse('login')+'?next='+next)
