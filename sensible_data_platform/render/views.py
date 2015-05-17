@@ -106,7 +106,7 @@ def see_informed_consent(request):
 
 def login_child(request):
 	parent_session_key = request.GET.get("parent_session")
-	child_id = request.GET.get("child_id")
+	type_id = request.GET.get("type_id")
 	parent_session = Session.objects.get(session_key=parent_session_key)
 	uid = parent_session.get_decoded().get('_auth_user_id')
 
@@ -116,7 +116,7 @@ def login_child(request):
 
 	login(request, user)
 
-	return HttpResponseRedirect(settings.QUESTIONNAIRE_APP_URL + "?child_id=" + child_id)
+	return HttpResponseRedirect(settings.QUESTIONNAIRE_APP_URL + "?type_id=" + type_id)
 
 
 def notify_child(request):
