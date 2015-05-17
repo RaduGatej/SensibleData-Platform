@@ -19,6 +19,7 @@ from django.core.urlresolvers import reverse
 
 from django.conf import settings
 from django.contrib.auth import authenticate, login
+import pdb
 
 def check_username(request):
 	username = None
@@ -59,7 +60,8 @@ def check_cpr(request):
 		except Participant.DoesNotExist:
 			status = 0
 			description = "CPR available for selection"
-		except:
+		except Exception as e:
+			pdb.set_trace()
 			status = -2
 			description = "Something funky with the cpr"
 
