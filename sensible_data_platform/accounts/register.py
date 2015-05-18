@@ -53,15 +53,15 @@ def check_cpr(request):
 	if request.method == "GET":
 		#TODO: encode and hexlify for checking
 		cpr = request.GET.get("cpr")
+		encrypted_cpr = simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, cpr).encode("hex")
 		try:
-			Participant.objects.get(cpr__exact=cpr) # TODO: sanitize input server-side
+			CPRNumber.objects.get(cpr__exact=encrypted_cpr) # TODO: sanitize input server-side
 			status = -1
 			description = "CPR already taken"
-		except Participant.DoesNotExist:
+		except CPRNumber.DoesNotExist:
 			status = 0
 			description = "CPR available for selection"
 		except Exception as e:
-			pdb.set_trace()
 			status = -2
 			description = "Something funky with the cpr"
 
@@ -110,7 +110,9 @@ def register(request):
 
 		participant = Participant()
 		participant.user = user
-		participant.cpr = request.POST.get('cpr', '')#simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, request.POST.get('cpr', ''))
+		encrypted_cpr = CPRNumber(cpr=simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, request.POST.get('cpr', '')).encode("hex"))
+		encrypted_cpr.save()
+		participant.cpr = encrypted_cpr
 		try: participant.pseudonym = str(hashlib.sha1(user.username.encode('utf-8')).hexdigest())[:30]
 		except: participant.pseudonym = str(hashlib.sha1(user.username).hexdigest())[:30]
 
@@ -127,13 +129,14 @@ def register(request):
 
 		for i in range(0,10):
 			child_name = request.POST.get('child_' + str(i) + '_name')
-			child_cpr = request.POST.get('child_' + str(i) + '_cpr')#simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, request.POST.get('child_' + str(i) + '_cpr'))
-			child_email = request.POST.get('child_' + str(i) + '_email_input')
+			child_cpr = request.POST.get('child_' + str(i) + '_cpr')
 			if child_name is None or child_cpr is None:
 				break
-
-			child_questionnaire_id = str(hashlib.sha1(child_cpr+str(uuid.uuid4())).hexdigest())
-			child = Child(user=user, name=child_name, cpr=child_cpr, questionnaire_id = child_questionnaire_id, email = child_email)
+			encrypted_cpr = CPRNumber(cpr=simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, child_cpr).encode("hex"))
+			encrypted_cpr.save()
+			child_email = request.POST.get('child_' + str(i) + '_email_input')
+			child_questionnaire_id = str(hashlib.sha1(encrypted_cpr.cpr[:10]+str(uuid.uuid4())).hexdigest())
+			child = Child(user=user, name=child_name, cpr=encrypted_cpr, questionnaire_id = child_questionnaire_id, email = child_email)
 			child.save()
 		#return redirect(reverse('login')+'?next='+next)
 		return redirect(next)
