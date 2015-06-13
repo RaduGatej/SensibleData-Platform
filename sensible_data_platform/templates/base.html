@@ -2,7 +2,11 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block jq %}<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> {% endblock jq %}
+{% block jq %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/additional-methods.min.js"></script>
+{% endblock jq %}
 {% block menu %} 
 
  <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">

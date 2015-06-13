@@ -45,8 +45,8 @@ def home(request):
 		session_key = request.session.session_key
 		children = []
 		for child in children_objects:
-			child_questionnaire_url = settings.BASE_URL + "login_child" + "?parent_session=" + session_key + "&child_id=" + child.questionnaire_id
-			parent_questionnaire_url = settings.BASE_URL + "login_child" + "?parent_session=" + session_key + "&child_id=" + "parent"
+			child_questionnaire_url = settings.BASE_URL + "login_child" + "?parent_session=" + session_key + "&type_id=" "child_" + child.questionnaire_id
+			parent_questionnaire_url = settings.BASE_URL + "login_child" + "?parent_session=" + session_key + "&type_id=" + "parent_" + child.questionnaire_id
 			child_dict = model_to_dict(child)
 			child_dict["child_questionnaire_url"] = child_questionnaire_url
 			child_dict["parent_questionnaire_url"] = parent_questionnaire_url
@@ -106,7 +106,7 @@ def see_informed_consent(request):
 
 def login_child(request):
 	parent_session_key = request.GET.get("parent_session")
-	child_id = request.GET.get("child_id")
+	type_id = request.GET.get("type_id")
 	parent_session = Session.objects.get(session_key=parent_session_key)
 	uid = parent_session.get_decoded().get('_auth_user_id')
 
@@ -116,7 +116,7 @@ def login_child(request):
 
 	login(request, user)
 
-	return HttpResponseRedirect(settings.QUESTIONNAIRE_APP_URL + "?child_id=" + child_id)
+	return HttpResponseRedirect(settings.QUESTIONNAIRE_APP_URL + "?type_id=" + type_id)
 
 
 def notify_child(request):
