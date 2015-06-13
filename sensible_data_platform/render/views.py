@@ -130,6 +130,6 @@ def notify_child(request):
 		child.notified = True
 		child.save()
 	# 	print "returning"
-		return HttpResponseRedirect('/home/')
+		return HttpResponseRedirect('/platform/')
 
 
