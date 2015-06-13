@@ -12,6 +12,7 @@ urlpatterns = patterns('',
 	url(r'^informed_consent/$', 'accounts.register.parent_informed_consent', name = 'parent_informed_consent'),
 	url(r'^parent_intro/$', 'accounts.register.parent_intro', name = 'parent_intro'),
     url(r'^check_username/$', 'accounts.register.check_username'),
+	url(r'^check_child_email/$', 'accounts.register.check_child_email'),
 	url(r'^check_cpr/$', 'accounts.register.check_cpr'),
     url(r'^', include('password_reset.urls')),
 )
