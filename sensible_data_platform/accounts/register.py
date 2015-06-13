@@ -10,6 +10,7 @@ from utils import SECURE_platform_config
 
 from openid_provider.models import *
 from .models import *
+from documents.get_documents import getText
 
 from collections import defaultdict
 import hashlib
@@ -68,11 +69,42 @@ def check_cpr(request):
 		return HttpResponse(json.dumps([status, description])) # If here everything ok
 	return HttpResponse(json.dumps("Request method not allowed")) # Should NOT reach this point
 
-def informed_consent(request):
-	informed_consent = "this is the informed consent"
+def check_child_email(request):
+
+	if request.method == "GET":
+		#TODO: encode and hexlify for checking
+		child_email = request.GET.get("child_email")
+		#child_email = simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, cpr).encode("hex")
+		try:
+			Child.objects.get(email__exact=child_email) # TODO: sanitize input server-side
+			status = -1
+			description = "Email already taken"
+		except Child.DoesNotExist:
+			status = 0
+			description = "Email available for selection"
+		except Exception as e:
+			status = -2
+			description = "Something funky with the Email"
+
+		return HttpResponse(json.dumps([status, description])) # If here everything ok
+	return HttpResponse(json.dumps("Request method not allowed")) # Should NOT reach this point
+
+def informed_consent(request, text, next):
+	informed_consent = text
 	params = {}
+	params['next'] = next
 	params['informed_consent'] = informed_consent
 	return render_to_response('informed_consent.html', params, context_instance=RequestContext(request))
+
+
+def parent_intro(request):
+	text = getText("parent_intro", "da")
+	return informed_consent(request, text, 'parent_informed_consent')
+
+
+def parent_informed_consent(request, ):
+	text = getText("informed_consent", "da")
+	return informed_consent(request, text, 'register')
 
 
 def register(request):
