@@ -11,24 +11,109 @@
             word-wrap: break-word;
         }
 
+        .error {
+            color: #ff6666;
+        }
+
+        input.error {
+            background: #F2DEDE;
+        }
+
+        input.valid {
+            background: #DFF0D8;
+        }
+
     </style>
 
     <script>
-    $(document).ready(function() {
-        $("[data-toggle=popover]").popover();
+        $(document).ready(function () {
+            $("[data-toggle=popover]").popover();
+            $('#child_wrapper').hide();
+            $.validator.addMethod("cprValid", function(value, element) {return validate_cpr(value)}, "Angiv en valid CPR");
+            $.validator.addMethod("cprTaken", function(value, element) {return cprTaken(value)}, "CPR nummer er allrede taget");
+            $('#child_form').validate({
+                 rules: {
+                    child_name: {
+                        required: true
+                    },
+                    child_cpr: {
+                        required: true,
+                        cprValid: true,
+                        cprTaken: true
+                    },
+                    child_email_input: {
+                        required: true,
+                        email: true
+                    }
+                },
+                //modify default onkeyup for "eager" validation
+                onkeyup: function (element, event) {
+                    if (event.which === 9 && this.elementValue(element) === "") {
+                        return;
+                    } else {
+                        this.element(element);
+                    }
+                },
+                messages: {
+                    child_name: "Please specify your child's name",
+                    child_email_input: "Please enter a valid email"
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
+            });
         });
+
+
+        function cprTaken(cpr) {
+            var url = window.location.origin + "/accounts/check_cpr/?cpr=" + cpr;
+            console.log(url);
+            var xmlHttp = null;
+            xmlHttp = new XMLHttpRequest();
+
+            xmlHttp.open("GET", url, false);
+            xmlHttp.send(null);
+            var response = jQuery.parseJSON(xmlHttp.responseText);
+            console.log(response);
+            var cprTaken =  response[0] < 0;
+            console.log(cprTaken);
+            return !cprTaken;
+
+        }
+
+        function strip_cpr(cpr) {
+            return cpr.replace(/[^0-9\.]+/g, "");
+        }
+
+        function validate_cpr(cpr) {
+            cpr = strip_cpr(cpr);
+            if (cpr.length != 10) return false;
+            var temp = 0;
+            var CONTROL = '432765432';
+            var DIVISOR = 11;
+            for (i = 0; i < 9; i++) {
+                temp += parseInt(cpr.charAt(i)) * parseInt(CONTROL.charAt(i));
+            }
+
+            var full = Math.floor(temp / DIVISOR);
+            var rest = temp - DIVISOR * full;
+            var control = 11 - rest;
+
+            return (control == parseInt(cpr.charAt(9)));
+        }
+
     </script>
 
     <h3>Available questionnaires:</h3>
     <table class="table table-striped">
         <thead>
-    			<tr>
-				    <th>Child name</th>
-				    <th>Parent questionnaire</th>
-                    <th>Child questionnaire</th>
-                    <th>Notified</th>
-			    </tr>
-            </thead>
+        <tr>
+            <th>Child name</th>
+            <th>Parent questionnaire</th>
+            <th>Child questionnaire</th>
+            <th>Notified</th>
+        </tr>
+        </thead>
         <tbody>
         {% for child in children %}
             <tr>
@@ -37,7 +122,7 @@
                     <a class="btn btn-success" type="button" href={{ child.parent_questionnaire_url }}>Start</a>
                 </td>
                 <td>
-                   <a href="#" data-toggle="popover" data-html="true" title="Child email" data-content='<form action="/notify_child/" method="POST">
+                    <a href="#" data-toggle="popover" data-html="true" title="Child email" data-content='<form action="/notify_child/" method="POST">
                                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" >
                                     <input name="child_email" type="text" value="{{ child.email }}"/>
                                     <input type="hidden" name="child_questionnaire_link" value={{ child.child_questionnaire_url }}/>
@@ -46,18 +131,75 @@
 
 
                 </td>
-            <td>
-                {% if child.notified %}
+                <td>
+                    {% if child.notified %}
                         <h5 style="color:limegreen">Yes</h5>
                     {% else %}
                         <h5 style="color:red">No</h5>
                     {% endif %}
-            </td>
+                </td>
             </tr>
 
-    {% endfor  %}
+        {% endfor %}
         </tbody>
     </table>
 
+    <a href="#" class="btn btn-primary" type="button" onclick="$('#child_wrapper').show();"><i class="icon-plus-sign icon-white"></i> Add child</a>
 
+    <form id="child_form" action="/register_child/" method="POST">
+    {% csrf_token %}
+    <div id="child_wrapper" style="padding:20px;background:#ffffff;margin:0 auto;">
+        <div class="usernameWrapper">
+            <strong><p style="margin-bottom: 0px">
+                <span id="child_name_message" class="confirmMessage">Navn</span></p>
+            </strong>
+
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-user"></i></span>
+                <input type="text" name="child_name" id="child_name" value="" spellcheck="false" autocomplete="off"
+                       autocapitalize="off" autocorrect="off" Placeholder="Navn">
+            </div>
+        </div>
+
+        <div class="cprWrapper">
+            <strong><p style="margin-bottom: 0px">
+                <span id="child_cpr_message" class="confirmMessage">CPR-nummer</span></p>
+            </strong>
+
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-user"></i></span>
+                <input type="text" name="child_cpr"
+                                                                            id="child_cpr" spellcheck="false"
+                                                                            autocomplete="off" autocapitalize="off"
+                                                                            autocorrect="off" placeholder="DDMMÅÅ-XXXX">
+            </div>
+        </div>
+
+        <div class="relationWrapper">
+            <strong><p style="margin-bottom: 0px;"><span id="child_0_relation_message" class="confirmMessage">Din relation til barnet</span>
+            </p></strong>
+
+            <div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span><select
+                    name="child_relation" id="child_relation">
+                <option value="c">Vælg venligst</option>
+                <option value="m">Mor</option>
+                <option value="f">Far</option>
+                <option value="v">Værge</option>
+            </select></div>
+        </div>
+
+        <div class="childEmailWrapper">
+            <strong><p style="margin-bottom: 0px;"><span id="child_email_message" class="confirmMessage">Email</span>
+            </p></strong>
+
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-envelope"></i></span>
+                <input type="text" name="child_email_input" id="child_email_input" value="" spellcheck="false"
+                       autocomplete="off" autocapitalize="off" autocorrect="off" Placeholder="Email">
+            </div>
+        </div>
+        <input class="btn btn-primary" type="submit" value="Add"/>
+        <button class="btn btn-medium" type="button" onclick="$('#child_wrapper').hide();">Cancel</button>
+    </div>
+    </form>
 {% endblock %}

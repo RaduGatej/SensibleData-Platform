@@ -143,4 +143,23 @@ def register(request):
 		return redirect(next)
 
 
+def register_child(request):
+	if request.method == "POST":
+		user = User.objects.get(username=request.user.username)
+		if not user:
+			if user.is_active:
+				login(request, user)
+
+		child_name = request.POST.get('child_name')
+		child_cpr = request.POST.get('child_cpr')
+		if child_name is None or child_cpr is None:
+			return redirect("/home/")
+		encrypted_cpr = CPRNumber(cpr=child_cpr)#simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, child_cpr).encode("hex"))
+		encrypted_cpr.save()
+		child_email = request.POST.get('child_email_input')
+		child_questionnaire_id = str(hashlib.sha1(encrypted_cpr.cpr[:10]+str(uuid.uuid4())).hexdigest())
+		child = Child(user=user, name=child_name, cpr=encrypted_cpr, questionnaire_id = child_questionnaire_id, email = child_email)
+		child.save()
+
+	return redirect("/home/")
 
