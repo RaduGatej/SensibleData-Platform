@@ -30,7 +30,8 @@
             $("[data-toggle=popover]").popover();
             $('#child_wrapper').hide();
             $.validator.addMethod("cprValid", function(value, element) {return validate_cpr(value)}, "Angiv en valid CPR");
-            $.validator.addMethod("cprTaken", function(value, element) {return cprTaken(value)}, "CPR nummer er allrede taget");
+            $.validator.addMethod("cprAvailable", function(value, element) {return fieldAvailable("cpr", value)}, "CPR nummer er allrede taget");
+            $.validator.addMethod("childEmailAvailable", function(value, element) {return fieldAvailable("child_email", value)}, "Email er allrede taget");
             $('#child_form').validate({
                  rules: {
                     child_name: {
@@ -39,11 +40,12 @@
                     child_cpr: {
                         required: true,
                         cprValid: true,
-                        cprTaken: true
+                        cprAvailable: true
                     },
                     child_email_input: {
                         required: true,
-                        email: true
+                        email: true,
+                        childEmailAvailable: true
                     }
                 },
                 //modify default onkeyup for "eager" validation
@@ -65,8 +67,8 @@
         });
 
 
-        function cprTaken(cpr) {
-            var url = window.location.origin + "/accounts/check_cpr/?cpr=" + cpr;
+        function fieldAvailable(field_name, field_value) {
+            var url = window.location.origin + "/accounts/check_" + field_name + "/?" + field_name + "=" + field_value;
             console.log(url);
             var xmlHttp = null;
             xmlHttp = new XMLHttpRequest();
@@ -75,11 +77,11 @@
             xmlHttp.send(null);
             var response = jQuery.parseJSON(xmlHttp.responseText);
             console.log(response);
-            var cprTaken =  response[0] < 0;
-            console.log(cprTaken);
-            return !cprTaken;
-
+            var fieldTaken =  response[0] < 0;
+            console.log(fieldTaken);
+            return !fieldTaken;
         }
+
 
         function strip_cpr(cpr) {
             return cpr.replace(/[^0-9\.]+/g, "");

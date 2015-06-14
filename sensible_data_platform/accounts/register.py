@@ -69,6 +69,25 @@ def check_cpr(request):
 		return HttpResponse(json.dumps([status, description])) # If here everything ok
 	return HttpResponse(json.dumps("Request method not allowed")) # Should NOT reach this point
 
+def check_child_email(request):
+
+	if request.method == "GET":
+		#TODO: encode and hexlify for checking
+		child_email = request.GET.get("child_email")
+		#child_email = simplecrypt.encrypt(SECURE_platform_config.CPR_ENCRYPTION_KEY, cpr).encode("hex")
+		try:
+			Child.objects.get(email__exact=child_email) # TODO: sanitize input server-side
+			status = -1
+			description = "Email already taken"
+		except Child.DoesNotExist:
+			status = 0
+			description = "Email available for selection"
+		except Exception as e:
+			status = -2
+			description = "Something funky with the Email"
+
+		return HttpResponse(json.dumps([status, description])) # If here everything ok
+	return HttpResponse(json.dumps("Request method not allowed")) # Should NOT reach this point
 
 def informed_consent(request, text, next):
 	informed_consent = text
