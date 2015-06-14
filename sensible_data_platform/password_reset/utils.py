@@ -18,10 +18,14 @@ def send_email(receiver_email, message, subject=""):
 	username = settings.EMAIL_HOST_USER
 	password = settings.EMAIL_HOST_PASSWORD
 
-	server = smtplib.SMTP(settings.EMAIL_HOST + ":" + str(settings.EMAIL_PORT))
+	#server = smtplib.SMTP(settings.EMAIL_HOST + ":" + str(settings.EMAIL_PORT))
+	#server.starttls()
+	server = smtplib.SMTP()
+	server.connect(settings.EMAIL_HOST, settings.EMAIL_PORT)
+	server.ehlo()
 	server.starttls()
-
-	ntlm_authenticate(server, username, password)
+	server.login(username, password)
+	#ntlm_authenticate(server, username, password)
 
 	fromaddr = settings.DEFAULT_FROM_EMAIL
 	toaddrs  = receiver_email

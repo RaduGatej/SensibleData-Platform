@@ -68,8 +68,7 @@
 
 
         function fieldAvailable(field_name, field_value) {
-            var url = window.location.origin + "/accounts/check_" + field_name + "/?" + field_name + "=" + field_value;
-            console.log(url);
+            var url = window.location.origin + "/platform/accounts/check_" + field_name + "/?" + field_name + "=" + field_value;
             var xmlHttp = null;
             xmlHttp = new XMLHttpRequest();
 
@@ -149,7 +148,7 @@
 
     <a href="#" class="btn btn-primary" type="button" onclick="$('#child_wrapper').show();"><i class="icon-plus-sign icon-white"></i> Add child</a>
 
-    <form id="child_form" action="/register_child/" method="POST">
+    <form id="child_form" action="/platform/register_child/" method="POST">
     {% csrf_token %}
     <div id="child_wrapper" style="padding:20px;background:#ffffff;margin:0 auto;">
         <div class="usernameWrapper">
