@@ -46,14 +46,6 @@
                         email: true
                     }
                 },
-                //modify default onkeyup for "eager" validation
-                onkeyup: function (element, event) {
-                    if (event.which === 9 && this.elementValue(element) === "") {
-                        return;
-                    } else {
-                        this.element(element);
-                    }
-                },
                 messages: {
                     child_name: "Please specify your child's name",
                     child_email_input: "Please enter a valid email"
