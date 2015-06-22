@@ -27,7 +27,7 @@
 
     <script>
         $(document).ready(function () {
-            $("[data-toggle=popover]").popover();
+            $("[data-toggle=popover]").popover({trigger:'focus'});
             $('#child_wrapper').hide();
             $.validator.addMethod("cprValid", function(value, element) {return validate_cpr(value)}, "Angiv en valid CPR");
             $.validator.addMethod("cprTaken", function(value, element) {return cprTaken(value)}, "CPR nummer er allrede taget");
