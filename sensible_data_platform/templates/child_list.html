@@ -27,7 +27,7 @@
 
     <script>
         $(document).ready(function () {
-            $("[data-toggle=popover]").popover();
+            $("[data-toggle=popover]").popover({trigger:'focus'});
             $('#child_wrapper').hide();
             $.validator.addMethod("cprValid", function(value, element) {return validate_cpr(value)}, "Angiv en valid CPR");
             $.validator.addMethod("cprAvailable", function(value, element) {return fieldAvailable("cpr", value)}, "CPR nummer er allrede taget");
@@ -46,14 +46,6 @@
                         required: true,
                         email: true,
                         childEmailAvailable: true
-                    }
-                },
-                //modify default onkeyup for "eager" validation
-                onkeyup: function (element, event) {
-                    if (event.which === 9 && this.elementValue(element) === "") {
-                        return;
-                    } else {
-                        this.element(element);
                     }
                 },
                 messages: {
@@ -106,7 +98,6 @@
     </script>
 
     <h3>Available questionnaires:</h3>
-    <p>Use the "See link" button to share the questionnaire address with your child for use on his/her device</p>
     <table class="table table-striped">
         <thead>
         <tr>

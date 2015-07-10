@@ -191,7 +191,7 @@ function add_child() {
     string += "<span class=\"add-on\">";
     string += "<i class=\"icon-envelope\"></i>";
     string += "</span>";
-    string += "<input  type=\"text\" name=\"child_" + child_count + "_email_input\" id=\"child_" + child_count + "_email_input\" value=\"\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" Placeholder=\"Email\" onkeyup=\"_validateEmail(this);\"  onblur=\"childIsTaken(this);\">";
+    string += "<input  type=\"text\" class=\"child_email_input\" name=\"child_" + child_count + "_email_input\" id=\"child_" + child_count + "_email_input\" value=\"\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" Placeholder=\"Email\" onkeyup=\"_validateEmail(this);\"  onblur=\"childIsTaken(this);\">";
     string += "</div>";
     string += "</div>";
 
@@ -317,6 +317,20 @@ function childIsTaken(obj) {
         obj.placeholder = "Du skal ikke bruge din egen e-mail";
         set_background(obj, false);  
         return; 
+    }
+    //check if unique child email
+    var child_email_inputs = document.querySelectorAll(".child_email_input");
+
+    for (i = 0; i < child_email_inputs.length; i++) {
+        if (obj.id == child_email_inputs[i].id) {
+            continue;
+        }
+        if (val == child_email_inputs[i].value) {
+            obj.value = "";
+            obj.placeholder = "Dit barns email skal være entydigt";
+            set_background(obj, false);
+            return;
+        }
     }
     var response = _isTaken(val);
     if (response[0] < 0) {
