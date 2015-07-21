@@ -120,16 +120,19 @@ def login_child(request):
 
 
 def notify_child(request):
-	print request.method
 	if request.method == 'POST':
-	# 	print request.POST
-	# 	#form = ChildNotificationForm(request.POST)
-	# 	message = "Follow this link to start the YGP questionnaire: " + request.POST["child_questionnaire_link"] + "\n\nKind regards\nYGP team"
-	# send_email(request.POST["child_email"], message, subject="Youth Gaming Project questionnaire")
-		child = Child.objects.get(email=request.POST["child_email"])
-		child.notified = True
-		child.save()
-	# 	print "returning"
+		message =  "Follow this link to start the YGP questionnaire: " + request.POST["child_questionnaire_link"] + "\n\nKind regards\nYGP team"
+		send_email(request.POST["child_email"], message, subject="Youth Gaming Project questionnaire")
+		try:
+			children = Child.objects.filter(email=request.POST["child_email"])
+			for child in children:
+				child.notified = True
+				child.save()
+		except:
+			return HttpResponseRedirect('/home/')
+
 		return HttpResponseRedirect('/home/')
+
+	return HttpResponseRedirect('/home/')
 
 
