@@ -27,7 +27,13 @@
 
     <script>
         $(document).ready(function () {
-            $("[data-toggle=popover]").popover({trigger:'focus'});
+            $("[data-toggle=popover]").popover({trigger:'click'});
+            $('body').on('click', function (e) {
+                //did not click a popover toggle or popover
+                if ($(e.target).data('toggle') !== 'popover' && $(e.target).parents('.popover.in').length === 0) {
+                    $('[data-toggle="popover"]').popover('hide');
+                }
+            });
             $('#child_wrapper').hide();
             $.validator.addMethod("cprValid", function(value, element) {return validate_cpr(value)}, "Angiv en valid CPR");
             $.validator.addMethod("cprAvailable", function(value, element) {return fieldAvailable("cpr", value)}, "CPR nummer er allrede taget");
