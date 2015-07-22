@@ -186,7 +186,7 @@ function add_child() {
     string += "<span class=\"add-on\">";
     string += "<i class=\"icon-user\"></i>";
     string += "</span>";
-    string += "<input type=\"text\" name=\"child_" + child_count + "_cpr\" id=\"child_" + child_count + "_cpr\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" placeholder=\"DDMMÅÅ-XXXX\" onblur=\"validate_children()\" onkeyup=\"validate_children()\">";
+    string += "<input type=\"text\" name=\"child_" + child_count + "_cpr\" id=\"child_" + child_count + "_cpr\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" placeholder=\"DDMMÅÅ-XXXX\" onblur=\"validate_children()\" >";
     string += "</div>";
     string += "</div>";
 
@@ -196,7 +196,7 @@ function add_child() {
     string += "<span class=\"add-on\">";
     string += "<i class=\"icon-user\"></i>";
     string += "</span>";
-    string += "<select name=\"child_" + child_count + "_relation\" id=\"child_" + child_count + "_relation\" onblur=\"validate_children()\" onkeyup=\"validate_children()\">";
+    string += "<select name=\"child_" + child_count + "_relation\" id=\"child_" + child_count + "_relation\" onblur=\"validate_children()\" onchange=\"validate_children()\">";
     string += "<option value=\"c\">Vælg venligst</option>";
     string += "<option value=\"m\">Mor</option>";
     string += "<option value=\"f\">Far</option>";
@@ -211,7 +211,7 @@ function add_child() {
     string += "<span class=\"add-on\">";
     string += "<i class=\"icon-envelope\"></i>";
     string += "</span>";
-    string += "<input  type=\"text\" class=\"child_email_input\" name=\"child_" + child_count + "_email_input\" id=\"child_" + child_count + "_email_input\" value=\"\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" Placeholder=\"Email\" onkeyup=\"_validateEmail(this);\"  onblur=\"childIsTaken(this);\">";
+    string += "<input  type=\"text\" class=\"child_email_input\" name=\"child_" + child_count + "_email_input\" id=\"child_" + child_count + "_email_input\" value=\"\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" Placeholder=\"Email\" onkeyup=\"validate_children()\">";
     string += "</div>";
     string += "</div>";
 
@@ -292,8 +292,23 @@ function validate_children() {
     var actual_child_count = 0;
     for (var child_id = 0; child_id < child_count; child_id++) {
         try {
-            result = result && validate_field(document.getElementById("child_" + child_id + "_cpr"));
-            result = result && validate_field(document.getElementById("child_" + child_id + "_name"));
+            result = validate_field(document.getElementById("child_" + child_id + "_name")) && result;
+            result = validate_field(document.getElementById("child_" + child_id + "_cpr")) && result;
+            
+            // turn the relation field green
+            if (document.getElementById("child_" + child_id + "_relation").value != "c") {
+                document.getElementById("child_" + child_id + "_relation").style.backgroundColor = goodBackColor;
+            } else {
+                document.getElementById("child_" + child_id + "_relation").style.backgroundColor = '0xfff';
+                result = false;
+            }
+            if (document.getElementById("child_" + child_id + "_email_input").value.length > 0) {
+                result = (_validateEmail(document.getElementById("child_" + child_id + "_email_input")) == 0) 
+                        && !childIsTaken(document.getElementById("child_" + child_id + "_email_input"))
+                        && result; 
+            } else {
+                result = false;
+            }
             actual_child_count+=1;
         } catch (TypeError) {
             continue;
@@ -336,7 +351,7 @@ function childIsTaken(obj) {
         obj.value = "";
         obj.placeholder = "Du skal ikke bruge din egen e-mail";
         set_background(obj, false);  
-        return; 
+        return true; 
     }
     //check if unique child email
     var child_email_inputs = document.querySelectorAll(".child_email_input");
@@ -349,7 +364,7 @@ function childIsTaken(obj) {
             obj.value = "";
             obj.placeholder = "Dit barns email skal være entydigt";
             set_background(obj, false);
-            return;
+            return true;
         }
     }
     var response = _isTaken(val);
@@ -357,7 +372,9 @@ function childIsTaken(obj) {
         obj.value = "";
         obj.placeholder = get_validation_message(response[0]);
         set_background(obj, false);
+        return true;
     }
+    return false;
 }
 
 
