@@ -1,3 +1,4 @@
+# coding=utf-8
 from django import forms
 from django.core.validators import validate_email
 from django.db.models import Q
@@ -79,11 +80,11 @@ class PasswordRecoveryForm(forms.Form):
 
 class PasswordResetForm(forms.Form):
     password1 = forms.CharField(
-        label=_('New password'),
+        label=_('Ny adgangskode'),
         widget=forms.PasswordInput,
     )
     password2 = forms.CharField(
-        label=_('New password (confirm)'),
+        label=_('Ny adgangskode (bekræft)'),
         widget=forms.PasswordInput,
     )
 
@@ -94,8 +95,10 @@ class PasswordResetForm(forms.Form):
     def clean_password2(self):
         password1 = self.cleaned_data.get('password1', '')
         password2 = self.cleaned_data['password2']
+        if len(password1) < 6:
+            raise forms.ValidationError(_("Adgangskoden skal være på mindst 6 tegn."))
         if not password1 == password2:
-            raise forms.ValidationError(_("The two passwords didn't match."))
+            raise forms.ValidationError(_("De to adgangskoder matchede ikke hinanden."))
         return password2
 
     def save(self, commit=True):
