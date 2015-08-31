@@ -1,3 +1,4 @@
+# coding=utf-8
 from binascii import hexlify
 import uuid
 from django.http import HttpResponse
@@ -90,11 +91,12 @@ def check_child_email(request):
 	return HttpResponse(json.dumps("Request method not allowed")) # Should NOT reach this point
 
 
-def informed_consent(request, text, next):
+def informed_consent(request, text, title, next):
 	informed_consent = text
 	params = {}
 	params['next'] = next
 	params['informed_consent'] = informed_consent
+	params['title'] = title
 	return render_to_response('informed_consent.html', params, context_instance=RequestContext(request))
 
 
@@ -106,12 +108,12 @@ def informed_consent_stub(request):
 
 def parent_intro(request):
 	text = getText("parent_intro", "da")
-	return informed_consent(request, text, 'parent_informed_consent')
+	return informed_consent(request, text, 'Information om projektet', 'parent_informed_consent')
 
 
-def parent_informed_consent(request, ):
+def parent_informed_consent(request):
 	text = getText("informed_consent", "da")
-	return informed_consent(request, text, 'register')
+	return informed_consent(request, text, 'Samtykkeerklæring', 'register')
 
 
 def register(request):
