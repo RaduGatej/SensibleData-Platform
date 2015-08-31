@@ -91,7 +91,7 @@ def check_child_email(request):
 	return HttpResponse(json.dumps("Request method not allowed")) # Should NOT reach this point
 
 
-def informed_consent(request, text, title, next, accept="Accepter", reject="Nej tak"):
+def informed_consent(request, text, title, next, accept="Acceptér", reject="Nej tak"):
 	informed_consent = text
 	params = {}
 	params['next'] = next
