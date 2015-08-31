@@ -91,12 +91,14 @@ def check_child_email(request):
 	return HttpResponse(json.dumps("Request method not allowed")) # Should NOT reach this point
 
 
-def informed_consent(request, text, title, next):
+def informed_consent(request, text, title, next, accept="Accepter", reject="Nej tak"):
 	informed_consent = text
 	params = {}
 	params['next'] = next
 	params['informed_consent'] = informed_consent
 	params['title'] = title
+	params['accept'] = accept
+	params['reject'] = reject
 	return render_to_response('informed_consent.html', params, context_instance=RequestContext(request))
 
 
@@ -108,7 +110,7 @@ def informed_consent_stub(request):
 
 def parent_intro(request):
 	text = getText("parent_intro", "da")
-	return informed_consent(request, text, 'Information om projektet', 'parent_informed_consent')
+	return informed_consent(request, text, 'Information om projektet', 'parent_informed_consent', reject="Jeg ønsker ikke at deltage", accept="Deltag")
 
 
 def parent_informed_consent(request):
