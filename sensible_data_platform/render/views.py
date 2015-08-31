@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.models import User
@@ -121,8 +123,13 @@ def login_child(request):
 
 def notify_child(request):
 	if request.method == 'POST':
-		message =  "Follow this link to start the YGP questionnaire: " + request.POST["child_questionnaire_link"] + "\n\nKind regards\nYGP team"
-		send_email(request.POST["child_email"], message, subject="Youth Gaming Project questionnaire")
+		message =  unicode(u"Velkommen til Youth Gaming Project!\n\n")
+		message += unicode(u"Din forælder har tilmeldt dig forskningsprojektet Youth Gaming Project (YGP). Følg venligst dette link for at starte spørgeskemaet: " ) 
+		message += unicode(request.POST["child_questionnaire_link"])
+		message += unicode(u"\n\n")
+		message += unicode(u"Opbevar denne mail i tilfælde af, at du holder pause undervejs og vil komme tilbage til spørgeskemaet senere. Hvis du mister linket, kan du altid bede din forælder om at sende dig et nyt link.")
+		message += unicode(u"\n\nMed venlig hilsen\nYouth Gaming Project")
+		send_email(request.POST["child_email"], message, subject="Youth Gaming Project spørgeskema")
 		try:
 			children = Child.objects.filter(email=request.POST["child_email"])
 			for child in children:

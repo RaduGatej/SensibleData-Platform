@@ -24,7 +24,7 @@ def send_email(receiver_email, message, subject=""):
 	server.connect(settings.EMAIL_HOST, settings.EMAIL_PORT)
 	server.ehlo()
 	server.starttls()
-	server.login(username, password)
+	#server.login(username, password)
 	#ntlm_authenticate(server, username, password)
 
 	fromaddr = settings.DEFAULT_FROM_EMAIL
