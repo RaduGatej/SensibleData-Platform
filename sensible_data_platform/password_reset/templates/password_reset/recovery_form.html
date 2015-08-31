@@ -2,18 +2,18 @@
 {% load i18n %}
 {% load url from future %}
 
-{% block title %}{% trans "Password recovery" %}{% endblock %}
+{% block title %}{% trans "Nulstil din adgangskode" %}{% endblock %}
 
 {% block content %}
     <div class="row">
     <fieldset class="well span">
-	<h1>Password <p>recovery</p></h1>
+	<h1>Nulstil din adgangskode</h1>
     <div class="form-actions" style="margin-bottom: 0px;">
 
         <form method="post" action="{{ url }}">
 		{% csrf_token %}
 		{{ form.as_p }}
-		<p><input class="btn btn-primary" type="submit" value="{% trans "Recover my password" %}"></p>
+		<p><input class="btn btn-primary" type="submit" value="{% trans "Nulstil min adgangskode" %}"></p>
 	</form>
         </div>
 

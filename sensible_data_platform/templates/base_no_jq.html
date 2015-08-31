@@ -118,18 +118,18 @@
         {% if user.is_authenticated %}
 		<div class="nav-collapse collapse">
             <ul class="nav">
-                <li><a href="{% url 'home' %}" class=""><i class="icon-home icon-white"></i>{% trans "Home" %}</a></li>
+                <li><a href="{% url 'home' %}" class=""><i class="icon-home icon-black"></i>{% trans "Home" %}</a></li>
 {#                <li><a href="{% url 'profile' %}" class=""><i class="icon-user icon-white"></i>{% trans "Profile" %}</a></li>#}
 {#				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-white"></i>{% trans "About" %}</a></li>#}
-				<li><a href="mailto:{{ support_email }}" class=""><i class="icon-exclamation-sign icon-white"></i>{% trans "Help" %}</a></li>
+				<li><a href="mailto:{{ support_email }}" class=""><i class="icon-question-sign icon-black"></i>{% trans "Hjælpe" %}</a></li>
             </ul>
 		
         </div>
 		{% else %}
 		<div class="nav-collapse collapse">
             <ul class="nav">
-{#				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-white"></i>{% trans "About" %}</a></li>#}
-{#				<li><a href="mailto:{{ support_email }}" class=""><i class="icon-exclamation-sign icon-white"></i>{% trans "Help" %}</a></li>#}
+{#				<li><a href="{% url 'about' %}" class=""><i class="icon-question-sign icon-black"></i>{% trans "About" %}</a></li>#}
+{#				<li><a href="mailto:{{ support_email }}" class=""><i class="icon-question-sign icon-black"></i>{% trans "Hjælpe" %}</a></li>#}
             </ul>
         </div>
 		{% endif %}
@@ -165,7 +165,7 @@
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a href={% url 'logout' %}><i class="icon-road"></i>{% trans "Logout" %}</a></li>
+                    <li><a href={% url 'logout' %}><i class="icon-road"></i>{% trans "Log ud" %}</a></li>
                   </ul>
         {% else %}
 				{% block sign_button %}{% endblock sign_button %}
@@ -189,7 +189,7 @@
 
 	<div class="span">
         {% if user.is_authenticated %}
-            <p>Københavns Universitet 2015 | <a href="{% url 'informed_consent_stub' %}">Tiltrædelseserklæring</a></p>
+            <p>Københavns Universitet 2015 | <a href="{% url 'informed_consent_stub' %}">Information om projektet</a></p>
         {% endif %}
 
         <p>
