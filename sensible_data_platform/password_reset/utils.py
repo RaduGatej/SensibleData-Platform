@@ -30,7 +30,7 @@ def send_email(receiver_email, message, subject=""):
 	fromaddr = settings.DEFAULT_FROM_EMAIL
 	toaddrs  = receiver_email
 
-	m = text(message)
+	m = text(message.encode('utf-8'),'plain','utf-8')
 
 	m['Subject'] = subject
 	m['From'] = fromaddr

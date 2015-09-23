@@ -129,7 +129,7 @@ def notify_child(request):
 		message += unicode(u"\n\n")
 		message += unicode(u"Opbevar denne mail i tilfælde af, at du holder pause undervejs og vil komme tilbage til spørgeskemaet senere. Hvis du mister linket, kan du altid bede din forælder om at sende dig et nyt link.")
 		message += unicode(u"\n\nMed venlig hilsen\nYouth Gaming Project")
-		send_email(request.POST["child_email"], message, subject="Youth Gaming Project spørgeskema")
+		send_email(request.POST["child_email"], message, subject=unicode(u"Youth Gaming Project spørgeskema"))
 		try:
 			children = Child.objects.filter(email=request.POST["child_email"])
 			for child in children:
