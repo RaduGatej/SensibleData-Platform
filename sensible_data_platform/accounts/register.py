@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response, redirect
 from django.core.context_processors import csrf
 from django.contrib.auth.models import User
 from django.template import RequestContext
+from django.db import IntegrityError
 import simplecrypt
 from utils import SECURE_platform_config
 
@@ -136,10 +137,12 @@ def register(request):
 
 
 
-
 		user = User.objects.create_user(username, '', password)
 		user.email = request.POST.get("username", "")
-		user.save()
+		try:
+			user.save()
+		except IntegrityError, e:
+			redirect(next)
 
 		openid = OpenID()
 		openid.user = user
