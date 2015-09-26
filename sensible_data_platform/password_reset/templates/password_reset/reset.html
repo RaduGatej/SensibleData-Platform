@@ -3,13 +3,13 @@
 {% block content %}
     <div class="row">
     <fieldset class="well span">
-	<h1>Password <p>recovery</p></h1>
+	<h1>Gendan <p>din adgangskode</p></h1>
     <div class="form-actions" style="margin-bottom: 0px;">
 
 	{% if invalid %}{% url "password_reset_recover" as recovery_url %}
 		<p>{% blocktrans %}Sorry, this password reset link is invalid. You can still <a href="{{ recovery_url }}">request a new one</a>.{% endblocktrans %}</p>
 	{% else %}
-	<p>{% blocktrans %}Hej, <strong>{{ username }}</strong>! <p>>Vælg venligst en ny adgangskode.{% endblocktrans %}</p>
+	<p>{% blocktrans %}Hej, <strong>{{ username }}</strong>! <p>Vælg venligst en ny adgangskode.{% endblocktrans %}</p>
 		<form method="post" action="{% url "password_reset_reset" token %}">
 			{% csrf_token %}
 			{{ form.as_p }}

@@ -31,6 +31,8 @@ EMAIL_USE_TLS = LOCAL_SETTINGS.EMAIL_USE_TLS
 
 QUESTIONNAIRE_APP_URL = LOCAL_SETTINGS.QUESTIONNAIRE_APP_URL
 
+CHILD_LINK_AGE = LOCAL_SETTINGS.CHILD_LINK_AGE
+
 MAINTENANCE_IGNORE_URLS = (
 		    r'^.*/admin/$',
 )
@@ -133,6 +135,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 	'django.core.context_processors.i18n',
         'django.contrib.auth.context_processors.auth',
  		'sensible_data_platform.context_processors.platform',
+		'django.core.context_processors.request',
 )
 
 ROOT_URLCONF = 'sensible_data_platform.urls'

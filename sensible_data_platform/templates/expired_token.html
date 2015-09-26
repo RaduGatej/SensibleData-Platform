@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load i18n %} 
+
+{% block content %}
+<div class="page-header">
+	<h4>{% trans "Your token is expired! Please ask your parent to send you a new link for accessing the questionnaire." %}</h4>
+</div>
+{% endblock %}

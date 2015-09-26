@@ -4,9 +4,11 @@ from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
+from django.core import signing
 from django.core.context_processors import csrf
+from django.core.signing import SignatureExpired, BadSignature
 from django.forms import model_to_dict
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response
 import json
 
@@ -20,6 +22,8 @@ from render.forms import ChildNotificationForm
 from service_manager import service_manager
 from collections import defaultdict
 from sensible_platform_documents.get_documents import getText
+from utils import SECURE_platform_config
+
 
 def home(request):
 	if not request.user.is_authenticated():
@@ -44,16 +48,14 @@ def home(request):
 	else:
 		#return HttpResponseRedirect(settings.QUESTIONNAIRE_APP_URL)
 		children_objects = Child.objects.filter(user=User.objects.get(username=request.user.username))
-		session_key = request.session.session_key
 		children = []
 		for child in children_objects:
-			child_questionnaire_url = settings.BASE_URL + "login_child" + "?parent_session=" + session_key + "&type_id=" "child_" + child.questionnaire_id
-			parent_questionnaire_url = settings.BASE_URL + "login_child" + "?parent_session=" + session_key + "&type_id=" + "parent_" + child.questionnaire_id
-			child_dict = model_to_dict(child)
-			child_dict["child_questionnaire_url"] = child_questionnaire_url
+			parent_questionnaire_url = settings.QUESTIONNAIRE_APP_URL + "?" + urllib.urlencode({"type_id": "parent_" + child.questionnaire_id})
+			child_dict = model_to_dict(child, exclude=['questionnaire_id', 'user', 'cpr', 'relation_to_user'])
+			child_dict["id"] = int(child_dict["id"])
 			child_dict["parent_questionnaire_url"] = parent_questionnaire_url
 			children.append(child_dict)
-		return render_to_response("child_list.html", {"children":children}, context_instance=RequestContext(request))
+		return render_to_response("child_list.html", {"children": children}, context_instance=RequestContext(request))
 
 	for service in services:
 		render_services[service] = {}
@@ -107,13 +109,18 @@ def see_informed_consent(request):
 
 
 def login_child(request):
-	parent_session_key = request.GET.get("parent_session")
+	login_token = request.GET.get("token")
+	uid = -1
+	try:
+		uid = signing.loads(login_token, salt=SECURE_platform_config.CHILD_LINK_SALT, max_age=settings.CHILD_LINK_AGE)
+	except SignatureExpired, e:
+		return render_to_response('expired_token.html', context_instance=RequestContext(request))
+	except BadSignature, e:
+		return Http404
+
 	type_id = request.GET.get("type_id")
-	parent_session = Session.objects.get(session_key=parent_session_key)
-	uid = parent_session.get_decoded().get('_auth_user_id')
 
 	user = User.objects.get(pk=uid)
-
 	user.backend = 'django.contrib.auth.backends.ModelBackend'
 
 	login(request, user)
@@ -123,18 +130,31 @@ def login_child(request):
 
 def notify_child(request):
 	if request.method == 'POST':
-		message =  unicode(u"Velkommen til Youth Gaming Project!\n\n")
+		child_id = int(request.POST.get("child_id", -1))
+		child = Child.objects.get(pk=child_id)
+
+		uid = User.objects.get(username=request.user.username).pk
+		token = signing.dumps(uid, salt=SECURE_platform_config.CHILD_LINK_SALT)
+
+		child_questionnaire_url = settings.BASE_URL + "login_child" + "?" + urllib.urlencode({"token": token, "type_id": "child_" + child.questionnaire_id})
+
+		message = unicode(u"Velkommen til Youth Gaming Project!\n\n")
 		message += unicode(u"Din forælder har tilmeldt dig forskningsprojektet Youth Gaming Project (YGP). Følg venligst dette link for at starte spørgeskemaet: " ) 
-		message += unicode(request.POST["child_questionnaire_link"])
+		message += unicode(child_questionnaire_url)
 		message += unicode(u"\n\n")
 		message += unicode(u"Opbevar denne mail i tilfælde af, at du holder pause undervejs og vil komme tilbage til spørgeskemaet senere. Hvis du mister linket, kan du altid bede din forælder om at sende dig et nyt link.")
 		message += unicode(u"\n\nMed venlig hilsen\nYouth Gaming Project")
-		send_email(request.POST["child_email"], message, subject=unicode(u"Youth Gaming Project spørgeskema"))
+
+		send_email(request.POST.get("child_email"), message, subject=unicode(u"Youth Gaming Project spørgeskema"))
+
+		save_new_email = request.POST.get("save_email")
+
+		if save_new_email == 'Save':
+			child.email = request.POST.get("child_email")
+
+		child.notified = True
 		try:
-			children = Child.objects.filter(email=request.POST["child_email"])
-			for child in children:
-				child.notified = True
-				child.save()
+			child.save()
 		except:
 			return HttpResponseRedirect('/platform/')
 

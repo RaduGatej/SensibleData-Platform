@@ -27,7 +27,7 @@ class PasswordRecoveryForm(forms.Form):
         labels = {
             'username': _('Username'),
             'email': _('Email'),
-            'both': mark_safe('<strong>Please enter your email address</strong>'),
+            'both': mark_safe('<strong>Angiv venligst din e-mail</strong>'),
         }
         User = get_user_model()  # noqa
         if getattr(User, 'USERNAME_FIELD', 'username') == 'email':

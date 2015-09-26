@@ -2,9 +2,16 @@
 {% load i18n %}
 {% load url from future %}
 
+
+
 {% block title %}Your children{% endblock %}
 
 {% block content %}
+
+{% if request.session.is_child %}
+    Access denied.
+{% else %}
+
     <style>
 
         .popover-content {
@@ -35,7 +42,7 @@
                 }
             });
             $('#child_wrapper').hide();
-            $.validator.addMethod("cprValid", function(value, element) {return validate_cpr(value)}, "Angiv en valid CPR");
+            $.validator.addMethod("cprValid", function(value, element) {return validate_cpr(value)}, "Angiv en gyldig CPR");
             $.validator.addMethod("cprAvailable", function(value, element) {return fieldAvailable("cpr", value)}, "CPR nummer er allrede taget");
             $.validator.addMethod("childEmailAvailable", function(value, element) {return fieldAvailable("child_email", value)}, "Email er allrede taget");
             $('#child_form').validate({
@@ -88,17 +95,18 @@
             cpr = strip_cpr(cpr);
             if (cpr.length != 10) return false;
             var temp = 0;
-            var CONTROL = '432765432';
+            var CONTROL = '4327654321';
             var DIVISOR = 11;
-            for (i = 0; i < 9; i++) {
+            for (i = 0; i<10; i++) {
+                //console.log(i);
                 temp += parseInt(cpr.charAt(i)) * parseInt(CONTROL.charAt(i));
             }
-
+            //console.log(temp);
             var full = Math.floor(temp / DIVISOR);
             var rest = temp - DIVISOR * full;
-            var control = 11 - rest;
+            return rest == 0;
 
-            return (control == parseInt(cpr.charAt(9)));
+            //return (control == parseInt(cpr.charAt(9)));
         }
 
     </script>
@@ -124,8 +132,9 @@
                 <td>
                    <a href="#" data-toggle="popover" data-html="true" title="Barnets e-mail" data-content='<form action="/platform/notify_child/" method="POST">
                                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" >
-                                    <input name="child_email" type="text" value="{{ child.email }}"/>
-                                    <input type="hidden" name="child_questionnaire_link" value={{ child.child_questionnaire_url }}/>
+                                    <input name="child_email" type="text" value="{{ child.email }}"/> <br>
+                                    <input name="save_email" type="checkbox" value="Save">  Save as permanent e-mail<br>
+                                    <input type="hidden" name="child_id" value="{{ child.id }}"/>
                                     <input class="btn btn-success" type="submit" value="OK"/>
                                     </form>' class="btn btn-primary" type="button">Send 'Barn spørgeskema'</a>
 
@@ -133,9 +142,9 @@
                 </td>
                 <td>
                     {% if child.notified %}
-                        <h5 style="color:limegreen">Yes</h5>
+                        <h5 style="color:limegreen">Ja</h5>
                     {% else %}
-                        <h5 style="color:red">No</h5>
+                        <h5 style="color:red">Nej</h5>
                     {% endif %}
                 </td>
             </tr>
@@ -202,4 +211,5 @@
         <button class="btn btn-medium" type="button" onclick="$('#child_wrapper').hide();">Afbryd</button>
     </div>
     </form>
+{% endif %}
 {% endblock %}
