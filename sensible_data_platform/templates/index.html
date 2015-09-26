@@ -8,7 +8,7 @@
 </div>
 
 	{% if not user.is_authenticated %}
-		<a class="btn btn-large btn-success" href="{% url 'register' %}"><i class="icon-pencil icon-white"></i> Registrér</a>
+		<a class="btn btn-large btn-success" href="{% url 'register' %}"><i class="icon-pencil icon-white"></i>&nbsp;Registrér</a>
 		<a class="btn btn-large btn-primary" href="{% url 'login' %}"><i class="icon-user icon-white"></i> Log på</a>
 	{% endif %}
 {% endblock %}
