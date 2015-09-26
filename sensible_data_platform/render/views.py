@@ -131,7 +131,7 @@ def login_child(request):
 
 def notify_child(request):
 	if request.method == 'POST':
-		child_id = int(request.POST["child_id"])
+		child_id = int(request.POST.get("child_id", -1))
 		child = Child.objects.get(pk=child_id)
 
 		uid = User.objects.get(username=request.user.username).pk
@@ -146,13 +146,16 @@ def notify_child(request):
 		message += unicode(u"Opbevar denne mail i tilfælde af, at du holder pause undervejs og vil komme tilbage til spørgeskemaet senere. Hvis du mister linket, kan du altid bede din forælder om at sende dig et nyt link.")
 		message += unicode(u"\n\nMed venlig hilsen\nYouth Gaming Project")
 
-		send_email(request.POST["child_email"], message, subject="Youth Gaming Project spørgeskema")
+		send_email(request.POST.get("child_email"), message, subject="Youth Gaming Project spørgeskema")
 
+		save_new_email = request.POST.get("save_email")
+
+		if save_new_email == 'Save':
+			child.email = request.POST.get("child_email")
+
+		child.notified = True
 		try:
-			children = Child.objects.filter(email=request.POST["child_email"])
-			for child in children:
-				child.notified = True
-				child.save()
+			child.save()
 		except:
 			return HttpResponseRedirect('/home/')
 
