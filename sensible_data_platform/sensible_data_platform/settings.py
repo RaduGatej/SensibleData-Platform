@@ -135,6 +135,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 	'django.core.context_processors.i18n',
         'django.contrib.auth.context_processors.auth',
  		'sensible_data_platform.context_processors.platform',
+		'django.core.context_processors.request',
 )
 
 ROOT_URLCONF = 'sensible_data_platform.urls'
