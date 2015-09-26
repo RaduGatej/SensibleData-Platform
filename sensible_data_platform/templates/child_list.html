@@ -2,9 +2,16 @@
 {% load i18n %}
 {% load url from future %}
 
+
+
 {% block title %}Your children{% endblock %}
 
 {% block content %}
+
+{% if request.session.is_child %}
+    Access denied.
+{% else %}
+
     <style>
 
         .popover-content {
@@ -204,4 +211,5 @@
         <button class="btn btn-medium" type="button" onclick="$('#child_wrapper').hide();">Afbryd</button>
     </div>
     </form>
+{% endif %}
 {% endblock %}
