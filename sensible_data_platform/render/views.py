@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import urllib
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.models import User
