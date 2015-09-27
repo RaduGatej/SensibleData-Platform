@@ -10,12 +10,6 @@
 
 {% block content %}
 
-{% if request.session.is_child %}
-    Access denied.
-
-{% else %}
-
-
     <style>
 
         .popover-content {
@@ -114,7 +108,6 @@
         }
 
     </script>
-
 	<h3>Velkommen til Youth Gaming Project! </h3>
 	<p>Nedenfor ser du en oversigt over det/de spørgeskema(er), der er tilgængelig for dig.</p> <p>For hvert barn, du har angivet, findes der et 'forældre' og et 'barn' spørgeskema. Du skal selv besvare det/de spørgeskema(er), der står i kolonnen 'Forældre spørgeskema'. 'Barn spørgeskemaet' skal du sende til dit barn ved at klikke på linket i kolonnen 'Barn spørgeskema'.</p>
     <table class="table table-striped">
@@ -216,6 +209,5 @@
     </div>
     </form>
 
-{% endif %}
 {% endblock %}
 
