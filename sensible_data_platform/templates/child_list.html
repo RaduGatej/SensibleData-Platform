@@ -1,3 +1,5 @@
+
+
 {% extends "base.html" %}
 {% load i18n %}
 {% load url from future %}
@@ -10,7 +12,9 @@
 
 {% if request.session.is_child %}
     Access denied.
+
 {% else %}
+
 
     <style>
 
@@ -211,5 +215,7 @@
         <button class="btn btn-medium" type="button" onclick="$('#child_wrapper').hide();">Afbryd</button>
     </div>
     </form>
+
 {% endif %}
 {% endblock %}
+
