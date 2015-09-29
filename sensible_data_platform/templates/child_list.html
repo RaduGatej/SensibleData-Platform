@@ -72,7 +72,7 @@
         function checkChildEmail(child_id, child_email) {
             var data = {"child_id": child_id, "child_email": child_email};
             var canModify = false;
-            $.get("/accounts/modify_child_email/", {"child_id": child_id, "child_email": child_email}, function(data, status) {
+            $.get("/platform/accounts/modify_child_email/", {"child_id": child_id, "child_email": child_email}, function(data, status) {
                 canModify = data === true || data === "true";
             });
             return canModify;
