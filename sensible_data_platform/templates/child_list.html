@@ -40,8 +40,8 @@
                 }
             });
             $('#child_wrapper').hide();
-            $.validator.addMethod("cprValid", function(value, element) {return validate_cpr(value)}, "Angiv en gyldig CPR");
-            $.validator.addMethod("cprAvailable", function(value, element) {return fieldAvailable("cpr", value)}, "CPR nummer er allrede taget");
+            $.validator.addMethod("cprValid", function(value, element) {return validate_cpr(value)}, "Angiv et gyldigt CPR-nummer");
+            $.validator.addMethod("cprAvailable", function(value, element) {return fieldAvailable("cpr", value)}, "Dette CPR-nummer er allerede taget");
             $.validator.addMethod("childEmailAvailable", function(value, element) {return fieldAvailable("child_email", value)}, "Email er allrede taget");
             $('#child_form').validate({
                  rules: {
@@ -61,7 +61,7 @@
                 },
                 messages: {
                     child_name: "Please specify your child's name",
-                    child_email_input: "Please enter a valid email"
+                    child_email_input: "Ugyldig e-mail adresse"
                 },
                 submitHandler: function(form) {
                     form.submit();
