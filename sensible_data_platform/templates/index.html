@@ -8,7 +8,11 @@
 </div>
 
 	{% if not user.is_authenticated %}
-		<a class="btn btn-large btn-success" href="{% url 'parent_intro' %}"><i class="icon-pencil icon-white"></i>&nbsp;Registrér</a>
+        <p>Hvis det er første gang, du besøger vores side, skal du klikke på ”Registrér”. Her kan du læse mere om projektet og tilmelde dig og dit barn.</p>
+        <p>Hvis du allerede har registreret dig, skal du klikke på ”Log på”. Her kan du logge dig på med din e-mail og din valgte adgangskode.</p>
+        <br>
+
+		<a class="btn btn-large btn-success" href="{% url 'register' %}"><i class="icon-pencil icon-white"></i>&nbsp;Registrér</a>
 		<a class="btn btn-large btn-primary" href="{% url 'login' %}"><i class="icon-user icon-white"></i> Log på</a>
 	{% endif %}
 {% endblock %}
