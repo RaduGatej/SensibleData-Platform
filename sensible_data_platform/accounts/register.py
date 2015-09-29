@@ -50,6 +50,25 @@ def check_username(request):
 	return HttpResponse(json.dumps("Request method not allowed")) # Should NOT reach this point
 
 
+def can_modify_child_email(request):
+	if request.method == "GET":
+		child_id = request.GET.get("child_id")
+		child_email = request.GET.get("child_email")
+
+		if len(User.objects.filter(username=child_email)) > 0:
+			return HttpResponse(json.dumps(False))
+
+		children_with_email = Child.objects.filter(email=child_email)
+		for child in children_with_email:
+			if child.id == int(child_id):
+				return HttpResponse(json.dumps(True))
+
+		if len(children_with_email) == 0:
+			return HttpResponse(json.dumps(True))
+
+		return HttpResponse(json.dumps(False))
+
+
 def check_cpr(request):
 	status = None
 	description = None

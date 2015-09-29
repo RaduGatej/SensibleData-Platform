@@ -69,6 +69,14 @@
             });
         });
 
+        function checkChildEmail(child_id, child_email) {
+            var data = {"child_id": child_id, "child_email": child_email};
+            var canModify = false;
+            $.get("/accounts/modify_child_email/", {"child_id": child_id, "child_email": child_email}, function(data, status) {
+                canModify = data === true || data === "true";
+            });
+            return canModify;
+        }
 
         function fieldAvailable(field_name, field_value) {
             var url = window.location.origin + "/platform/accounts/check_" + field_name + "/?" + field_name + "=" + field_value;
@@ -84,6 +92,22 @@
             return !fieldTaken;
         }
 
+        function validatePopover(child_id) {
+            jQuery.ajaxSetup({async:false});
+            $.validator.addMethod("canModifyChildEmail", function(value, element) {return checkChildEmail(child_id, value)}, "Email er allrede taget");
+            $('#notify_form').validate({
+                rules: {
+                    child_email: {
+                        required: true,
+                        email: true,
+                        canModifyChildEmail: true
+                    }
+                },
+                 submitHandler: function(form) {
+                    form.submit();
+                }
+            });
+        }
 
         function strip_cpr(cpr) {
             return cpr.replace(/[^0-9\.]+/g, "");
@@ -127,7 +151,7 @@
                     <a class="btn btn-success" type="button" href={{ child.parent_questionnaire_url }}>Start</a>
                 </td>
                 <td>
-                   <a href="#" data-toggle="popover" data-html="true" title="Barnets e-mail" data-content='<form action="/platform/notify_child/" method="POST">
+                    <a href="#" data-toggle="popover" data-html="true" title="Barnets e-mail" data-content='<script>validatePopover({{ child.id }});</script><form id=notify_form action="/platform/notify_child/" method="POST">
                                     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" >
                                     <input name="child_email" type="text" value="{{ child.email }}"/> <br>
                                     <input name="save_email" type="checkbox" value="Save">  Save as permanent e-mail<br>
@@ -152,7 +176,7 @@
 
     <a href="#" class="btn btn-primary" type="button" onclick="$('#child_wrapper').show();"><i class="icon-plus-sign icon-white"></i> Tilføj et barn</a>
 
-    <form id="child_form" action="/platform/register_child/" method="POST">
+    <form id="child_form" action="/register_child/" method="POST">
     {% csrf_token %}
     <div id="child_wrapper" style="padding:20px;background:#ffffff;margin:0 auto;">
         <div class="usernameWrapper">
