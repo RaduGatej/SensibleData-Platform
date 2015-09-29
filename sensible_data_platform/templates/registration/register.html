@@ -289,7 +289,12 @@ function validatePw(pw, pw_message_id, other_id, other_message_id)
  //      pw_message.innerHTML = "Password"
         pw_OK = false;
     }
-}  
+}
+
+
+function validate_child_cpr_field(cpr_field) {
+
+}
 
 function validate_children() {
     children_OK = false;
@@ -319,8 +324,53 @@ function validate_children() {
             continue;
         }
     }
-    children_OK = result && (actual_child_count > 0);
+
+    if (!checkCPRsUnique()) {
+        for (var child_id = 0; child_id < child_count; child_id++) {
+            setInvalidCPRColors(document.getElementById("child_" + child_id + "_cpr"));
+        }
+        setInvalidCPRColors(document.getElementById("cpr"));
+    } else {
+        for (var child_id = 0; child_id < child_count; child_id++) {
+            setValidCPRColors(document.getElementById("child_" + child_id + "_cpr"));
+        }
+        setValidCPRColors(document.getElementById("cpr"));
+    }
+
+    children_OK = result && (actual_child_count > 0) && checkCPRsUnique();
+
     validateForm();
+}
+
+function setInvalidCPRColors(field) {
+    field.style.backgroundColor = badBackColor;
+    var cprelement = document.getElementById(field.id + "_message");
+    cprelement.innerHTML ="CPR numbers must be unique";
+    cprelement.style.color = badFontColor;
+}
+
+function setValidCPRColors(field) {
+    field.style.backgroundColor = goodBackColor;
+    var cprelement = document.getElementById(field.id + "_message");
+    cprelement.innerHTML ="";
+    cprelement.style.color = badFontColor;
+}
+
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
+
+function checkCPRsUnique() {
+    var cprs = [];
+    cprs.push(document.getElementById("cpr").value);
+    for (var child_id = 0; child_id < child_count; child_id++) {
+        cprs.push(document.getElementById("child_" + child_id + "_cpr").value);
+    }
+
+    var unique = cprs.filter(onlyUnique);
+
+    return unique.length === cprs.length;
+
 }
 
 function validateEmailSoft()
