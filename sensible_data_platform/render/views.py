@@ -145,6 +145,9 @@ def notify_child(request):
 		message += unicode(u"\n\n")
 		message += unicode(u"Opbevar denne mail i tilfælde af, at du holder pause undervejs og vil komme tilbage til spørgeskemaet senere. Hvis du mister linket, kan du altid bede din forælder om at sende dig et nyt link.")
 		message += unicode(u"\n\nMed venlig hilsen\nYouth Gaming Project")
+		message += unicode(u"Hjemmeside: www.psy.ku.dk/ygp\n")
+		message += unicode(u"E-mail: ygp.info@psy.ku.dk\n")
+		message += unicode(u"Like, del og følg os på Facebook: www.facebook.com/youthgamingproject")
 
 		send_email(request.POST.get("child_email"), message, subject=unicode(u"Youth Gaming Project spørgeskema"))
 
