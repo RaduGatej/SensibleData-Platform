@@ -8,17 +8,17 @@
 
 
 <div class="page-header">
-	    <h1>You are already signed in.</h1>
+	    <h1>Du er allerede logget på.</h1>
 		    </div>
 
 
 
-<p><a href="{% url 'logout' %}"><button class="btn-large btn"><i class="icon-road"></i> Logout</button></a>
+<p><a href="{% url 'logout' %}"><button class="btn-large btn"><i class="icon-road"></i> Log ud</button></a>
 
 {% if next %}
-	<a href="{{ next }}"><button type="submit" name="submit" value="Login" class="btn btn-large btn-primary">Continue <i class="icon-chevron-right icon-white"></i></button></a>
+	<a href="{{ next }}"><button type="submit" name="submit" value="Login" class="btn btn-large btn-primary">Videre <i class="icon-chevron-right icon-white"></i></button></a>
 {% else %}
-	<a href="{% url 'home' %}"><button type="submit" name="submit" value="Login" class="btn btn-large btn-primary">Continue <i class="icon-chevron-right icon-white"></i></button></a>
+	<a href="{% url 'home' %}"><button type="submit" name="submit" value="Login" class="btn btn-large btn-primary">Videre <i class="icon-chevron-right icon-white"></i></button></a>
 {% endif %}
 </p>
 
