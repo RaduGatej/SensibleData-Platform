@@ -13,7 +13,7 @@
 		<form method="post" action="{% url "password_reset_reset" token %}">
 			{% csrf_token %}
 			{{ form.as_p }}
-			<p><input class="btn btn-primary" type="submit" value="{% trans "Vælg venligst en ny adgangskode." %}"></p>
+			<p><input class="btn btn-primary" type="submit" value="{% trans "Gem min nye adgangskode." %}"></p>
 		</form>
 	{% endif %}
     </div>
