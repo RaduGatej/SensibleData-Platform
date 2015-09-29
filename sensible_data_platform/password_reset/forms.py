@@ -84,7 +84,7 @@ class PasswordResetForm(forms.Form):
         widget=forms.PasswordInput,
     )
     password2 = forms.CharField(
-        label=_('Ny adgangskode (bekræft)'),
+        label=_(unicode(u'Ny adgangskode (bekræft)')),
         widget=forms.PasswordInput,
     )
 
@@ -96,7 +96,7 @@ class PasswordResetForm(forms.Form):
         password1 = self.cleaned_data.get('password1', '')
         password2 = self.cleaned_data['password2']
         if len(password1) < 6:
-            raise forms.ValidationError(_("Adgangskoden skal være på mindst 6 tegn."))
+            raise forms.ValidationError(_(unicode(u"Adgangskoden skal være på mindst 6 tegn.")))
         if not password1 == password2:
             raise forms.ValidationError(_("De to adgangskoder matchede ikke hinanden."))
         return password2
