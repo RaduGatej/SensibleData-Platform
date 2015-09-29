@@ -42,7 +42,7 @@
             $('#child_wrapper').hide();
             $.validator.addMethod("cprValid", function(value, element) {return validate_cpr(value)}, "Angiv et gyldigt CPR-nummer");
             $.validator.addMethod("cprAvailable", function(value, element) {return fieldAvailable("cpr", value)}, "Dette CPR-nummer er allerede taget");
-            $.validator.addMethod("childEmailAvailable", function(value, element) {return fieldAvailable("child_email", value)}, "Email er allrede taget");
+            $.validator.addMethod("childEmailAvailable", function(value, element) {return fieldAvailable("child_email", value)}, "Denne e-mail er allerede taget");
             $('#child_form').validate({
                  rules: {
                     child_name: {
@@ -95,7 +95,7 @@
 
         function validatePopover(child_id) {
             jQuery.ajaxSetup({async:false});
-            $.validator.addMethod("canModifyChildEmail", function(value, element) {return checkChildEmail(child_id, value)}, "Email er allrede taget");
+            $.validator.addMethod("canModifyChildEmail", function(value, element) {return checkChildEmail(child_id, value)}, "Denne e-mail er allerede taget");
             $('#notify_form').validate({
                 rules: {
                     child_email: {
