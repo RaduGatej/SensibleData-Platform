@@ -1,3 +1,4 @@
+# coding=utf-8
 from binascii import hexlify
 import uuid
 from django.http import HttpResponse
