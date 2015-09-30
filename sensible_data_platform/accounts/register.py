@@ -1,4 +1,3 @@
-# coding=utf-8
 from binascii import hexlify
 import uuid
 from django.http import HttpResponse
@@ -155,6 +154,8 @@ def register(request):
 		next = request.POST.get('next', '')
 
 
+		if len(User.objects.filter(username=username)) > 0:
+			redirect(next)
 
 		user = User.objects.create_user(username, '', password)
 		user.email = request.POST.get("username", "")
