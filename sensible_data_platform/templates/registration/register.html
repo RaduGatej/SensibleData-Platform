@@ -300,11 +300,19 @@ function validate_children() {
     children_OK = false;
     var result = true;
     var actual_child_count = 0;
+    var cprs = [];
+    cprs.push(document.getElementById("cpr").value.replace('-',''));
     for (var child_id = 0; child_id < child_count; child_id++) {
         try {
             result = validate_field(document.getElementById("child_" + child_id + "_name")) && result;
-            result = validate_field(document.getElementById("child_" + child_id + "_cpr")) && result;
-            
+            cpr = document.getElementById("child_" + child_id + "_cpr").value.replace('-','');
+            if (cprs.indexOf(cpr) >= 0) {
+                setInvalidCPRColors(document.getElementById("child_" + child_id + "_cpr"));
+                result = false;    
+            } else { 
+                result = validate_field(document.getElementById("child_" + child_id + "_cpr")) && result;
+                cprs.push(cpr);
+            }
             // turn the relation field green
             if (document.getElementById("child_" + child_id + "_relation").value != "c") {
                 document.getElementById("child_" + child_id + "_relation").style.backgroundColor = goodBackColor;
@@ -325,19 +333,7 @@ function validate_children() {
         }
     }
 
-    if (!checkCPRsUnique()) {
-        for (var child_id = 0; child_id < child_count; child_id++) {
-            setInvalidCPRColors(document.getElementById("child_" + child_id + "_cpr"));
-        }
-        setInvalidCPRColors(document.getElementById("cpr"));
-    } else {
-        for (var child_id = 0; child_id < child_count; child_id++) {
-            setValidCPRColors(document.getElementById("child_" + child_id + "_cpr"));
-        }
-        setValidCPRColors(document.getElementById("cpr"));
-    }
-
-    children_OK = result && (actual_child_count > 0) && checkCPRsUnique();
+    children_OK = result && (actual_child_count > 0);// && checkCPRsUnique();
 
     validateForm();
 }
@@ -356,22 +352,6 @@ function setValidCPRColors(field) {
     cprelement.style.color = badFontColor;
 }
 
-function onlyUnique(value, index, self) {
-    return self.indexOf(value) === index;
-}
-
-function checkCPRsUnique() {
-    var cprs = [];
-    cprs.push(document.getElementById("cpr").value);
-    for (var child_id = 0; child_id < child_count; child_id++) {
-        cprs.push(document.getElementById("child_" + child_id + "_cpr").value);
-    }
-
-    var unique = cprs.filter(onlyUnique);
-
-    return unique.length === cprs.length;
-
-}
 
 function validateEmailSoft()
 {
@@ -403,8 +383,10 @@ function childIsTaken(obj) {
     // check if the same as parents:
     var parentEmail = document.getElementById("username_input");
     if (val == parentEmail.value) {
-        obj.value = "";
-        obj.placeholder = "Du skal ikke bruge din egen e-mail";
+        //obj.value = "";
+        var emailmessage = document.getElementById(obj.id.replace("_input", "_message"));
+        emailmessage.innerHTML = "Du må ikke anvende din egen e-mail. Angiv venligst dit barns e-mail adresse."
+        emailmessage.style.color = badFontColor;
         set_background(obj, false);  
         return true; 
     }
@@ -416,19 +398,25 @@ function childIsTaken(obj) {
             continue;
         }
         if (val == child_email_inputs[i].value) {
-            obj.value = "";
-            obj.placeholder = "Dit barns email skal være entydigt";
+            //obj.value = "";
+            var emailmessage = document.getElementById(obj.id.replace("_input", "_message"));
+            emailmessage.style.color = badFontColor;
+            emailmessage.innerHTML= "Dit barns email skal være entydigt";
             set_background(obj, false);
             return true;
         }
     }
     var response = _isTaken(val);
     if (response[0] < 0) {
-        obj.value = "";
-        obj.placeholder = get_validation_message(response[0]);
+        //obj.value = "";
+        var emailmessage = document.getElementById(obj.id.replace("_input", "_message"));
+        emailmessage.style.color = badFontColor;
+        emailmessage.innerHTML= get_validation_message(response[0]);
         set_background(obj, false);
         return true;
     }
+    var emailmessage = document.getElementById(obj.id.replace("_input", "_message"));
+    emailmessage.innerHTML = "";
     return false;
 }
 
