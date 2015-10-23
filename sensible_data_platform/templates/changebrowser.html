@@ -24,16 +24,31 @@
 
 	<body>
 		<div class="container">
-			<h1>{% trans "Hey, have you tried using a modern browser?" %}</h1>
-			<div class="alert alert-error">
-				<p><strong>{% trans "Internet Explorer starts with version 9!</strong> It seems that you have a very old browser. Unfortunately, this page does not support it, so you will need to get one of the newer ones. Here's what we support:" %}</p>
+			<h1>{% trans "Hej! Din browser fortæller os, at den er meget gammel." %}</h1>
+			
+				<p><strong>{% trans "Der kan være to årsager til dette: 1) du bruger Internet Explorer 9 eller højere, som er sat til ”kompatibilitetsvisning” (dvs. god til at vise gamle sider men dårlig til at vise nye sider), eller 2) du burger en meget gammel browser, som ikke kan vise vores side. Se løsningen nedenfor:" %}</strong></p>
+			
+				<h4>Du bruger en nyere version af Internet Explorer</h4>
+			<div class="alert alert-warning">
+				<p>Hvis du bruger Internet Explorer 11, skal du bare følge nedenstående trin:</p>
+				<ol>
+					<li>Tryk eller klik på knappen Funktioner<img src="{% static "img/ie.png" %}"/>, og tryk eller klik derefter på Indstillinger for kompatibilitetsvisning.</li>
+					<li>Slå fluebenene fra i det vindue, der popper op. Luk derefter vinduet og opdatér siden.</li>
+				</ol>
+				<p>
+Hvis du bruger en ældre version af Internet Explorer, kan du få flere detaljer ved at se dette link: <a href="http://windows.microsoft.com/da-DK/internet-explorer/use-compatibility-view#ie=ie-10">http://windows.microsoft.com/da-DK/internet-explorer/use-compatibility-view#ie=ie-10</a></p>
+			</div>
+
+				<h4>Du bruger en meget gammel browser</h4>
+			<div class="alert alert-warning">
+				<p>Hvis du bruger en meget gammel browser, kan den muligvis ikke vise vores side.
+Her kan du se en liste af de browsere, der kan bruges til at vise vores side:</p>
 				<ul>
-					<li><a href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a>
-					<li><a href="http://www.mozilla.org/en-US/firefox/new/">Mozilla Firefox</a>
-					<li><a href="http://www.microsoft.com/en-us/download/internet-explorer-10-details.aspx">Internet Explorer 10</a>
+					<li><a href="https://www.google.com/chrome/browser/">Chrome</a></li>
+					<li><a href="http://www.mozilla.org/">Firefox</a></li>
+					<li><a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">IE</a></li>
 				</ul>
 
-				<p><strong>{% trans "Wait, are using" %} Internet Explorer 9 {% trans "or higher?" %}</strong>{% trans "Then you probably are in the compatibility mode. Then, go and" %}<a href="http://answers.microsoft.com/en-us/ie/forum/ie10-windows_8/permanently-disable-compatibility-view-in-ie10/c714c273-6a12-4c61-a70d-67e962eeb37d">{% trans "check this out" %} </a>. {% trans "And please come back!" %}
 			</div>
 		</div>
 	</body>
