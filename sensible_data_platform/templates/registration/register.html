@@ -111,6 +111,13 @@
             </div>
         </div>             
         
+
+        <div class="checkbox" id="checkbox_div">
+            <label>
+                <input type="checkbox" name="consent" value="read" onchange="validate_field(this)"> Jeg har læst og forstået <a href="http://sapiezynski.eu" target="_blank">samtykke.</a>
+            </label>
+        </div>
+
 		<p></hr></p>
         <div class="buttonWrapper">
 			<button class="btn btn-primary btn-large" type="button" id="button_id" value="Register" disabled onclick="submitForm()"><i class="icon-pencil icon-white" ></i> Registrér</button>
@@ -146,7 +153,7 @@ var date_OK = false;
 var sex_GIVEN = false;
 var sex_OK = false;
 var meta_OK = false;
-
+var consent_OK = false;
 
 
 
@@ -511,6 +518,11 @@ function validate_field(obj) {
             document.getElementById('sexMessage').style.color = 'black';
             document.getElementById('sexMessage').innerHTML = 'Køn';
         }
+    } else if (obj.name == 'consent') {
+        host_div = document.getElementById('checkbox_div');
+        set_background(host_div, obj.checked);
+        consent_OK = obj.checked;
+
     } else if (obj.name.endsWith('name')) {
         if (obj.value.trim() != "") {
             set_background(obj, true);   
@@ -535,7 +547,7 @@ function validate_field(obj) {
 
 
 function _validate() {
-    return (cpr_OK && sex_OK && date_OK);
+    return (cpr_OK && sex_OK && date_OK && consent_OK);
 }
 
 function _validate_sex() {
