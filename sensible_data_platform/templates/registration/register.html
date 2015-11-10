@@ -110,9 +110,7 @@
             </select>
             </div>
         </div>             
-        <div id="child_wrapper"></div>
-        <button class="btn btn-medium" onclick="add_child()" type="button"><i class="icon-black icon-plus"></i> Tilføj et barn</button>
-
+        
 		<p></hr></p>
         <div class="buttonWrapper">
 			<button class="btn btn-primary btn-large" type="button" id="button_id" value="Register" disabled onclick="submitForm()"><i class="icon-pencil icon-white" ></i> Registrér</button>
@@ -148,9 +146,8 @@ var date_OK = false;
 var sex_GIVEN = false;
 var sex_OK = false;
 var meta_OK = false;
-var children_OK = false;
 
-var child_count = 0;
+
 
 
 function get_validation_message(return_code) {
@@ -165,70 +162,7 @@ function get_validation_message(return_code) {
     }
 }
 
-function remove_child(child_id) {
-    elt = document.getElementById("child_" + child_id + "_wrapper");   
-    elt.parentNode.removeChild(elt);
-}
 
-function add_child() {
-    elt = document.getElementById("child_wrapper");
-    var node = document.createElement("div");
-    var string = "<div id=\"child_" + child_count + "_wrapper\" style=\"padding:20px;background:#ffffff;margin:20px\">";
-    string += "<h4>Angiv dit barns oplysninger:</h4>";
-    string += "<div class=\"usernameWrapper\">";
-    string += "<strong><p style=\"margin-bottom: 0px\";><span id=\"child_" + child_count + "_name_message\" class=\"confirmMessage\">Barnets navn</span></p></strong>";
-    string += "<div class=\"input-prepend\" >";
-    string += "<span class=\"add-on\">";
-    string += "<i class=\"icon-user\"></i>";
-    string += "</span>"
-    string += "<input type=\"text\" name=\"child_" + child_count + "_name\" id=\"child_" + child_count + "_name\" value=\"\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" Placeholder=\"Navn\" onblur=\"validate_children()\">";
-    string += "</div>";
-    string += "</div>";
-
-    string += "<div class=\"cprWrapper\">";
-    string += "<strong><p style=\"margin-bottom: 0px;\"><span id=\"child_" + child_count + "_cpr_message\" class=\"confirmMessage\">Barnets CPR-nummer</span></p></strong>";
-    string += "<div class=\"input-prepend\">";
-    string += "<span class=\"add-on\">";
-    string += "<i class=\"icon-user\"></i>";
-    string += "</span>";
-    string += "<input type=\"text\" name=\"child_" + child_count + "_cpr\" id=\"child_" + child_count + "_cpr\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" placeholder=\"DDMMÅÅ-XXXX\" onblur=\"validate_children()\" >";
-    string += "</div>";
-    string += "</div>";
-
-    string += "<div class=\"relationWrapper\">";
-    string += "<strong><p style=\"margin-bottom: 0px;\"><span id=\"child_" + child_count + "_relation_message\" class=\"confirmMessage\">Din relation til barnet</span></p></strong>";
-    string += "<div class=\"input-prepend\">";
-    string += "<span class=\"add-on\">";
-    string += "<i class=\"icon-user\"></i>";
-    string += "</span>";
-    string += "<select name=\"child_" + child_count + "_relation\" id=\"child_" + child_count + "_relation\" onblur=\"validate_children()\" onchange=\"validate_children()\">";
-    string += "<option value=\"c\">Vælg venligst</option>";
-    string += "<option value=\"m\">Mor</option>";
-    string += "<option value=\"f\">Far</option>";
-    string += "<option value=\"v\">Værge</option>";
-    string += "</select>"
-    string += "</div>";
-    string += "</div>";
-
-    string += "<div class=\"childEmailWrapper\">";
-    string += "<strong><p style=\"margin-bottom: 0px;\"><span id=\"child_" + child_count + "_email_message\" class=\"confirmMessage\">Barnets e-mail</span></p></strong>";
-    string += "<div class=\"input-prepend\">";
-    string += "<span class=\"add-on\">";
-    string += "<i class=\"icon-envelope\"></i>";
-    string += "</span>";
-    string += "<input  type=\"text\" class=\"child_email_input\" name=\"child_" + child_count + "_email_input\" id=\"child_" + child_count + "_email_input\" value=\"\" spellcheck=\"false\" autocomplete=\"off\" autocapitalize=\"off\" autocorrect=\"off\" Placeholder=\"E-mail\" onkeyup=\"validate_children()\">";
-    string += "</div>";
-    string += "</div>";
-
-
-    string += "<button class=\"btn btn-medium\" type=\"button\" onclick=\"remove_child(" + child_count + ")\">Afbryd</button>";
-    string += "</div>";
-    node.innerHTML = string;
-    elt.appendChild(node);
-    child_count +=1;
-
-    //<!-- vaerge -->
-}
 
 function validatePw(pw, pw_message_id, other_id, other_message_id)
 {
@@ -292,51 +226,6 @@ function validatePw(pw, pw_message_id, other_id, other_message_id)
 }
 
 
-function validate_child_cpr_field(cpr_field) {
-
-}
-
-function validate_children() {
-    children_OK = false;
-    var result = true;
-    var actual_child_count = 0;
-    var cprs = [];
-    cprs.push(document.getElementById("cpr").value.replace('-',''));
-    for (var child_id = 0; child_id < child_count; child_id++) {
-        try {
-            result = validate_field(document.getElementById("child_" + child_id + "_name")) && result;
-            cpr = document.getElementById("child_" + child_id + "_cpr").value.replace('-','');
-            if (cprs.indexOf(cpr) >= 0) {
-                setInvalidCPRColors(document.getElementById("child_" + child_id + "_cpr"));
-                result = false;    
-            } else { 
-                result = validate_field(document.getElementById("child_" + child_id + "_cpr")) && result;
-                cprs.push(cpr);
-            }
-            // turn the relation field green
-            if (document.getElementById("child_" + child_id + "_relation").value != "c") {
-                document.getElementById("child_" + child_id + "_relation").style.backgroundColor = goodBackColor;
-            } else {
-                document.getElementById("child_" + child_id + "_relation").style.backgroundColor = '0xfff';
-                result = false;
-            }
-            if (document.getElementById("child_" + child_id + "_email_input").value.length > 0) {
-                result = (_validateEmail(document.getElementById("child_" + child_id + "_email_input")) == 0) 
-                        && !childIsTaken(document.getElementById("child_" + child_id + "_email_input"))
-                        && result; 
-            } else {
-                result = false;
-            }
-            actual_child_count+=1;
-        } catch (TypeError) {
-            continue;
-        }
-    }
-
-    children_OK = result && (actual_child_count > 0);// && checkCPRsUnique();
-
-    validateForm();
-}
 
 function setInvalidCPRColors(field) {
     field.style.backgroundColor = badBackColor;
@@ -376,48 +265,6 @@ function _isTaken(username) {
     var response = jQuery.parseJSON(xmlHttp.responseText);
     response[1] = get_validation_message(response[0]);
     return response;
-}
-
-function childIsTaken(obj) {
-    var val = obj.value;
-    // check if the same as parents:
-    var parentEmail = document.getElementById("username_input");
-    if (val == parentEmail.value) {
-        //obj.value = "";
-        var emailmessage = document.getElementById(obj.id.replace("_input", "_message"));
-        emailmessage.innerHTML = "Du må ikke anvende din egen e-mail. Angiv venligst dit barns e-mail adresse."
-        emailmessage.style.color = badFontColor;
-        set_background(obj, false);  
-        return true; 
-    }
-    //check if unique child email
-    var child_email_inputs = document.querySelectorAll(".child_email_input");
-
-    for (i = 0; i < child_email_inputs.length; i++) {
-        if (obj.id == child_email_inputs[i].id) {
-            continue;
-        }
-        if (val == child_email_inputs[i].value) {
-            //obj.value = "";
-            var emailmessage = document.getElementById(obj.id.replace("_input", "_message"));
-            emailmessage.style.color = badFontColor;
-            emailmessage.innerHTML= "Dit barns email skal være entydigt";
-            set_background(obj, false);
-            return true;
-        }
-    }
-    var response = _isTaken(val);
-    if (response[0] < 0) {
-        //obj.value = "";
-        var emailmessage = document.getElementById(obj.id.replace("_input", "_message"));
-        emailmessage.style.color = badFontColor;
-        emailmessage.innerHTML= get_validation_message(response[0]);
-        set_background(obj, false);
-        return true;
-    }
-    var emailmessage = document.getElementById(obj.id.replace("_input", "_message"));
-    emailmessage.innerHTML = "";
-    return false;
 }
 
 
@@ -688,7 +535,7 @@ function validate_field(obj) {
 
 
 function _validate() {
-    return (cpr_OK && sex_OK && date_OK && children_OK);
+    return (cpr_OK && sex_OK && date_OK);
 }
 
 function _validate_sex() {
