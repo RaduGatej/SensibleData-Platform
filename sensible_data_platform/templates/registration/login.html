@@ -64,7 +64,7 @@ Forkert e-mail og/eller adgangskode. Prøv venligst igen.
 	<p></p>
 	<p><button id="submit_button" type="submit" name="submit" value="Login" class="btn btn-primary btn-large"><i class="icon-user icon-white"></i> Log på</button></p>
 	<p></p>
-	<div id="register_button"><p><a class="btn btn-success" href="{% url 'parent_intro' %}?next={{ trust_root }}"><i class="icon-pencil icon-white"></i> Registrér</a></p></div>
+	<div id="register_button"><p><a class="btn btn-success" href="{% url 'register' %}?next={{ trust_root }}"><i class="icon-pencil icon-white"></i> Registrér</a></p></div>
 	<p><a href="{% url "password_reset_recover" %}">Jeg har glemt min adgangskode</a></p>
     </div>
   </fieldset>
