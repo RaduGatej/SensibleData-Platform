@@ -163,13 +163,12 @@
                     <a class="btn btn-success" type="button" href={{ child.parent_questionnaire_url }}>Start</a>
                 </td>
                 <td>
-                    <a href="#" data-toggle="popover" data-html="true" title="Barnets e-mail" data-content='<script>validatePopover({{ child.id }});</script><form id=notify_form action="/notify_child/" method="POST">
-                                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" >
-                                    <input name="child_email" type="text" value="{{ child.email }}"/> <br>
-                                    <input name="save_email" type="checkbox" value="Save">  Opdatér og gem<br>
-                                    <input type="hidden" name="child_id" value="{{ child.id }}"/><br/>
-                                    <input class="btn btn-success" type="submit" value="Send spørgeskema"/>
-                                    </form>' class="btn btn-primary" type="button">Send 'Barn spørgeskema'</a>
+                    <form id=notify_form action="/notify_child/" method="POST">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" >
+                        <input name="child_email" type="hidden" value="{{ child.email }}"/>
+                        <input type="hidden" name="child_id" value="{{ child.id }}"/>
+                        <input class="btn btn-primary" type="submit" value="Send barn spørgeskema"/>
+                    </form>
 
 
                 </td>
