@@ -32,6 +32,9 @@
 
     <script>
         $(document).ready(function () {
+            document.getElementById('repeat_child_email_input').onpaste = function(e) {
+                e.preventDefault();
+            };
             $("[data-toggle=popover]").popover({trigger:'click'});
             $('body').on('click', function (e) {
                 //did not click a popover toggle or popover
@@ -57,7 +60,12 @@
                         required: true,
                         email: true,
                         childEmailAvailable: true
-                    }
+                    },
+                     repeat_child_email_input: {
+                         required: true,
+                         email: true,
+                         equalTo: "#child_email_input"
+                     }
                 },
                 messages: {
                     child_name: "Please specify your child's name",
@@ -229,6 +237,17 @@
             <div class="input-prepend">
                 <span class="add-on"><i class="icon-envelope"></i></span>
                 <input type="text" name="child_email_input" id="child_email_input" value="" spellcheck="false"
+                       autocomplete="off" autocapitalize="off" autocorrect="off" Placeholder="E-mail">
+            </div>
+        </div>
+
+        <div class="childEmailWrapper">
+            <strong><p style="margin-bottom: 0px;"><span id="repeat_child_email_message" class="confirmMessage">Barnets e-mail</span>
+            </p></strong>
+
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-envelope"></i></span>
+                <input type="text" name="repeat_child_email_input" id="repeat_child_email_input" value="" spellcheck="false"
                        autocomplete="off" autocapitalize="off" autocorrect="off" Placeholder="E-mail">
             </div>
         </div>
