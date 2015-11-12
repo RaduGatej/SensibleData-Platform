@@ -143,43 +143,45 @@
         }
 
     </script>
-	<h3>Velkommen til Youth Gaming Project! </h3>
-	<p>Nedenfor ser du en oversigt over de spørgeskemaer, der er tilgængelige for dig.</p>
-<p>For hvert barn, du har registreret, findes der et forældre- og et barn-spørgeskema. Barn-spørgeskemaet skal du sende til dit barn ved at klikke på knappen i kolonnen 'Barn spørgeskema'. Her skal du, inden du sender spørgeskemaet afsted, kontrollere, at du har angivet dit barns e-mail adresse korrekt. Hvis du opdager en fejl, bedes du rette den og sætte flueben i ”Opdatér og gem”. Spørgeskemaet sendes afsted, når du trykker ”Send spørgeskema”.</p>
-<p>Du skal selv besvare det/de spørgeskema(er), der står i kolonnen 'Forældre spørgeskema' ved at klikke på ”Start”. </p>
+	<h3>Kom godt igang </h3>
+	<p>1. Tilmeld dit barn.</p>
+    <p>2. Send spørgeskema til dit barn.</p>
+    <p>3. Udfyld dit eget spørgeskema</p>
 
     <table class="table table-striped">
         <thead>
         <tr>
             <th>Barnets navn</th>
-            <th>Forældre spørgeskema</th>
-            <th>Barn spørgeskema</th>
-            <th>Barn spørgeskema er afsendt</th>
+            <th>Send spørgeskema til barn</th>
+            <th>Barn spørgeskema afsendt</th>
+            <th>Udfyld eget spørgeskema</th>
         </tr>
         </thead>
         <tbody>
         {% for child in children %}
             <tr>
                 <td>{{ child.name }}</td>
-                <td>
-                    <a class="btn btn-success" type="button" href={{ child.parent_questionnaire_url }}>Start</a>
-                </td>
+
                 <td>
                     <form id=notify_form action="/notify_child/" method="POST">
                         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" >
                         <input name="child_email" type="hidden" value="{{ child.email }}"/>
                         <input type="hidden" name="child_id" value="{{ child.id }}"/>
-                        <input class="btn btn-primary" type="submit" value="Send barn spørgeskema"/>
+                        <input class="btn btn-primary" type="submit" value="Send"/>
                     </form>
 
 
                 </td>
                 <td>
                     {% if child.notified %}
-                        <h5 style="color:limegreen">Ja</h5>
+                        <h5 style="color:limegreen">JA</h5>
                     {% else %}
-                        <h5 style="color:red">Nej</h5>
+                        <h5 style="color:red">NEJ</h5>
                     {% endif %}
+                </td>
+
+                <td>
+                    <a class="btn btn-success" type="button" href={{ child.parent_questionnaire_url }}>Start</a>
                 </td>
             </tr>
 
@@ -187,7 +189,7 @@
         </tbody>
     </table>
 
-    <a href="#" class="btn btn-primary" type="button" onclick="$('#child_wrapper').show();"><i class="icon-plus-sign icon-white"></i> Tilføj et barn</a>
+    <a href="#" class="btn btn-primary" type="button" onclick="$('#child_wrapper').show();"><i class="icon-plus-sign icon-white"></i> Opret barn</a>
 
     <form id="child_form" action="/register_child/" method="POST">
     {% csrf_token %}
@@ -243,7 +245,7 @@
         </div>
 
         <div class="childEmailWrapper">
-            <strong><p style="margin-bottom: 0px;"><span id="repeat_child_email_message" class="confirmMessage">Barnets e-mail</span>
+            <strong><p style="margin-bottom: 0px;"><span id="repeat_child_email_message" class="confirmMessage">Tast barnets e-mail igen</span>
             </p></strong>
 
             <div class="input-prepend">
@@ -252,8 +254,8 @@
                        autocomplete="off" autocapitalize="off" autocorrect="off" Placeholder="E-mail">
             </div>
         </div>
+        <button class="btn btn-medium" type="button" onclick="$('#child_wrapper').hide();">Fortryd</button>
         <input class="btn btn-primary" type="submit" value="Tilføj"/>
-        <button class="btn btn-medium" type="button" onclick="$('#child_wrapper').hide();">Afbryd</button>
     </div>
     </form>
 
