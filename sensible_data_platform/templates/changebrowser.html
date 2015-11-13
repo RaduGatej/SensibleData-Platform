@@ -20,6 +20,15 @@
 		<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+	<script>
+		try {
+				NodeList;
+				HTMLCollection;
+				window.location = "https://ygp.psy.ku.dk/";
+			} catch (err) {
+			//window.location = "{% url "changebrowser" %}";
+			}
+		</script>
 	</head>
 
 	<body>
