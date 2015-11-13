@@ -80,8 +80,9 @@
                         </span>
             <input type="text" name="cpr" id="cpr" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="DDMMÅÅ-XXXX" onblur="validate_field(this)" >
             </div>
+            <a href="http://youthgamingproject.dk/hvorfor-cpr/" target="_blank"><i class="icon-question-sign"></i> Hvofor CPR?</a>
         </div>    
-
+        <!--
         <div class="birthdateWrapper">
             <strong><p style="margin-bottom: 0px;"><span id="dateMessage" class="confirmMessage">Forældre fødselsdato</span></p></strong>
         <div class="input-prepend">
@@ -110,7 +111,7 @@
             </select>
             </div>
         </div>             
-        
+        -->
 
         <div class="checkbox" id="checkbox_div">
             <label>
@@ -538,8 +539,8 @@ function validate_field(obj) {
         set_background(obj, result);
 
     }
-    _validate_sex();
-    _validate_date();
+    //_validate_sex();
+    //_validate_date();
     validateForm();
     return result;
 }
@@ -547,7 +548,8 @@ function validate_field(obj) {
 
 
 function _validate() {
-    return (cpr_OK && sex_OK && date_OK && consent_OK);
+    //return (cpr_OK && sex_OK && date_OK && consent_OK);
+    return (cpr_OK && consent_OK);
 }
 
 function _validate_sex() {
