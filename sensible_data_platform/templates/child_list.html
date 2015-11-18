@@ -143,8 +143,8 @@
 
     </script>
 	<h3>Kom godt igang </h3>
-	<p>1. Tilmeld dit barn.</p>
-    <p>2. Send spørgeskema til dit barn.</p>
+	<p>1. Tilmeld dit barn</p>
+    <p>2. Send spørgeskema til dit ban</p>
     <p>3. Udfyld dit eget spørgeskema</p>
 
     <table class="table table-striped">
@@ -162,7 +162,7 @@
                 <td>{{ child.name }}</td>
 
                 <td>
-                    <form id=notify_form action="/notify_child/" method="POST">
+                    <form id=notify_form action="/platform/notify_child/" method="POST">
                         <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" >
                         <input name="child_email" type="hidden" value="{{ child.email }}"/>
                         <input type="hidden" name="child_id" value="{{ child.id }}"/>
