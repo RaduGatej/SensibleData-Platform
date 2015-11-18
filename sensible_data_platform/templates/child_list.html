@@ -195,14 +195,11 @@
     {% csrf_token %}
     <div id="child_wrapper" style="padding:20px;background:#ffffff;margin:0 auto;">
         <div class="usernameWrapper">
-            <strong><p style="margin-bottom: 0px">
-                <span id="child_name_message" class="confirmMessage">Barnets navn</span></p>
-            </strong>
 
             <div class="input-prepend">
                 <span class="add-on"><i class="icon-user"></i></span>
                 <input type="text" name="child_name" id="child_name" value="" spellcheck="false" autocomplete="off"
-                       autocapitalize="off" autocorrect="off" Placeholder="Navn">
+                       autocapitalize="off" autocorrect="off" Placeholder="Barnets navn">
             </div>
         </div>
 
@@ -221,12 +218,10 @@
         </div>
 
         <div class="relationWrapper">
-            <strong><p style="margin-bottom: 0px;"><span id="child_0_relation_message" class="confirmMessage">Din relation til barnet</span>
-            </p></strong>
 
             <div class="input-prepend"><span class="add-on"><i class="icon-user"></i></span><select
                     name="child_relation" id="child_relation">
-                <option value="c">Vælg venligst</option>
+                <option value="c">Vælg relation</option>
                 <option value="m">Mor</option>
                 <option value="f">Far</option>
                 <option value="v">Værge</option>
@@ -234,24 +229,20 @@
         </div>
 
         <div class="childEmailWrapper">
-            <strong><p style="margin-bottom: 0px;"><span id="child_email_message" class="confirmMessage">Barnets e-mail</span>
-            </p></strong>
 
             <div class="input-prepend">
                 <span class="add-on"><i class="icon-envelope"></i></span>
                 <input type="text" name="child_email_input" id="child_email_input" value="" spellcheck="false"
-                       autocomplete="off" autocapitalize="off" autocorrect="off" Placeholder="E-mail">
+                       autocomplete="off" autocapitalize="off" autocorrect="off" Placeholder="Barnets e-mail">
             </div>
         </div>
 
         <div class="childEmailWrapper">
-            <strong><p style="margin-bottom: 0px;"><span id="repeat_child_email_message" class="confirmMessage">Tast barnets e-mail igen</span>
-            </p></strong>
 
             <div class="input-prepend">
                 <span class="add-on"><i class="icon-envelope"></i></span>
                 <input type="text" name="repeat_child_email_input" id="repeat_child_email_input" value="" spellcheck="false"
-                       autocomplete="off" autocapitalize="off" autocorrect="off" Placeholder="E-mail">
+                       autocomplete="off" autocapitalize="off" autocorrect="off" Placeholder="Tast barnets e-mail igen">
             </div>
         </div>
         <button class="btn btn-medium" type="button" onclick="$('#child_wrapper').hide();">Fortryd</button>
