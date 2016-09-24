@@ -230,3 +230,7 @@ def register_child(request):
 
 	return redirect("/platform/home/")
 
+def register_not_allowed(request):
+	return render_to_response('registration/register_not_allowed.html', context_instance=RequestContext(request))
+
+
