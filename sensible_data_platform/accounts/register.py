@@ -130,7 +130,7 @@ def informed_consent_stub(request):
 
 def parent_intro(request):
 	text = getText("parent_intro", "da")
-	return informed_consent(request, text, 'Information om projektet', 'parent_informed_consent', reject="Jeg ønsker ikke at deltage", accept="Deltag")
+	return informed_consent(request, text, 'Information om projektet', 'login', reject="Jeg ønsker ikke at deltage", accept="Log på")
 
 
 def parent_informed_consent(request):

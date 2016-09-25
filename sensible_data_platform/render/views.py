@@ -17,6 +17,7 @@ from accounts import manager
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from accounts.models import Child
+from accounts.register import parent_intro
 from oauth2app.models import Client
 from password_reset.utils import send_email
 from render.forms import ChildNotificationForm
@@ -28,9 +29,10 @@ from utils import SECURE_platform_config
 
 def home(request):
 	if not request.user.is_authenticated():
-		text = {}
-		text['welcome'] = getText('welcome_text', request.LANGUAGE_CODE)
-		return render_to_response('index.html', {'text': text}, context_instance=RequestContext(request))
+		# text = {}
+		# text['welcome'] = getText('welcome_text', request.LANGUAGE_CODE)
+		# return render_to_response('index.html', {'text': text}, context_instance=RequestContext(request))
+		return parent_intro(request)
 
 	#return HttpResponseRedirect(settings.QUESTIONNAIRE_APP_URL)
 
